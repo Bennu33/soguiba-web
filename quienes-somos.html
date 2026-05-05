@@ -42,44 +42,37 @@ em{font-style:italic;color:var(--g)}
 }
 
 /* ---------- Top nav ---------- */
-.nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:18px 48px;
-  background:rgba(20,20,18,0);
-  backdrop-filter:blur(0);
-  transition:background .35s ease, backdrop-filter .35s ease, padding .35s ease, border-color .35s ease;
-  border-bottom:1px solid transparent;
-}
-.nav.scrolled{
-  background:rgba(20,20,18,0.82);
-  backdrop-filter:blur(14px);
-  padding:12px 48px;
-  border-bottom:1px solid rgba(250,250,248,0.08);
-}
-.nav .logo{display:flex;align-items:center;gap:10px}
-.nav .logo img{height:36px;width:auto}
-.nav-links{display:flex;gap:36px;align-items:center}
-.nav-links a{
-  color:var(--w);font-size:14px;font-weight:500;
-  letter-spacing:0.02em;
-  position:relative;padding:6px 0;
-  opacity:0.78;transition:opacity .25s
-}
-.nav-links a:hover{opacity:1}
-.nav-links a.active{opacity:1}
-.nav-links a.active::after{
-  content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--gl)
-}
-.nav-cta{
-  background:var(--g);color:var(--w)!important;
-  padding:10px 22px;border-radius:999px;
-  opacity:1!important;font-weight:600;
-  transition:background .25s, transform .25s
-}
-.nav-cta:hover{background:var(--gd);transform:translateY(-1px)}
-.nav-cta::after{display:none!important}
-.nav-burger{display:none;background:none;border:0;color:var(--w);cursor:pointer;padding:6px}
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:28px 64px;transition:all .5s cubic-bezier(.22,1,.36,1)}
+#nav.solid{background:rgba(250,250,248,.96);backdrop-filter:blur(20px);
+  padding:18px 64px;box-shadow:0 1px 0 rgba(0,0,0,.06)}
+.nav-logo{display:flex;align-items:center;text-decoration:none}
+.nav-logo img{height:36px;width:auto;transition:filter .4s}
+.nav-links{display:flex;align-items:center;gap:40px;list-style:none;margin:0;padding:0}
+.nav-links a{font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  text-decoration:none;color:rgba(255,255,255,.75);transition:color .3s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--a);transition:width .3s}
+.nav-links a:hover{color:white}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-links a.active{color:white}
+#nav.solid .nav-links a{color:var(--mid)}
+#nav.solid .nav-links a:hover,#nav.solid .nav-links a.active{color:var(--g)}
+#nav.solid .nav-links a::after,#nav.solid .nav-links a.active::after{background:var(--g)}
+.nav-r{display:flex;align-items:center;gap:20px}
+.nav-lang{font-size:11px;font-weight:600;letter-spacing:.12em;color:rgba(255,255,255,.4);cursor:pointer;transition:color .3s}
+#nav.solid .nav-lang{color:var(--faint)}
+.btn-nav{position:relative;overflow:hidden;font-size:12px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:white;background:var(--g);
+  border:none;padding:12px 26px;border-radius:2px;cursor:pointer;text-decoration:none;
+  transition:background .3s,transform .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-nav::after{content:'';position:absolute;top:-50%;left:-80%;width:50%;height:200%;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.3) 50%,transparent 60%);
+  transform:skewX(-15deg);transition:left .6s}
+.btn-nav:hover::after{left:135%}
+.btn-nav:hover{background:var(--gd)}
+.nav-burger{display:none;background:none;border:0;color:white;cursor:pointer;padding:6px}
+#nav.solid .nav-burger{color:var(--ink)}
 
 /* ---------- Section primitives ---------- */
 section{position:relative;padding:var(--section-pad,120px) 48px}
@@ -170,11 +163,11 @@ section.off{background:var(--off)}
 .history-grid .big-num{
   font-family:var(--serif);
   font-size:clamp(5rem,11vw,9rem);
-  color:var(--g);line-height:.9;margin:24px 0 8px;font-weight:600;
+  color:var(--g);line-height:.9;margin:24px 0 24px;font-weight:600;
   letter-spacing:-0.04em
 }
 .history-grid .big-num-label{
-  text-transform:uppercase;letter-spacing:3px;font-size:11px;color:var(--mid);font-weight:600
+  text-transform:uppercase;letter-spacing:3px;font-size:12px;color:var(--mid);font-weight:600;margin-top:8px
 }
 .history-grid p{color:var(--mid);font-size:1.02rem;line-height:1.75;margin-bottom:1.4em}
 .history-evidence{
@@ -287,7 +280,7 @@ section.off{background:var(--off)}
 /* ---------- Strategic Plan ---------- */
 .plan-section{background:var(--ink);color:var(--w);overflow:hidden}
 .plan-section .layer-shapes{position:absolute;inset:0;opacity:.10;pointer-events:none}
-.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:56px}
+.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:56px;align-items:start}
 .plan-card{
   position:relative;background:rgba(250,250,248,0.04);
   border:1px solid rgba(67,160,71,0.3);border-radius:10px;
@@ -323,20 +316,30 @@ section.off{background:var(--off)}
 .plan-card details li b{color:var(--gl);font-weight:600;display:block;margin-bottom:2px;font-size:.88rem}
 .plan-cta{display:flex;gap:16px;justify-content:center;margin-top:56px;flex-wrap:wrap}
 
-/* ---------- Buttons ---------- */
+/* ---------- Buttons (matched to proyectos.html) ---------- */
 .btn{
-  display:inline-flex;align-items:center;gap:10px;
-  padding:14px 28px;border-radius:999px;
-  font-weight:600;font-size:.95rem;letter-spacing:.01em;
-  border:1.5px solid transparent;cursor:pointer;
-  transition:transform .25s, background .25s, border-color .25s, color .25s
+  position:relative;overflow:hidden;
+  display:inline-flex;align-items:center;gap:8px;
+  padding:18px 36px;border-radius:2px;
+  font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;cursor:pointer;
+  border:1.5px solid transparent;
+  transition:background .3s, transform .2s, border-color .3s, color .3s
 }
+.btn::after{
+  content:'';position:absolute;top:-50%;left:-80%;width:50%;height:200%;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.3) 50%,transparent 60%);
+  transform:skewX(-15deg);transition:left .6s
+}
+.btn:hover::after{left:135%}
 .btn-primary{background:var(--g);color:var(--w)}
 .btn-primary:hover{background:var(--gd);transform:translateY(-2px)}
 .btn-amber{background:var(--a);color:var(--ink)}
 .btn-amber:hover{background:var(--al);transform:translateY(-2px)}
-.btn-ghost{background:transparent;color:var(--w);border-color:rgba(250,250,248,0.5)}
-.btn-ghost:hover{border-color:var(--w);background:rgba(250,250,248,0.06);transform:translateY(-2px)}
+.btn-amber::after{background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.4) 50%,transparent 60%)}
+.btn-ghost{background:transparent;color:var(--w);border-color:rgba(250,250,248,0.35)}
+.btn-ghost:hover{border-color:var(--w);background:rgba(250,250,248,.08);transform:translateY(-2px)}
+.btn-ghost::after{display:none}
 
 /* ---------- Evaluación ---------- */
 .eval-row{
@@ -360,9 +363,9 @@ section.off{background:var(--off)}
 .eval-tail{margin-top:48px;color:var(--mid);font-size:1.02rem;line-height:1.7;max-width:760px}
 
 /* ---------- Videos ---------- */
-.videos-section{background:var(--ink);color:var(--w);overflow:hidden}
+.videos-section{background:var(--ink);color:var(--w);overflow:hidden;padding-top:80px;padding-bottom:80px}
 .videos-grid{
-  display:flex;flex-wrap:wrap;justify-content:center;gap:48px;margin-top:56px
+  display:flex;flex-wrap:wrap;justify-content:center;gap:48px;margin-top:32px
 }
 .video-block{
   position:relative;border-radius:8px;overflow:hidden;
@@ -374,9 +377,10 @@ section.off{background:var(--off)}
   flex:0 1 400px;width:100%;max-width:400px
 }
 .video-block .badge{
-  position:absolute;top:-12px;left:24px;z-index:3;
-  padding:8px 18px;border-radius:999px;
-  font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700
+  position:absolute;top:14px;left:14px;z-index:3;
+  padding:7px 14px;border-radius:999px;
+  font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;
+  white-space:nowrap;backdrop-filter:blur(6px);box-shadow:0 4px 12px rgba(0,0,0,.25)
 }
 .video-block.gb .badge{background:var(--g);color:var(--w)}
 .video-block.es .badge{background:var(--a);color:var(--ink)}
@@ -471,8 +475,8 @@ section.off{background:var(--off)}
 .org-filters{display:flex;justify-content:center;gap:10px;margin:48px 0 36px;flex-wrap:wrap}
 .org-filter{
   background:rgba(250,250,248,0.05);border:1px solid rgba(250,250,248,0.15);
-  color:var(--w);font-size:13px;font-weight:500;
-  padding:9px 20px;border-radius:999px;cursor:pointer;
+  color:var(--w);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:11px 22px;border-radius:2px;cursor:pointer;
   transition:background .25s, border-color .25s, color .25s
 }
 .org-filter:hover{background:rgba(250,250,248,0.1);border-color:rgba(67,160,71,0.5)}
@@ -513,8 +517,8 @@ section.off{background:var(--off)}
   background:rgba(67,160,71,0.08);
   box-shadow:0 20px 40px -20px rgba(46,125,50,.5);
 }
-.org-node.dim{opacity:.2}
 .org-node.dim-soft{opacity:.5}
+.org-hidden{display:none!important}
 .org-node.junta{border-top:2px solid var(--a)}
 .org-node.coord{
   background:rgba(46,125,50,0.18);border-color:rgba(67,160,71,0.6);
@@ -695,9 +699,10 @@ footer{
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1024px){
-  .nav{padding:14px 24px}
-  .nav.scrolled{padding:10px 24px}
+  #nav{padding:18px 24px}
+  #nav.solid{padding:14px 24px}
   .nav-links{display:none}
+  .nav-r{display:none}
   .nav-burger{display:block}
   section{padding:80px 24px}
   .hero{padding:140px 24px 80px;min-height:80vh}
@@ -750,18 +755,20 @@ footer{
 <div class="scroll-progress" id="progress"></div>
 
 <!-- ============== NAV ============== -->
-<nav class="nav" id="topnav">
-  <a href="index.html" class="logo">
-    <img src="img/soguiba-logo-white.png" alt="Soguiba" />
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <img src="img/soguiba-logo-white.png" id="navLogo" alt="Soguiba" height="36" style="transition:filter .4s">
   </a>
-  <div class="nav-links">
-    <a href="index.html#esencia">Inicio</a>
-    <a href="quienes-somos.html" class="active">Quiénes somos</a>
-    <a href="proyectos.html">Proyectos</a>
-    <a href="index.html#anumbara">Anúmbara</a>
-    <a href="index.html#actualidad">Actualidad</a>
-    <a href="index.html#contacto">Contacto</a>
-    <a href="#unete" class="nav-cta">Hazte socio/a</a>
+  <ul class="nav-links">
+    <li><a href="quienes-somos.html" class="active">Quiénes somos</a></li>
+    <li><a href="proyectos.html">Proyectos</a></li>
+    <li><a href="index.html#anumbara">Anúmbara</a></li>
+    <li><a href="index.html#testimonios">Testimonios</a></li>
+    <li><a href="#unete">Colabora</a></li>
+  </ul>
+  <div class="nav-r">
+    <span class="nav-lang">ES</span>
+    <a href="#unete" class="btn-nav">Donar</a>
   </div>
   <button class="nav-burger" aria-label="Menú">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -795,7 +802,7 @@ footer{
         <svg viewBox="0 0 200 14" preserveAspectRatio="none"><path d="M2,8 Q50,2 100,7 T198,6"/></svg>
       </span>
     </h1>
-    <p class="sub">Soguiba nació en Cáceres en 2001 con una convicción: que la solidaridad no es caridad, es justicia. Desde entonces caminamos junto a las comunidades rurales de Guinea Bissau y junto a la sociedad extremeña, construyendo un puente humano que ya tiene más de dos décadas.</p>
+    <p class="sub">Caminamos junto a las comunidades rurales de Guinea Bissau y la sociedad extremeña, construyendo un puente humano que ya tiene más de dos décadas.</p>
   </div>
   <div class="scroll-indicator">
     <span>Desliza</span>
@@ -810,10 +817,8 @@ footer{
       <div class="reveal from-left">
         <div class="section-tag" style="font-size: 14px">Nuestra historia</div>
         <h2>Desde 2001,<br>un puente humano <em>entre dos orillas</em></h2>
-        <div class="big-num" data-count="24" data-suffix="+">25</div>
-        <div class="big-num-label">
-
-AÑOS ACOMPAÑANDO</div>
+        <div class="big-num" data-count="25" data-suffix="+">25</div>
+        <div class="big-num-label">AÑOS ACOMPAÑANDO</div>
       </div>
       <div class="reveal from-right">
         <p>Soguiba inició su andadura en el año 2001 en la ciudad de Cáceres, fruto del deseo de un grupo de personas comprometidas con la solidaridad de construir un puente humano entre España y Guinea Bissau. Desde nuestros comienzos, hemos dedicado esfuerzos incansables a fomentar la justicia social y mejorar la calidad de vida de las comunidades rurales guineanas, así como a sensibilizar a la sociedad española sobre las realidades y desafíos que enfrentan estas comunidades.</p>
@@ -1187,14 +1192,14 @@ Es elegida en asamblea por las personas socias de Soguiba.</p>
       <div class="org-inner" id="orgInner">
 
         <!-- Junta Directiva -->
-        <div class="org-section-label">
+        <div class="org-section-label" data-filter-show="junta">
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2 L10 6 L14 6 L11 9 L12 14 L8 11 L4 14 L5 9 L2 6 L6 6 Z"/></svg>
           Junta Directiva · Gobierno voluntario
         </div>
-        <div class="org-row">
+        <div class="org-row" data-filter-show="junta">
           <div class="org-node junta" data-group="junta" tabindex="0" aria-label="Abelardo Martín Cordero, Presidente"><div class="role">Presidente</div><div class="person">Abelardo Martín Cordero</div></div>
         </div>
-        <div class="org-row" style="margin-bottom:48px">
+        <div class="org-row" data-filter-show="junta" style="margin-bottom:48px">
           <div class="org-node junta" data-group="junta" tabindex="0"><div class="role">Vicepresidenta</div><div class="person">Marisol Sáenz Chacón</div></div>
           <div class="org-node junta" data-group="junta" tabindex="0"><div class="role">Secretario</div><div class="person">Alejandro Barroso Sáenz</div></div>
           <div class="org-node junta" data-group="junta" tabindex="0"><div class="role">Tesorera</div><div class="person">Ana Barroso Sáenz</div></div>
@@ -1203,13 +1208,13 @@ Es elegida en asamblea por las personas socias de Soguiba.</p>
         </div>
 
         <!-- Bridge -->
-        <div class="bridge-wrap">
+        <div class="bridge-wrap" data-filter-show="es gb">
           <div class="org-node coord" data-group="es" tabindex="0">
             <div class="role">Coordinación general</div>
             <div class="person">Pilar Milanés Milanés</div>
             <div class="sub">Coordinadora general en sede y terreno</div>
           </div>
-          <div class="bridge-line"><div class="bridge-pulse"></div></div>
+          <div class="bridge-line" data-filter-show="all"><div class="bridge-pulse"></div></div>
           <div class="org-node coord" data-group="gb" tabindex="0">
             <div class="role">Delegación Guinea Bissau</div>
             <div class="person">Pedro Uri Sane</div>
@@ -1218,9 +1223,9 @@ Es elegida en asamblea por las personas socias de Soguiba.</p>
         </div>
 
         <!-- Two orillas -->
-        <div class="org-orillas">
+        <div class="org-orillas" data-filter-show="es gb">
           <!-- ESPAÑA -->
-          <div class="org-orilla es">
+          <div class="org-orilla es" data-filter-show="es">
             <h4>
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2 C 5 5, 5 8, 8 14 C 11 8, 11 5, 8 2 Z"/><path d="M5 6 L8 6 M8 9 L11 9"/></svg>
               Sede · Cáceres
@@ -1234,7 +1239,7 @@ Es elegida en asamblea por las personas socias de Soguiba.</p>
           </div>
 
           <!-- GUINEA BISSAU -->
-          <div class="org-orilla gb">
+          <div class="org-orilla gb" data-filter-show="gb">
             <h4>
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="8" cy="6" rx="4" ry="3"/><path d="M8 9 L8 14"/><path d="M5 14 L11 14"/></svg>
               Delegación · Guinea Bissau
@@ -1248,7 +1253,7 @@ Es elegida en asamblea por las personas socias de Soguiba.</p>
         </div>
 
         <!-- Sub-areas operativas (GB) -->
-        <div style="margin-top:48px">
+        <div style="margin-top:48px" data-filter-show="gb">
           <div class="org-section-label" style="color:rgba(67,160,71,0.7)">Áreas operativas en Guinea Bissau</div>
           <div class="org-sub-areas">
             <div class="org-node" data-group="gb" tabindex="0"><div class="role">Educación</div><div class="person">Augusta Blete · María Augusta N'Tchami</div></div>
@@ -1528,14 +1533,17 @@ document.querySelectorAll('.tw-segments').forEach(grp=>{
 
 applyTweaks();
 
-/* ---------- Scroll progress ---------- */
+/* ---------- Scroll progress + nav state ---------- */
 const progressEl = document.getElementById('progress');
-const topnav = document.getElementById('topnav');
+const topnav = document.getElementById('nav');
+const navLogoEl = document.getElementById('navLogo');
 function onScroll(){
   const h = document.documentElement;
   const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
   progressEl.style.width = (scrolled*100)+'%';
-  topnav.classList.toggle('scrolled', h.scrollTop > 60);
+  const solid = h.scrollTop > 60;
+  topnav.classList.toggle('solid', solid);
+  if(navLogoEl){ navLogoEl.style.filter = solid ? 'brightness(0)' : 'brightness(0) invert(1)'; }
 }
 window.addEventListener('scroll', onScroll, {passive:true});
 onScroll();
@@ -1647,10 +1655,17 @@ document.querySelectorAll('.org-filter').forEach(btn=>{
     document.querySelectorAll('.org-filter').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     const f = btn.dataset.filter;
+    // Hide individual nodes that don't match
     document.querySelectorAll('.org-node').forEach(n=>{
-      if(f === 'all'){ n.classList.remove('dim'); }
-      else if(n.dataset.group === f){ n.classList.remove('dim'); }
-      else { n.classList.add('dim'); }
+      const g = n.dataset.group;
+      const show = (f === 'all') || (g === f);
+      n.classList.toggle('org-hidden', !show);
+    });
+    // Hide section wrappers (labels, rows, orillas, sub-areas) based on data-filter-show
+    document.querySelectorAll('[data-filter-show]').forEach(el=>{
+      const groups = el.dataset.filterShow.split(' ');
+      const show = (f === 'all') || groups.includes(f);
+      el.classList.toggle('org-hidden', !show);
     });
   });
 });
