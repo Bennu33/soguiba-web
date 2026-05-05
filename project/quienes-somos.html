@@ -1,0 +1,1732 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Quiénes somos — Soguiba</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g:#2e7d32; --gl:#43a047; --gd:#1b5e20;
+  --r:#c0392b; --rl:#e74c3c;
+  --a:#f39c12; --al:#f5b942;
+  --w:#fafaf8; --off:#f2f0ec;
+  --ink:#141412; --mid:#5a5855; --faint:#9a9895;
+  --serif:'Playfair Display', Georgia, serif;
+  --sans:'Inter', system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  color:var(--ink);
+  background:var(--w);
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;letter-spacing:-0.01em;line-height:1.1;margin:0}
+p{margin:0 0 1em}
+em{font-style:italic;color:var(--g)}
+
+/* ---------- Scroll progress ---------- */
+.scroll-progress{
+  position:fixed;top:0;left:0;height:2px;width:0%;background:var(--g);
+  z-index:200;transition:width 100ms linear
+}
+
+/* ---------- Top nav ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 48px;
+  background:rgba(20,20,18,0);
+  backdrop-filter:blur(0);
+  transition:background .35s ease, backdrop-filter .35s ease, padding .35s ease, border-color .35s ease;
+  border-bottom:1px solid transparent;
+}
+.nav.scrolled{
+  background:rgba(20,20,18,0.82);
+  backdrop-filter:blur(14px);
+  padding:12px 48px;
+  border-bottom:1px solid rgba(250,250,248,0.08);
+}
+.nav .logo{display:flex;align-items:center;gap:10px}
+.nav .logo img{height:36px;width:auto}
+.nav-links{display:flex;gap:36px;align-items:center}
+.nav-links a{
+  color:var(--w);font-size:14px;font-weight:500;
+  letter-spacing:0.02em;
+  position:relative;padding:6px 0;
+  opacity:0.78;transition:opacity .25s
+}
+.nav-links a:hover{opacity:1}
+.nav-links a.active{opacity:1}
+.nav-links a.active::after{
+  content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--gl)
+}
+.nav-cta{
+  background:var(--g);color:var(--w)!important;
+  padding:10px 22px;border-radius:999px;
+  opacity:1!important;font-weight:600;
+  transition:background .25s, transform .25s
+}
+.nav-cta:hover{background:var(--gd);transform:translateY(-1px)}
+.nav-cta::after{display:none!important}
+.nav-burger{display:none;background:none;border:0;color:var(--w);cursor:pointer;padding:6px}
+
+/* ---------- Section primitives ---------- */
+section{position:relative;padding:var(--section-pad,120px) 48px}
+.wrap{max-width:1240px;margin:0 auto}
+.section-tag{
+  font-size:12px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--a);font-weight:600;margin-bottom:18px
+}
+section h2{
+  font-size:var(--h2-scale, clamp(2rem, 4.2vw, 3.4rem));
+  margin-bottom:32px;text-wrap:balance;
+}
+section.dark{background:var(--ink);color:var(--w)}
+section.dark .section-tag{color:var(--a)}
+section.dark em{color:var(--gl)}
+section.off{background:var(--off)}
+
+/* ---------- Reveal ---------- */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity var(--reveal-dur,.9s) cubic-bezier(.2,.7,.2,1), transform var(--reveal-dur,.9s) cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal.from-left{transform:translateX(-40px)}
+.reveal.from-left.in{transform:translateX(0)}
+.reveal.from-right{transform:translateX(40px)}
+.reveal.from-right.in{transform:translateX(0)}
+
+/* ---------- Hero ---------- */
+.hero{
+  min-height:var(--hero-min,88vh);display:flex;align-items:flex-end;
+  padding:160px 48px 90px;
+  background:var(--ink);color:var(--w);overflow:hidden
+}
+.hero .layer{position:absolute;inset:0;pointer-events:none}
+.hero .bg-img{
+  background:
+    linear-gradient(180deg, rgba(20,20,18,0.55) 0%, rgba(20,20,18,0.75) 100%),
+    repeating-linear-gradient(135deg, #1f3a1f 0 18px, #1b341b 18px 36px);
+  /* Placeholder backdrop. Replace with: background-image:url('img/hero-comunidad.jpg'); */
+  background-size:cover;background-position:center;
+  filter:saturate(.9);
+  will-change:transform;
+}
+.hero .bg-img::after{
+  content:"📷 Subir imagen real: comunidad guineana en encuentro o trabajo colectivo, plano amplio, luz natural cálida";
+  position:absolute;left:24px;bottom:24px;
+  font-family:ui-monospace,Menlo,monospace;font-size:11px;
+  color:rgba(250,250,248,0.45);
+  background:rgba(20,20,18,0.55);padding:6px 10px;border-radius:4px;
+  letter-spacing:0.03em
+}
+.hero .organic{will-change:transform;opacity:0.18}
+.hero .content{position:relative;z-index:2;max-width:1240px;margin:0 auto;width:100%}
+.hero .eyebrow{
+  font-size:12px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--a);font-weight:600;margin-bottom:24px
+}
+.hero h1{
+  font-size:var(--hero-h1-scale, clamp(2.6rem,6.6vw,5.6rem));
+  font-weight:600;line-height:1.04;color:var(--w);
+  margin:0 0 28px;text-wrap:balance;max-width:18ch
+}
+.hero h1 .word{display:inline-block;opacity:0;transform:translateY(28px) rotate(2deg);transition:opacity .9s, transform .9s;margin-right:0.28em}
+.hero h1 .word.in{opacity:1;transform:translateY(0) rotate(0)}
+.hero h1 .underlined{position:relative;display:inline-block}
+.hero h1 .underlined svg{
+  position:absolute;left:0;right:0;bottom:-10px;width:100%;height:14px;
+  overflow:visible
+}
+.hero h1 .underlined svg path{
+  stroke:var(--g);stroke-width:5;fill:none;stroke-linecap:round;
+  stroke-dasharray:1000;stroke-dashoffset:1000;
+  transition:stroke-dashoffset 1.4s 1.2s cubic-bezier(.2,.7,.2,1)
+}
+.hero h1.go .underlined svg path{stroke-dashoffset:0}
+.hero p.sub{
+  font-size:clamp(1rem,1.4vw,1.18rem);
+  color:rgba(250,250,248,0.85);
+  max-width:640px;line-height:1.55;margin:0
+}
+.scroll-indicator{
+  position:absolute;left:50%;bottom:32px;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:10px;z-index:3;
+  color:rgba(250,250,248,0.6);font-size:11px;letter-spacing:3px;text-transform:uppercase
+}
+.scroll-indicator .line{
+  width:1px;height:48px;background:linear-gradient(to bottom, transparent, var(--gl));
+  animation:scrollPulse 2.2s ease-in-out infinite
+}
+@keyframes scrollPulse{
+  0%,100%{transform:scaleY(.4);transform-origin:top;opacity:.4}
+  50%{transform:scaleY(1);opacity:1}
+}
+
+/* ---------- History block ---------- */
+.history-grid{
+  display:grid;grid-template-columns:1fr 1.3fr;gap:80px;align-items:start
+}
+.history-grid .big-num{
+  font-family:var(--serif);
+  font-size:clamp(5rem,11vw,9rem);
+  color:var(--g);line-height:.9;margin:24px 0 8px;font-weight:600;
+  letter-spacing:-0.04em
+}
+.history-grid .big-num-label{
+  text-transform:uppercase;letter-spacing:3px;font-size:11px;color:var(--mid);font-weight:600
+}
+.history-grid p{color:var(--mid);font-size:1.02rem;line-height:1.75;margin-bottom:1.4em}
+
+/* ---------- Timeline ---------- */
+.timeline-wrap{position:relative;margin-top:60px}
+.timeline-track{
+  position:relative;
+  display:flex;gap:48px;
+  padding:60px 8px 40px;
+  overflow-x:auto;scroll-snap-type:x mandatory;
+  scrollbar-width:thin;scrollbar-color:var(--g) transparent
+}
+.timeline-track::-webkit-scrollbar{height:6px}
+.timeline-track::-webkit-scrollbar-thumb{background:var(--g);border-radius:6px}
+.timeline-line{
+  position:absolute;left:0;right:0;top:90px;height:1.5px;
+  background:linear-gradient(90deg, transparent, var(--g) 6%, var(--g) 94%, transparent);
+  z-index:0;
+  transform:scaleX(0);transform-origin:left;transition:transform 1.4s cubic-bezier(.2,.7,.2,1)
+}
+.timeline-wrap.in .timeline-line{transform:scaleX(1)}
+.milestone{
+  flex:0 0 320px;scroll-snap-align:start;
+  position:relative;padding-top:60px;
+  opacity:0;transform:translateY(20px);transition:opacity .7s, transform .7s
+}
+.milestone.in{opacity:1;transform:translateY(0)}
+.milestone .dot{
+  position:absolute;left:0;top:24px;
+  width:14px;height:14px;border-radius:50%;
+  background:var(--g);border:3px solid var(--w);
+  box-shadow:0 0 0 4px rgba(46,125,50,0.15);
+  z-index:2
+}
+.milestone .year{
+  font-family:var(--serif);font-size:1.7rem;color:var(--g);font-weight:600;margin-bottom:6px
+}
+.milestone h4{font-family:var(--sans);font-size:1.05rem;font-weight:600;margin-bottom:8px;color:var(--ink)}
+.milestone p{color:var(--mid);font-size:.94rem;line-height:1.6;margin:0}
+
+/* ---------- Mission/Vision/Values ---------- */
+.mvv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:24px}
+.mvv-card{
+  background:var(--w);
+  border:1px solid rgba(20,20,18,0.06);
+  padding:44px 36px;border-radius:8px;
+  position:relative;overflow:hidden;
+  transition:transform .35s, box-shadow .35s, border-color .35s
+}
+.mvv-card:hover{transform:translateY(-4px);box-shadow:0 22px 60px -30px rgba(20,20,18,0.25);border-color:rgba(46,125,50,0.25)}
+.mvv-card .icon{width:54px;height:54px;margin-bottom:24px;color:var(--g)}
+.mvv-card .icon svg{width:100%;height:100%}
+.mvv-card .icon path,.mvv-card .icon circle,.mvv-card .icon line{
+  stroke:var(--g);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:300;stroke-dashoffset:300;
+  transition:stroke-dashoffset 1.6s ease-out
+}
+.mvv-card.in .icon path,.mvv-card.in .icon circle,.mvv-card.in .icon line{stroke-dashoffset:0}
+.mvv-card .label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--a);font-weight:600;margin-bottom:14px}
+.mvv-card h3{font-size:1.5rem;margin-bottom:14px}
+.mvv-card p{color:var(--mid);font-size:.97rem;line-height:1.65;margin:0}
+.values-detail{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+.value-mini{
+  background:var(--w);border:1px solid rgba(20,20,18,0.08);
+  border-radius:8px;padding:28px 24px;
+  display:flex;gap:16px;align-items:flex-start
+}
+.value-mini .ico{flex:0 0 36px;height:36px;color:var(--g)}
+.value-mini h4{font-family:var(--sans);font-size:1rem;font-weight:600;margin-bottom:6px}
+.value-mini p{color:var(--mid);font-size:.92rem;line-height:1.55;margin:0}
+
+/* ---------- Cómo trabajamos ---------- */
+.how-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.how-img{
+  aspect-ratio:4/5;border-radius:8px;overflow:hidden;
+  background:
+    linear-gradient(135deg, rgba(46,125,50,0.18), rgba(243,156,18,0.10)),
+    repeating-linear-gradient(45deg, #d8d4cc 0 14px, #cfcbc2 14px 28px);
+  position:relative;
+  transform-style:preserve-3d;transition:transform .5s ease
+}
+.how-img::after{
+  content:"📷 Subir imagen real: reunión comunitaria, taller participativo, encuentro entre personas guineanas y voluntariado";
+  position:absolute;left:18px;bottom:18px;right:18px;
+  font-family:ui-monospace,Menlo,monospace;font-size:11px;
+  color:rgba(20,20,18,0.55);
+  background:rgba(250,250,248,0.85);padding:8px 12px;border-radius:4px;
+  letter-spacing:0.02em
+}
+.how-text p{color:var(--mid);font-size:1.02rem;line-height:1.75;margin-bottom:1.3em}
+.principles{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:64px
+}
+.principle{display:flex;gap:14px;align-items:flex-start}
+.principle .ico{flex:0 0 28px;height:28px;color:var(--g);margin-top:2px}
+.principle h5{font-family:var(--sans);font-size:.95rem;font-weight:600;margin-bottom:4px;letter-spacing:0.01em}
+.principle p{color:var(--mid);font-size:.88rem;line-height:1.5;margin:0}
+
+/* ---------- Strategic Plan ---------- */
+.plan-section{background:var(--ink);color:var(--w);overflow:hidden}
+.plan-section .layer-shapes{position:absolute;inset:0;opacity:.10;pointer-events:none}
+.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:56px}
+.plan-card{
+  position:relative;background:rgba(250,250,248,0.04);
+  border:1px solid rgba(67,160,71,0.3);border-radius:10px;
+  padding:42px 36px;overflow:hidden;
+  transition:border-color .35s, transform .35s
+}
+.plan-card:hover{border-color:rgba(67,160,71,0.7);transform:translateY(-3px)}
+.plan-card .num{
+  position:absolute;right:-12px;top:-32px;
+  font-family:var(--serif);font-size:11rem;font-weight:600;
+  color:rgba(67,160,71,0.18);line-height:1;pointer-events:none;letter-spacing:-0.04em
+}
+.plan-card .icon{width:38px;height:38px;color:var(--gl);margin-bottom:20px;position:relative;z-index:2}
+.plan-card .icon path{stroke:var(--gl);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:300;stroke-dashoffset:300;transition:stroke-dashoffset 1.6s ease-out}
+.plan-card.in .icon path{stroke-dashoffset:0}
+.plan-card h3{font-family:var(--serif);font-size:1.35rem;margin-bottom:14px;position:relative;z-index:2;color:var(--w)}
+.plan-card .summary{color:rgba(250,250,248,0.78);font-size:.96rem;line-height:1.6;margin-bottom:18px;position:relative;z-index:2}
+.plan-card details{position:relative;z-index:2;border-top:1px solid rgba(250,250,248,0.12);padding-top:14px}
+.plan-card summary{
+  cursor:pointer;font-size:12px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--a);font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center
+}
+.plan-card summary::-webkit-details-marker{display:none}
+.plan-card summary::after{content:"+";font-size:18px;transition:transform .3s}
+.plan-card details[open] summary::after{transform:rotate(45deg)}
+.plan-card details ul{margin:18px 0 0;padding:0;list-style:none}
+.plan-card details li{
+  padding:12px 0;border-bottom:1px solid rgba(250,250,248,0.08);
+  font-size:.92rem;line-height:1.55;color:rgba(250,250,248,0.85)
+}
+.plan-card details li:last-child{border-bottom:0}
+.plan-card details li b{color:var(--gl);font-weight:600;display:block;margin-bottom:2px;font-size:.88rem}
+.plan-cta{display:flex;gap:16px;justify-content:center;margin-top:56px;flex-wrap:wrap}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 28px;border-radius:999px;
+  font-weight:600;font-size:.95rem;letter-spacing:.01em;
+  border:1.5px solid transparent;cursor:pointer;
+  transition:transform .25s, background .25s, border-color .25s, color .25s
+}
+.btn-primary{background:var(--g);color:var(--w)}
+.btn-primary:hover{background:var(--gd);transform:translateY(-2px)}
+.btn-amber{background:var(--a);color:var(--ink)}
+.btn-amber:hover{background:var(--al);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--w);border-color:rgba(250,250,248,0.5)}
+.btn-ghost:hover{border-color:var(--w);background:rgba(250,250,248,0.06);transform:translateY(-2px)}
+
+/* ---------- Evaluación ---------- */
+.eval-row{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:48px;
+  position:relative
+}
+.eval-row::before{
+  content:"";position:absolute;top:30px;left:8%;right:8%;height:1.5px;
+  background:linear-gradient(90deg, transparent, var(--g) 10%, var(--g) 90%, transparent);
+  z-index:0
+}
+.eval-step{position:relative;text-align:center;z-index:1}
+.eval-step .ico{
+  width:60px;height:60px;border-radius:50%;background:var(--off);
+  border:2px solid var(--g);color:var(--g);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 16px;
+  position:relative;z-index:2
+}
+.eval-step h4{font-family:var(--sans);font-size:1.02rem;font-weight:600;margin-bottom:8px}
+.eval-step p{color:var(--mid);font-size:.92rem;line-height:1.55;margin:0}
+.eval-tail{margin-top:48px;color:var(--mid);font-size:1.02rem;line-height:1.7;max-width:760px}
+
+/* ---------- Videos ---------- */
+.videos-section{background:var(--ink);color:var(--w);overflow:hidden}
+.videos-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:56px}
+.video-block{
+  position:relative;border-radius:8px;overflow:hidden;
+  border:1px solid rgba(67,160,71,0.3);
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.6);
+  background:#000;
+  transition:transform .4s ease;
+  transform-style:preserve-3d
+}
+.video-block .badge{
+  position:absolute;top:-12px;left:24px;z-index:3;
+  padding:8px 18px;border-radius:999px;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700
+}
+.video-block.gb .badge{background:var(--g);color:var(--w)}
+.video-block.es .badge{background:var(--a);color:var(--ink)}
+.video-block .player{
+  position:relative;aspect-ratio:16/9;background:#0a0a0a;cursor:pointer;
+  display:flex;align-items:center;justify-content:center
+}
+.video-block .poster{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg, rgba(46,125,50,0.4), rgba(20,20,18,0.85)),
+    repeating-linear-gradient(45deg, #1a2b1a 0 16px, #152215 16px 32px)
+}
+.video-block.es .poster{
+  background:linear-gradient(135deg, rgba(243,156,18,0.35), rgba(20,20,18,0.85)),
+    repeating-linear-gradient(45deg, #2a2419 0 16px, #221d14 16px 32px)
+}
+.video-block .play-btn{
+  position:relative;z-index:2;
+  width:84px;height:84px;border-radius:50%;
+  background:rgba(250,250,248,0.85);
+  display:flex;align-items:center;justify-content:center;
+  animation:playPulse 2.5s ease-in-out infinite;
+  transition:transform .25s, background .25s
+}
+.video-block .play-btn::after{
+  content:"";width:0;height:0;border-style:solid;
+  border-width:14px 0 14px 22px;border-color:transparent transparent transparent var(--ink);
+  margin-left:6px
+}
+.video-block:hover .play-btn{transform:scale(1.1);background:var(--w)}
+@keyframes playPulse{
+  0%,100%{opacity:.85;box-shadow:0 0 0 0 rgba(250,250,248,.4)}
+  50%{opacity:1;box-shadow:0 0 0 18px rgba(250,250,248,0)}
+}
+.video-block .meta{padding:24px 28px;background:rgba(250,250,248,0.02)}
+.video-block .meta h3{font-family:var(--serif);font-size:1.25rem;color:var(--w);margin-bottom:8px}
+.video-block .meta p{color:rgba(250,250,248,0.7);font-size:.92rem;line-height:1.55;margin:0}
+.video-block .placeholder-note{
+  position:absolute;left:14px;bottom:14px;z-index:2;
+  font-family:ui-monospace,Menlo,monospace;font-size:10px;
+  color:rgba(250,250,248,0.55);
+  background:rgba(0,0,0,.5);padding:5px 8px;border-radius:3px
+}
+.videos-quote{
+  text-align:center;margin-top:56px;
+  font-family:var(--serif);font-style:italic;font-size:1.25rem;
+  color:rgba(250,250,248,0.85)
+}
+.videos-link-jump{
+  display:flex;justify-content:center;margin-top:24px;
+  color:rgba(250,250,248,0.7);font-size:.95rem
+}
+.videos-link-jump a{display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid rgba(250,250,248,0.3);padding-bottom:2px}
+.videos-link-jump a:hover{color:var(--gl);border-color:var(--gl)}
+
+/* ---------- Junta Directiva ---------- */
+.junta-section{background:var(--w)}
+.junta-intro{text-align:center;max-width:720px;margin:0 auto 56px;color:var(--mid);font-size:1.02rem;line-height:1.7}
+.junta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px}
+.junta-card{
+  text-align:center;
+  transition:transform .35s
+}
+.junta-card:hover{transform:translateY(-4px)}
+.junta-card.featured .photo{transform:scale(1.04);border-color:var(--g);border-width:2px}
+.junta-card .photo{
+  width:200px;height:200px;border-radius:50%;overflow:hidden;
+  margin:0 auto 22px;border:1.5px solid var(--gl);
+  background:var(--g);color:var(--w);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:4.4rem;font-weight:600;
+  filter:grayscale(1);transition:filter .6s, transform .35s, border-color .35s, box-shadow .35s
+}
+.junta-card:hover .photo{filter:grayscale(0);box-shadow:0 22px 50px -25px rgba(46,125,50,.5)}
+.junta-card .name{font-family:var(--serif);font-size:1.25rem;font-weight:700;color:var(--ink);margin-bottom:8px}
+.junta-card .role{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--g);font-weight:600}
+.junta-card .deco{
+  width:0;height:1.5px;background:var(--g);margin:14px auto 0;
+  transition:width .6s ease-out .2s
+}
+.junta-card.in .deco{width:32px}
+.junta-foot{text-align:center;margin-top:64px;color:var(--mid);font-size:.92rem;font-style:italic}
+
+/* ---------- Organigrama ---------- */
+.org-section{background:var(--ink);color:var(--w);overflow:hidden;padding:120px 32px}
+.org-section .layer-shapes{position:absolute;inset:0;pointer-events:none;opacity:1}
+.org-section .blob{position:absolute;border-radius:50%;filter:blur(100px);opacity:.10}
+.org-intro{text-align:center;max-width:760px;margin:0 auto 32px;color:rgba(250,250,248,0.85);font-size:1.02rem;line-height:1.7}
+.org-section h2{text-align:center}
+.org-section .section-tag{text-align:center}
+.org-filters{display:flex;justify-content:center;gap:10px;margin:48px 0 36px;flex-wrap:wrap}
+.org-filter{
+  background:rgba(250,250,248,0.05);border:1px solid rgba(250,250,248,0.15);
+  color:var(--w);font-size:13px;font-weight:500;
+  padding:9px 20px;border-radius:999px;cursor:pointer;
+  transition:background .25s, border-color .25s, color .25s
+}
+.org-filter:hover{background:rgba(250,250,248,0.1);border-color:rgba(67,160,71,0.5)}
+.org-filter.active{background:var(--g);border-color:var(--g);color:var(--w)}
+
+.org-canvas{
+  position:relative;max-width:1400px;margin:0 auto;
+  perspective:1500px;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(46,125,50,0.12), transparent 60%),
+    radial-gradient(ellipse at 75% 80%, rgba(243,156,18,0.08), transparent 60%);
+  border-radius:16px;
+  padding:48px 32px;
+}
+.org-inner{transform-style:preserve-3d;transition:transform .25s ease-out}
+.org-row{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-bottom:36px;position:relative;z-index:2}
+.org-row.cols-2{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.org-section-label{
+  text-align:center;
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  color:rgba(250,250,248,0.55);font-weight:600;margin-bottom:18px;
+  display:flex;align-items:center;justify-content:center;gap:8px
+}
+.org-section-label svg{width:16px;height:16px;color:var(--gl)}
+.org-node{
+  background:rgba(250,250,248,0.04);
+  border:1px solid rgba(67,160,71,0.3);
+  border-radius:10px;padding:14px 18px;
+  min-width:170px;max-width:240px;
+  position:relative;cursor:default;
+  transition:transform .25s, border-color .25s, box-shadow .25s, opacity .35s, background .25s;
+  opacity:0;transform:translateY(14px);
+}
+.org-canvas.in .org-node{opacity:1;transform:translateY(0)}
+.org-node:hover{
+  transform:translateY(-6px);
+  border-color:rgba(67,160,71,0.9);
+  background:rgba(67,160,71,0.08);
+  box-shadow:0 20px 40px -20px rgba(46,125,50,.5);
+}
+.org-node.dim{opacity:.2}
+.org-node.dim-soft{opacity:.5}
+.org-node.junta{border-top:2px solid var(--a)}
+.org-node.coord{
+  background:rgba(46,125,50,0.18);border-color:rgba(67,160,71,0.6);
+  min-width:240px;padding:18px 22px
+}
+.org-node .role{
+  font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;
+  color:var(--gl);font-weight:600;margin-bottom:6px
+}
+.org-node.junta .role{color:var(--a)}
+.org-node .person{font-family:var(--serif);font-size:.95rem;font-weight:600;color:var(--w);line-height:1.3}
+.org-node.coord .person{font-size:1.05rem}
+.org-node .sub{font-size:11px;color:rgba(250,250,248,0.6);margin-top:6px;line-height:1.4}
+
+/* Bridge */
+.bridge-wrap{position:relative;display:flex;align-items:center;gap:0;margin:24px 0 36px}
+.bridge-wrap .org-node{flex:0 0 280px;text-align:center}
+.bridge-line{
+  flex:1;height:2px;position:relative;
+  background:linear-gradient(90deg, var(--g), var(--gl), var(--a), var(--gl), var(--g));
+  background-size:200% 100%;
+  animation:bridgeFlow var(--bridge-flow-dur,4s) linear infinite;
+  margin:0 -2px;
+  border-radius:2px
+}
+@keyframes bridgeFlow{
+  0%{background-position:200% 50%}
+  100%{background-position:-200% 50%}
+}
+.bridge-pulse{
+  position:absolute;top:-4px;
+  width:10px;height:10px;border-radius:50%;background:var(--a);
+  box-shadow:0 0 16px var(--a);
+  animation:bridgePulse var(--bridge-pulse-dur,3s) ease-in-out infinite alternate
+}
+@keyframes bridgePulse{
+  0%{left:0%}
+  100%{left:calc(100% - 10px)}
+}
+
+/* SVG connectors */
+.org-connectors{
+  position:absolute;inset:0;pointer-events:none;z-index:1;
+  width:100%;height:100%
+}
+.org-connectors path{
+  stroke:rgba(67,160,71,0.5);stroke-width:1.5;fill:none;
+  stroke-dasharray:600;stroke-dashoffset:600;
+  transition:stroke-dashoffset 1s ease-out
+}
+.org-canvas.in .org-connectors path{stroke-dashoffset:0}
+
+/* Two columns layout (España / Guinea Bissau) */
+.org-orillas{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:48px;position:relative;z-index:2}
+.org-orilla h4{
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  color:rgba(250,250,248,0.55);font-weight:600;margin-bottom:18px;
+  display:flex;align-items:center;justify-content:center;gap:8px;text-align:center;
+  font-family:var(--sans)
+}
+.org-orilla.es h4{color:var(--a)}
+.org-orilla.gb h4{color:var(--gl)}
+.org-orilla h4 svg{width:16px;height:16px}
+.org-orilla .nodes{display:flex;flex-direction:column;gap:14px;align-items:center}
+.org-orilla .org-node{width:100%;max-width:340px}
+
+.org-sub-areas{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+  margin-top:24px
+}
+.org-sub-areas .org-node{padding:11px 13px;min-width:0;font-size:.85rem}
+.org-sub-areas .org-node .role{font-size:9px;letter-spacing:1.2px}
+.org-sub-areas .org-node .person{font-size:.82rem}
+
+/* Counters */
+.org-counters{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:24px;
+  margin-top:80px;padding-top:48px;
+  border-top:1px solid rgba(250,250,248,0.1)
+}
+.org-counter{text-align:center}
+.org-counter .num{
+  font-family:var(--serif);font-size:clamp(2.5rem,5vw,4rem);
+  color:var(--gl);line-height:1;font-weight:600;letter-spacing:-0.03em
+}
+.org-counter .lab{
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(250,250,248,0.6);margin-top:10px;font-weight:600
+}
+.org-foot{
+  text-align:center;margin-top:56px;
+  font-family:var(--serif);font-style:italic;font-size:1.15rem;
+  color:rgba(250,250,248,0.7);max-width:680px;margin-left:auto;margin-right:auto
+}
+
+/* ---------- Allies ---------- */
+.allies-marquee{
+  margin-top:48px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image:linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent)
+}
+.allies-track{display:flex;gap:64px;animation:allyScroll 40s linear infinite;width:max-content}
+.allies-marquee:hover .allies-track{animation-play-state:paused}
+.ally-logo{
+  flex:0 0 auto;
+  width:160px;height:80px;
+  background:var(--w);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--mid);
+  border:1px solid rgba(20,20,18,0.06);
+  filter:grayscale(1);opacity:.6;
+  transition:filter .35s, opacity .35s
+}
+.ally-logo:hover{filter:grayscale(0);opacity:1}
+@keyframes allyScroll{
+  to{transform:translateX(-50%)}
+}
+
+/* ---------- Final CTA ---------- */
+.cta-section{
+  min-height:88vh;
+  background:var(--ink);color:var(--w);
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;overflow:hidden;padding:120px 48px
+}
+.cta-section .layer-shapes{position:absolute;inset:0;pointer-events:none;opacity:.12}
+.cta-section .content{position:relative;z-index:2;max-width:780px}
+.cta-section h2{font-size:clamp(2.5rem,5vw,4.2rem);color:var(--w);margin-bottom:24px;text-wrap:balance}
+.cta-section p.sub{font-size:1.15rem;color:rgba(250,250,248,0.85);margin-bottom:40px;line-height:1.6}
+.cta-buttons{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:24px}
+.cta-foot{font-size:.85rem;color:rgba(250,250,248,0.6);font-style:italic}
+
+/* ---------- Footer ---------- */
+footer{
+  background:#0c0c0a;color:rgba(250,250,248,0.7);
+  padding:80px 48px 40px
+}
+.footer-grid{
+  display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;
+  max-width:1240px;margin:0 auto 48px
+}
+.footer-grid h5{
+  font-family:var(--sans);font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--w);font-weight:600;margin-bottom:18px
+}
+.footer-grid img{height:38px;margin-bottom:16px}
+.footer-grid p{font-size:.92rem;line-height:1.6;color:rgba(250,250,248,0.6);margin:0 0 14px}
+.footer-grid ul{list-style:none;margin:0;padding:0}
+.footer-grid li{margin-bottom:10px;font-size:.92rem}
+.footer-grid a:hover{color:var(--gl)}
+.footer-bottom{
+  max-width:1240px;margin:0 auto;padding-top:24px;
+  border-top:1px solid rgba(250,250,248,0.08);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;
+  font-size:.82rem;color:rgba(250,250,248,0.5)
+}
+
+/* ---------- Mini side nav ---------- */
+.side-nav{
+  position:fixed;right:32px;top:50%;transform:translateY(-50%);
+  z-index:90;display:flex;flex-direction:column;gap:14px
+}
+.side-nav a{
+  display:block;width:10px;height:10px;border-radius:50%;
+  background:rgba(20,20,18,0.18);border:1.5px solid transparent;
+  transition:background .25s, border-color .25s, transform .25s;
+  position:relative
+}
+.side-nav a.dark-bg{background:rgba(250,250,248,0.25)}
+.side-nav a.active{background:var(--g);transform:scale(1.3)}
+.side-nav a span{
+  position:absolute;right:18px;top:50%;transform:translateY(-50%);
+  white-space:nowrap;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+  background:var(--ink);color:var(--w);padding:5px 10px;border-radius:4px;
+  opacity:0;pointer-events:none;transition:opacity .2s;font-weight:600
+}
+.side-nav a:hover span{opacity:1}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px){
+  .nav{padding:14px 24px}
+  .nav.scrolled{padding:10px 24px}
+  .nav-links{display:none}
+  .nav-burger{display:block}
+  section{padding:80px 24px}
+  .hero{padding:140px 24px 80px;min-height:80vh}
+  .history-grid,.how-grid,.videos-grid,.plan-grid{grid-template-columns:1fr;gap:48px}
+  .mvv-grid{grid-template-columns:1fr;gap:24px}
+  .values-detail{grid-template-columns:1fr}
+  .principles{grid-template-columns:1fr;gap:18px}
+  .eval-row{grid-template-columns:1fr;gap:32px}
+  .eval-row::before{display:none}
+  .junta-grid{grid-template-columns:repeat(2,1fr);gap:32px}
+  .org-orillas{grid-template-columns:1fr;gap:48px}
+  .bridge-wrap{flex-direction:column;gap:18px;align-items:center}
+  .bridge-wrap .org-node{flex:0 0 auto;width:100%;max-width:340px}
+  .bridge-wrap .bridge-line{flex:0 0 auto;width:2px;height:80px;background:linear-gradient(180deg,var(--g),var(--gl),var(--a),var(--gl),var(--g));background-size:100% 200%;animation:bridgeFlowV 4s linear infinite}
+  @keyframes bridgeFlowV{0%{background-position:50% 200%}100%{background-position:50% -200%}}
+  .bridge-pulse{top:auto;left:-4px!important;animation:bridgePulseV 3s ease-in-out infinite alternate}
+  @keyframes bridgePulseV{0%{top:0%}100%{top:calc(100% - 10px)}}
+  .org-sub-areas{grid-template-columns:repeat(2,1fr)}
+  .org-counters{grid-template-columns:repeat(2,1fr);gap:24px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .side-nav{display:none}
+  .footer-bottom{flex-direction:column}
+}
+@media (max-width: 600px){
+  .hero h1{font-size:2.2rem}
+  .junta-grid{grid-template-columns:1fr}
+  .org-sub-areas{grid-template-columns:1fr}
+  .org-counters{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+}
+
+/* prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .reveal{opacity:1;transform:none}
+  .org-canvas .org-node{opacity:1;transform:none}
+  .hero h1 .word{opacity:1;transform:none}
+  .bridge-line{animation:none;background:var(--gl)}
+  .bridge-pulse{display:none}
+  .allies-track{animation:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll progress -->
+<div class="scroll-progress" id="progress"></div>
+
+<!-- ============== NAV ============== -->
+<nav class="nav" id="topnav">
+  <a href="index.html" class="logo">
+    <img src="img/soguiba-logo-white.png" alt="Soguiba" />
+  </a>
+  <div class="nav-links">
+    <a href="index.html#esencia">Inicio</a>
+    <a href="quienes-somos.html" class="active">Quiénes somos</a>
+    <a href="proyectos.html">Proyectos</a>
+    <a href="index.html#anumbara">Anúmbara</a>
+    <a href="index.html#actualidad">Actualidad</a>
+    <a href="index.html#contacto">Contacto</a>
+    <a href="#unete" class="nav-cta">Hazte socio/a</a>
+  </div>
+  <button class="nav-burger" aria-label="Menú">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+</nav>
+
+<!-- ============== HERO ============== -->
+<section class="hero" id="hero">
+  <div class="layer bg-img" data-parallax="0.3"></div>
+  <div class="layer organic" data-parallax="0.5">
+    <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0">
+      <path d="M-100,420 Q300,300 600,500 T1500,440" stroke="#43a047" stroke-width="2" fill="none" opacity="0.5"/>
+      <path d="M-100,560 Q400,420 700,640 T1500,580" stroke="#43a047" stroke-width="2" fill="none" opacity="0.35"/>
+      <ellipse cx="200" cy="200" rx="180" ry="60" fill="#43a047" opacity="0.18" transform="rotate(-12 200 200)"/>
+      <ellipse cx="1200" cy="700" rx="220" ry="80" fill="#43a047" opacity="0.15" transform="rotate(18 1200 700)"/>
+      <path d="M1100,150 Q1180,90 1260,130 Q1290,210 1230,260 Q1140,260 1100,210 Z" fill="#43a047" opacity="0.2"/>
+      <path d="M150,650 Q230,580 320,620 Q360,710 290,760 Q200,760 150,710 Z" fill="#43a047" opacity="0.18"/>
+    </svg>
+  </div>
+  <div class="content">
+    <div class="eyebrow" style="font-size: 14px">Quiénes somos</div>
+    <h1 id="heroTitle">
+      <span class="word">Más</span>
+      <span class="word">de</span>
+      <span class="word">veinte</span>
+      <span class="word">años</span>
+      <br>
+      <span class="word">tendiendo</span>
+      <span class="word underlined">
+        <span class="word-inner">puentes</span>
+        <svg viewBox="0 0 200 14" preserveAspectRatio="none"><path d="M2,8 Q50,2 100,7 T198,6"/></svg>
+      </span>
+    </h1>
+    <p class="sub">Soguiba nació en Cáceres en 2001 con una convicción: que la solidaridad no es caridad, es justicia. Desde entonces caminamos junto a las comunidades rurales de Guinea Bissau y junto a la sociedad extremeña, construyendo un puente humano que ya tiene más de dos décadas.</p>
+  </div>
+  <div class="scroll-indicator">
+    <span>Desliza</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<!-- ============== HISTORIA ============== -->
+<section class="off" id="historia">
+  <div class="wrap">
+    <div class="history-grid">
+      <div class="reveal from-left">
+        <div class="section-tag" style="font-size: 14px">Nuestra historia</div>
+        <h2>Desde 2001,<br>un puente humano <em>entre dos orillas</em></h2>
+        <div class="big-num" data-count="24" data-suffix="+">25</div>
+        <div class="big-num-label">
+
+AÑOS ACOMPAÑANDO</div>
+      </div>
+      <div class="reveal from-right">
+        <p>Soguiba inició su andadura en el año 2001 en la ciudad de Cáceres, fruto del deseo de un grupo de personas comprometidas con la solidaridad de construir un puente humano entre España y Guinea Bissau. Desde nuestros comienzos, hemos dedicado esfuerzos incansables a fomentar la justicia social y mejorar la calidad de vida de las comunidades rurales guineanas, así como a sensibilizar a la sociedad española sobre las realidades y desafíos que enfrentan estas comunidades.</p>
+        <p>A lo largo de más de dos décadas, nuestra organización ha evolucionado significativamente, adaptándose continuamente a las necesidades cambiantes y a los desafíos globales. Hemos ampliado nuestra acción desde proyectos centrados inicialmente en cooperación directa hacia iniciativas educativas y de sensibilización más amplias.</p>
+        <p>Ejemplos de nuestro compromiso incluyen la creación del Espacio Solidario Anúmbara en Cáceres, un lugar de encuentro y promoción del comercio justo, así como proyectos educativos que impulsan una ciudadanía global crítica y empoderada. En Guinea Bissau, nuestras iniciativas se enfocan especialmente en el desarrollo sostenible, la salud comunitaria y el empoderamiento de las mujeres, reconociendo en ellas pilares fundamentales para construir un futuro más justo y equitativo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TIMELINE ============== -->
+<section id="trayectoria">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-tag" style="font-size: 14px">Trayectoria</div>
+      <h2>Más de dos décadas<br>de <em>caminos compartidos</em></h2>
+    </div>
+    <div class="timeline-wrap reveal">
+      <div class="timeline-line"></div>
+      <div class="timeline-track" id="timelineTrack">
+        <div class="milestone"><span class="dot"></span><div class="year">2001</div><h4>Fundación</h4><p>Un grupo de personas comprometidas en Cáceres pone en marcha Soguiba para tender un puente entre Extremadura y Guinea Bissau.</p></div>
+        <div class="milestone"><span class="dot"></span><div class="year">2003–2010</div><h4>Primera década en el terreno</h4><p>Consolidación de los primeros proyectos de cooperación directa en comunidades rurales guineanas.</p></div>
+        <div class="milestone"><span class="dot"></span><div class="year">2012</div><h4>Espacio Anúmbara</h4><p>Abrimos en Cáceres el Espacio Solidario Anúmbara, punto de encuentro, comercio justo y financiación de los proyectos sobre el terreno.</p></div>
+        <div class="milestone"><span class="dot"></span><div class="year">2015</div><h4>Educación para la Ciudadanía Global</h4><p>Lanzamos programas en centros escolares extremeños para construir ciudadanía crítica desde la infancia.</p></div>
+        <div class="milestone"><span class="dot"></span><div class="year">2020–2024</div><h4>Mujeres y soberanía alimentaria</h4><p>Reorientación estratégica hacia el liderazgo femenino, las huertas comunitarias y la salud comunitaria.</p></div>
+        <div class="milestone"><span class="dot"></span><div class="year">2024</div><h4>Plan Estratégico 2025–2030</h4><p>Tras un año de reflexión colectiva acompañada por el Colectivo CALA, aprobamos el plan que guiará nuestros próximos cinco años.</p></div>
+        <div class="milestone"><span class="dot"></span><div class="year">2025</div><h4>Mirando adelante</h4><p>Empezamos a desplegar el plan estratégico, construyendo la organización que queremos ser.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== MVV ============== -->
+<section class="off" id="mision-vision-valores">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center;max-width:760px;margin:0 auto 48px">
+      <div class="section-tag" style="font-size: 14px">Razón de ser</div>
+      <h2>Por qué hacemos<br><em>lo que hacemos</em></h2>
+    </div>
+    <div class="mvv-grid">
+      <article class="mvv-card reveal">
+        <div class="icon">
+          <svg viewBox="0 0 60 60"><path d="M10 38 Q18 22 30 32 Q42 22 50 38"/><path d="M14 38 L14 48"/><path d="M46 38 L46 48"/><circle cx="30" cy="32" r="3"/></svg>
+        </div>
+        <div class="label">Misión</div>
+        <h3>Construir alianzas, no caridad</h3>
+        <p>Soguiba se une y establece alianzas con las comunidades rurales de Guinea Bissau para construir una sociedad más justa, equitativa y sostenible, promoviendo, a través de la participación —allí y en España—, una ciudadanía crítica y empoderada.</p>
+      </article>
+      <article class="mvv-card reveal">
+        <div class="icon">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="10"/><circle cx="30" cy="30" r="3"/><path d="M30 8 L30 14"/><path d="M30 46 L30 52"/><path d="M8 30 L14 30"/><path d="M46 30 L52 30"/><path d="M14 14 L18 18"/><path d="M42 42 L46 46"/></svg>
+        </div>
+        <div class="label">Visión</div>
+        <h3>Asentadas en los territorios</h3>
+        <p>Ser una organización asentada en los territorios, cercana y referente en cooperación. Una organización que impulsa la mejora de los derechos humanos y la calidad de vida de colectivos y comunidades en situación de vulnerabilidad, con equipos capacitados y comprometidos con nuestra misión.</p>
+      </article>
+      <article class="mvv-card reveal">
+        <div class="icon">
+          <svg viewBox="0 0 60 60"><path d="M30 50 C 12 36, 8 22, 18 16 C 24 13, 30 18, 30 24 C 30 18, 36 13, 42 16 C 52 22, 48 36, 30 50 Z"/><circle cx="22" cy="28" r="2.5"/><circle cx="30" cy="32" r="2.5"/><circle cx="38" cy="28" r="2.5"/></svg>
+        </div>
+        <div class="label">Valores</div>
+        <h3>Tres pilares irrenunciables</h3>
+        <p>Solidaridad, Derechos Humanos y Justicia Social. Tres pilares que sostienen toda nuestra acción, dentro y fuera de la organización.</p>
+      </article>
+    </div>
+
+    <div class="values-detail">
+      <div class="value-mini reveal">
+        <div class="ico"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="18" cy="18" r="14"/><circle cx="12" cy="14" r="3"/><circle cx="24" cy="14" r="3"/><circle cx="18" cy="24" r="3"/><path d="M12 17 L16 21 M24 17 L20 21"/></svg></div>
+        <div><h4>Solidaridad</h4><p>Un grupo de personas que de manera voluntaria se unen para cooperar con el objetivo común del desarrollo humano en Guinea Bissau.</p></div>
+      </div>
+      <div class="value-mini reveal">
+        <div class="ico"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="18" cy="18" r="14"/><circle cx="12" cy="14" r="2.5"/><circle cx="24" cy="14" r="2.5"/><circle cx="18" cy="22" r="2.5"/><path d="M14 16 L17 21 M22 16 L19 21 M14 22 L22 22"/></svg></div>
+        <div><h4>Derechos Humanos</h4><p>Para Soguiba las personas están en el centro y los Derechos Humanos son la guía de su acción.</p></div>
+      </div>
+      <div class="value-mini reveal">
+        <div class="ico"><svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 L18 30"/><path d="M10 30 L26 30"/><path d="M18 9 L8 18 M18 9 L28 18"/><path d="M5 18 Q8 22 11 18 Q8 14 5 18 Z"/><path d="M25 18 Q28 22 31 18 Q28 14 25 18 Z"/></svg></div>
+        <div><h4>Justicia Social</h4><p>Que todas las personas tengan una vida digna, con igualdad de oportunidades y acceso a recursos sociales y económicos básicos.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CÓMO TRABAJAMOS ============== -->
+<section id="metodologia">
+  <div class="wrap">
+    <div class="how-grid">
+      <div class="how-img reveal from-left" id="howImg"></div>
+      <div class="how-text reveal from-right">
+        <div class="section-tag" style="font-size: 14px">Nuestra forma de hacer</div>
+        <h2>Lo colectivo,<br>como <em>punto de partida</em></h2>
+        <p>En Soguiba creemos profundamente en la fuerza de lo colectivo y en la construcción compartida. Por eso, nuestro trabajo se basa en metodologías participativas, donde las personas y comunidades con las que colaboramos —tanto en Guinea Bissau como en España— no son simples beneficiarias, sino protagonistas activas en la transformación de su realidad. Nos esforzamos en crear espacios de formación, escucha y diálogo que fortalezcan capacidades, empoderen voces y generen soluciones ajustadas a los contextos locales.</p>
+        <p>Tejer redes de colaboración es parte esencial de nuestro ADN. Trabajamos estrechamente con organizaciones locales e internacionales, así como con entidades públicas, convencidas de que el cambio se multiplica cuando se hace en alianza. Estas relaciones no solo amplifican nuestro impacto: enriquecen nuestros aprendizajes y fortalecen nuestra incidencia política y social.</p>
+        <p>La transparencia es uno de nuestros compromisos irrenunciables. Nos tomamos muy en serio la rendición de cuentas y la mejora continua, evaluando regularmente nuestro trabajo y garantizando una gestión ética y responsable de los recursos. Solo desde la coherencia y el cuidado interno podemos seguir construyendo el mundo que soñamos.</p>
+      </div>
+    </div>
+
+    <div class="principles">
+      <div class="principle reveal">
+        <div class="ico"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="14" cy="9" r="3.5"/><path d="M7 22 C 7 17, 11 15, 14 15 C 17 15, 21 17, 21 22"/><circle cx="6" cy="11" r="2.5"/><circle cx="22" cy="11" r="2.5"/></svg></div>
+        <div><h5>Participación</h5><p>Las comunidades como protagonistas, no como destinatarias.</p></div>
+      </div>
+      <div class="principle reveal">
+        <div class="ico"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="14" r="4"/><circle cx="19" cy="14" r="4"/><path d="M13 14 L15 14"/></svg></div>
+        <div><h5>Alianza</h5><p>El cambio se multiplica cuando se hace en red.</p></div>
+      </div>
+      <div class="principle reveal">
+        <div class="ico"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="14" cy="14" r="9"/><path d="M14 9 L14 14 L18 16"/></svg></div>
+        <div><h5>Transparencia</h5><p>Rendición de cuentas y mejora continua como compromisos diarios.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PLAN ESTRATÉGICO ============== -->
+<section class="plan-section dark" id="plan-estrategico">
+  <div class="layer-shapes">
+    <svg width="100%" height="100%" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1440 900">
+      <circle cx="200" cy="200" r="180" fill="#2e7d32" opacity="0.3"/>
+      <circle cx="1200" cy="700" r="220" fill="#2e7d32" opacity="0.25"/>
+      <rect x="600" y="100" width="100" height="100" fill="#2e7d32" opacity="0.2" transform="rotate(20 650 150)"/>
+    </svg>
+  </div>
+  <div class="wrap" style="position:relative;z-index:2">
+    <div class="reveal" style="text-align:center;max-width:780px;margin:0 auto 24px">
+      <div class="section-tag" style="font-size: 14px">Plan Estratégico 2025–2030</div>
+      <h2>Hacia dónde <em>caminamos</em></h2>
+      <p style="color:rgba(250,250,248,0.85);font-size:1.05rem;line-height:1.7;margin:0">Durante 2024 desarrollamos un proceso de reflexión, debate y toma de decisiones acompañado por el Colectivo CALA, en el que participaron Junta Directiva y personal técnico, manteniendo informado al voluntariado. De ese proceso nació el plan que nos guiará durante los próximos cinco años, vertebrado en cuatro líneas estratégicas.</p>
+    </div>
+
+    <div class="plan-grid">
+      <article class="plan-card reveal">
+        <div class="num">01</div>
+        <div class="icon"><svg viewBox="0 0 38 38" fill="none"><path d="M6 32 L6 14 L19 6 L32 14 L32 32 Z"/><path d="M14 32 L14 22 L24 22 L24 32"/></svg></div>
+        <h3>Promoción de la participación y de una ciudadanía crítica y empoderada</h3>
+        <p class="summary">Fomentando espacios de reflexión y fortalecimiento de capacidades.</p>
+        <details>
+          <summary>Ver detalle</summary>
+          <ul>
+            <li><b>Promover la sensibilidad ante las injusticias</b>Impulsar la defensa de los Derechos Humanos desde la solidaridad, el respeto y la igualdad, visibilizando el impacto de las propias acciones.</li>
+            <li><b>Ofrecer espacios de escucha, reflexión e intercambio</b>Espacios libres de juicio que dan a conocer las diversas realidades de los territorios donde trabajamos.</li>
+            <li><b>Fortalecer capacidades y reforzar conocimientos</b>Incentivando la búsqueda de información veraz y el cuestionamiento de los modelos impuestos.</li>
+            <li><b>Impulsar acciones contra los discursos de odio</b>Incidiendo en la responsabilidad ciudadana para su prevención.</li>
+          </ul>
+        </details>
+      </article>
+
+      <article class="plan-card reveal">
+        <div class="num">02</div>
+        <div class="icon"><svg viewBox="0 0 38 38" fill="none"><circle cx="19" cy="19" r="13"/><path d="M6 19 L32 19"/><path d="M19 6 Q26 12 26 19 Q26 26 19 32 Q12 26 12 19 Q12 12 19 6"/></svg></div>
+        <h3>Construcción de una sociedad más justa, equitativa y sostenible</h3>
+        <p class="summary">Concienciando sobre retos globales y promoviendo el desarrollo comunitario.</p>
+        <details>
+          <summary>Ver detalle</summary>
+          <ul>
+            <li><b>Concienciar sobre la crisis ecosocial</b>Abordar los retos globales y cómo afectan a la vida de las personas, especialmente en Guinea Bissau.</li>
+            <li><b>Promover el desarrollo comunitario</b>Fomentar la participación de colectivos vulnerables en espacios relevantes y de toma de decisiones, con acciones accesibles, inclusivas y en igualdad de condiciones.</li>
+            <li><b>Impulsar el liderazgo social</b>Especialmente el de las mujeres, mediante estrategias de fortalecimiento e impulso.</li>
+            <li><b>Mejorar la calidad de vida</b>Promover acciones directas con perspectiva de género, inclusión y accesibilidad.</li>
+          </ul>
+        </details>
+      </article>
+
+      <article class="plan-card reveal">
+        <div class="num">03</div>
+        <div class="icon"><svg viewBox="0 0 38 38" fill="none"><circle cx="11" cy="19" r="6"/><circle cx="27" cy="19" r="6"/><path d="M17 19 L21 19"/></svg></div>
+        <h3>Trabajo en alianza</h3>
+        <p class="summary">Estableciendo vínculos y colaboraciones con otras organizaciones.</p>
+        <details>
+          <summary>Ver detalle</summary>
+          <ul>
+            <li><b>Mapear relaciones</b>Identificar las relaciones con otras organizaciones e instituciones en los territorios donde Soguiba está presente.</li>
+            <li><b>Fomentar la colaboración</b>Participar en espacios de trabajo conjunto, compartir experiencias y formar redes de apoyo mutuo.</li>
+            <li><b>Impulsar estrategias de articulación</b>Establecer y fortalecer vínculos con asociaciones e instituciones, ya conocidas y nuevas.</li>
+            <li><b>Integrar espacios de toma de decisión</b>Coordinadoras de ONGs, consejos locales y otros espacios de participación política.</li>
+          </ul>
+        </details>
+      </article>
+
+      <article class="plan-card reveal">
+        <div class="num">04</div>
+        <div class="icon"><svg viewBox="0 0 38 38" fill="none"><rect x="7" y="11" width="24" height="20" rx="2"/><path d="M7 17 L31 17"/><path d="M13 11 L13 7 L25 7 L25 11"/></svg></div>
+        <h3>Coherencia interna y sostenibilidad económica</h3>
+        <p class="summary">Fortaleciendo la organización y diversificando fuentes de financiación.</p>
+        <details>
+          <summary>Ver detalle</summary>
+          <ul>
+            <li><b>Diversificar la financiación</b>Captación de socios y socias donantes y financiación privada coherente con nuestra misión, visión y valores.</li>
+            <li><b>Optimizar recursos</b>Priorizando proveedores locales y éticos para contribuir al impulso de la economía local.</li>
+            <li><b>Evaluación interna y mejora continua</b>Espacios periódicos de debate y autoevaluación.</li>
+            <li><b>Fortalecer a las personas que forman Soguiba</b>Espacios de participación interna, formación y compromiso compartido con la misión.</li>
+          </ul>
+        </details>
+      </article>
+    </div>
+
+    <div class="plan-cta">
+      <a class="btn btn-primary" href="#">Descargar Plan Estratégico (PDF)</a>
+      <a class="btn btn-ghost" href="#">Conocer el proceso de elaboración</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== EVALUACIÓN ============== -->
+<section class="off" id="evaluacion">
+  <div class="wrap">
+    <div class="reveal" style="max-width:760px">
+      <div class="section-tag" style="font-size: 14px">Evaluación y seguimiento</div>
+      <h2>Sin evaluación,<br><em>no hay aprendizaje</em></h2>
+    </div>
+    <div class="eval-row reveal">
+      <div class="eval-step">
+        <div class="ico"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="18" height="18" rx="2"/><path d="M5 11 L23 11"/><path d="M9 17 L13 17 M9 19 L11 19"/></svg></div>
+        <h4>Desarrollo de sistemas</h4>
+        <p>Crear sistemas de seguimiento y evaluación del plan estratégico.</p>
+      </div>
+      <div class="eval-step">
+        <div class="ico"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 4 L14 24"/><path d="M5 24 L23 24"/><path d="M7 24 L7 16 L11 16 L11 24"/><path d="M13 24 L13 11 L17 11 L17 24"/><path d="M19 24 L19 18 L23 18 L23 24"/></svg></div>
+        <h4>Planificaciones operativas</h4>
+        <p>Desarrollar planificaciones operativas anuales.</p>
+      </div>
+      <div class="eval-step">
+        <div class="ico"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="14" cy="14" r="9"/><path d="M14 6 L14 14 L20 18"/></svg></div>
+        <h4>Alineación de proyectos</h4>
+        <p>Encaminar acciones a corto plazo hacia las líneas estratégicas.</p>
+      </div>
+    </div>
+    <p class="eval-tail reveal">Durante 2025 continuamos desarrollando los sistemas de seguimiento y evaluación del plan, con planificaciones operativas anuales y alineando cada proyecto y acción con las líneas estratégicas marcadas. Porque sin evaluación no hay aprendizaje, y sin aprendizaje no hay cambio sostenido.</p>
+  </div>
+</section>
+
+<!-- ============== VIDEOS ============== -->
+<section class="videos-section dark" id="videos">
+  <div class="layer-shapes">
+    <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+      <path d="M0,300 Q360,200 720,320 T1440,280" stroke="#2e7d32" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <ellipse cx="200" cy="700" rx="200" ry="60" fill="#2e7d32" opacity="0.4"/>
+      <ellipse cx="1240" cy="200" rx="180" ry="60" fill="#2e7d32" opacity="0.4"/>
+    </svg>
+  </div>
+  <div class="wrap" style="position:relative;z-index:2">
+    <div class="reveal" style="text-align:center;max-width:780px;margin:0 auto">
+      <div class="section-tag" style="font-size: 14px">Conócenos en primera persona</div>
+      <h2>Las dos orillas<br>de un <em>mismo puente</em></h2>
+      <p style="color:rgba(250,250,248,0.85);font-size:1.05rem;line-height:1.7;margin:0">Soguiba existe porque hay personas a ambos lados del Atlántico que la sostienen cada día. Aquí puedes conocerlas en primera persona: el equipo local en Guinea Bissau y el equipo en España.</p>
+    </div>
+
+    <div class="videos-grid">
+      <div class="video-block gb reveal" data-video="videos/equipo-guinea-bissau.mp4">
+        <div class="badge">Guinea Bissau</div>
+        <div class="player">
+          <div class="poster"></div>
+          <div class="play-btn"></div>
+          <div class="placeholder-note">videos/equipo-guinea-bissau.mp4 · poster: equipo-guinea-bissau-poster.jpg</div>
+        </div>
+        <div class="meta">
+          <h3>Las personas que sostienen el trabajo sobre el terreno</h3>
+          <p>Conoce al equipo local que coordina, acompaña y hace posible cada proyecto en las comunidades rurales de Guinea Bissau. Sus voces, sus rostros, su forma de entender la cooperación desde dentro.</p>
+        </div>
+      </div>
+      <div class="video-block es reveal" data-video="videos/equipo-espana.mp4">
+        <div class="badge">Extremadura, España</div>
+        <div class="player">
+          <div class="poster"></div>
+          <div class="play-btn"></div>
+          <div class="placeholder-note">videos/equipo-espana.mp4 · poster: equipo-espana-poster.jpg</div>
+        </div>
+        <div class="meta">
+          <h3>El equipo que sostiene Soguiba desde Cáceres</h3>
+          <p>Quiénes somos en España, cómo trabajamos desde Extremadura y qué nos mueve a tender este puente. Junta directiva, equipo técnico y voluntariado se presentan.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="videos-quote reveal">"Una organización es, al final, las personas que la habitan."</div>
+    <div class="videos-link-jump reveal">
+      <a href="#junta-directiva">Conoce a la junta directiva ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== JUNTA DIRECTIVA ============== -->
+<section class="junta-section" id="junta-directiva">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center">
+      <div class="section-tag" style="font-size: 14px">Junta Directiva</div>
+      <h2>Las personas que asumen<br>el <em>compromiso</em></h2>
+    </div>
+    <p class="junta-intro reveal">Una junta directiva voluntaria, elegida en asamblea, que vela por la coherencia de Soguiba con su misión, visión y valores. Estas son las personas que firman, deciden y rinden cuentas en nombre de toda la organización.</p>
+
+    <div class="junta-grid">
+      <div class="junta-card reveal featured">
+        <div class="photo">AM</div>
+        <div class="name">Abelardo Martín Cordero</div>
+        <div class="role">Presidente</div>
+        <div class="deco"></div>
+      </div>
+      <div class="junta-card reveal">
+        <div class="photo">MS</div>
+        <div class="name">Marisol Sáenz Chacón</div>
+        <div class="role">Vicepresidenta</div>
+        <div class="deco"></div>
+      </div>
+      <div class="junta-card reveal">
+        <div class="photo">AB</div>
+        <div class="name">Alejandro Barroso Sáenz</div>
+        <div class="role">Secretario</div>
+        <div class="deco"></div>
+      </div>
+      <div class="junta-card reveal">
+        <div class="photo">AB</div>
+        <div class="name">Ana Barroso Sáenz</div>
+        <div class="role">Tesorera</div>
+        <div class="deco"></div>
+      </div>
+      <div class="junta-card reveal">
+        <div class="photo">RG</div>
+        <div class="name">Raquel Galán Sáenz</div>
+        <div class="role">Vocal</div>
+        <div class="deco"></div>
+      </div>
+      <div class="junta-card reveal">
+        <div class="photo">AM</div>
+        <div class="name">Abelardo Martín Galán</div>
+        <div class="role">Vocal</div>
+        <div class="deco"></div>
+      </div>
+    </div>
+
+    <p class="junta-foot reveal" style="font-size: 18px">La Junta Directiva ejerce su cargo de forma voluntaria y no remunerada. 
+Es elegida en asamblea por las personas socias de Soguiba.</p>
+  </div>
+</section>
+
+<!-- ============== ORGANIGRAMA ============== -->
+<section class="org-section" id="organigrama">
+  <div class="layer-shapes">
+    <div class="blob" style="background:#2e7d32;width:500px;height:500px;top:-100px;left:-100px"></div>
+    <div class="blob" style="background:#f39c12;width:400px;height:400px;bottom:-50px;right:-50px"></div>
+  </div>
+  <div class="wrap" style="position:relative;z-index:2">
+    <div class="reveal">
+      <div class="section-tag" style="font-size: 14px">Estructura organizativa</div>
+      <h2>Cómo nos organizamos<br>para <em>sostener el puente</em></h2>
+    </div>
+    <p class="org-intro reveal">Un equipo en sede y una delegación local en Guinea Bissau, articulados a través de la coordinación general. Más de treinta personas trabajando cada día para que ninguna comunidad quede atrás. Pasa el cursor sobre cada nodo para conocer mejor a quién hay detrás.</p>
+
+    <div class="org-filters reveal">
+      <button class="org-filter active" data-filter="all">Todo</button>
+      <button class="org-filter" data-filter="junta">Junta Directiva</button>
+      <button class="org-filter" data-filter="es">Sede España</button>
+      <button class="org-filter" data-filter="gb">Delegación Guinea Bissau</button>
+    </div>
+
+    <div class="org-canvas" id="orgCanvas">
+      <div class="org-inner" id="orgInner">
+
+        <!-- Junta Directiva -->
+        <div class="org-section-label">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2 L10 6 L14 6 L11 9 L12 14 L8 11 L4 14 L5 9 L2 6 L6 6 Z"/></svg>
+          Junta Directiva · Gobierno voluntario
+        </div>
+        <div class="org-row">
+          <div class="org-node junta" data-group="junta" tabindex="0" aria-label="Abelardo Martín Cordero, Presidente"><div class="role">Presidente</div><div class="person">Abelardo Martín Cordero</div></div>
+        </div>
+        <div class="org-row" style="margin-bottom:48px">
+          <div class="org-node junta" data-group="junta" tabindex="0"><div class="role">Vicepresidenta</div><div class="person">Marisol Sáenz Chacón</div></div>
+          <div class="org-node junta" data-group="junta" tabindex="0"><div class="role">Secretario</div><div class="person">Alejandro Barroso Sáenz</div></div>
+          <div class="org-node junta" data-group="junta" tabindex="0"><div class="role">Tesorera</div><div class="person">Ana Barroso Sáenz</div></div>
+          <div class="org-node junta" data-group="junta" tabindex="0"><div class="role">Vocal</div><div class="person">Raquel Galán Sáenz</div></div>
+          <div class="org-node junta" data-group="junta" tabindex="0"><div class="role">Vocal</div><div class="person">Abelardo Martín Galán</div></div>
+        </div>
+
+        <!-- Bridge -->
+        <div class="bridge-wrap">
+          <div class="org-node coord" data-group="es" tabindex="0">
+            <div class="role">Coordinación general</div>
+            <div class="person">Pilar Milanés Milanés</div>
+            <div class="sub">Coordinadora general en sede y terreno</div>
+          </div>
+          <div class="bridge-line"><div class="bridge-pulse"></div></div>
+          <div class="org-node coord" data-group="gb" tabindex="0">
+            <div class="role">Delegación Guinea Bissau</div>
+            <div class="person">Pedro Uri Sane</div>
+            <div class="sub">Coordinador delegación SOGUIBA Guinea Bissau</div>
+          </div>
+        </div>
+
+        <!-- Two orillas -->
+        <div class="org-orillas">
+          <!-- ESPAÑA -->
+          <div class="org-orilla es">
+            <h4>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2 C 5 5, 5 8, 8 14 C 11 8, 11 5, 8 2 Z"/><path d="M5 6 L8 6 M8 9 L11 9"/></svg>
+              Sede · Cáceres
+            </h4>
+            <div class="nodes">
+              <div class="org-node" data-group="es" tabindex="0"><div class="role">Cooperación internacional</div><div class="person">Adriana Asensio Tirado</div><div class="sub">Responsable de cooperación en sede y terreno</div></div>
+              <div class="org-node" data-group="es" tabindex="0"><div class="role">Educación e igualdad</div><div class="person">Lorena Andrés González</div><div class="sub">Responsable de EpCG e igualdad en sede</div></div>
+              <div class="org-node" data-group="es" tabindex="0"><div class="role">Administración</div><div class="person">Jorge García Durán</div><div class="sub">Responsable de administración en sede</div></div>
+              <div class="org-node" data-group="es" tabindex="0"><div class="role">Comercio justo</div><div class="person">Alejandro Fidel Barroso Sáenz</div><div class="sub">Responsable de Comercio Justo · Informática y tecnología</div></div>
+            </div>
+          </div>
+
+          <!-- GUINEA BISSAU -->
+          <div class="org-orilla gb">
+            <h4>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="8" cy="6" rx="4" ry="3"/><path d="M8 9 L8 14"/><path d="M5 14 L11 14"/></svg>
+              Delegación · Guinea Bissau
+            </h4>
+            <div class="nodes">
+              <div class="org-node" data-group="gb" tabindex="0"><div class="role">Área técnica de proyectos</div><div class="person">Abrão Bidé Buó · Clementino Sano Insali</div><div class="sub">Responsables de la gestión técnica de proyectos</div></div>
+              <div class="org-node" data-group="gb" tabindex="0"><div class="role">Gestión administrativa y contable</div><div class="person">Mussa Mané</div><div class="sub">Responsable de administración y contabilidad</div></div>
+              <div class="org-node" data-group="gb" tabindex="0"><div class="role">Auxiliar de coordinación</div><div class="person">Abdul Salamo Djaló</div><div class="sub">Apoyo de coordinación general</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-areas operativas (GB) -->
+        <div style="margin-top:48px">
+          <div class="org-section-label" style="color:rgba(67,160,71,0.7)">Áreas operativas en Guinea Bissau</div>
+          <div class="org-sub-areas">
+            <div class="org-node" data-group="gb" tabindex="0"><div class="role">Educación</div><div class="person">Augusta Blete · María Augusta N'Tchami</div></div>
+            <div class="org-node" data-group="gb" tabindex="0"><div class="role">Horticultura</div><div class="person">Mariama Tano · Sana Djau · Emilia N'També</div></div>
+            <div class="org-node" data-group="gb" tabindex="0"><div class="role">Cooperativismo</div><div class="person">Salimatu Djaló · Bacari Mané · Bebiana N'bundé</div></div>
+            <div class="org-node" data-group="gb" tabindex="0"><div class="role">Cajas de ahorro</div><div class="person">Anicete Cugna · Joaquina Nasca</div></div>
+            <div class="org-node" data-group="gb" tabindex="0"><div class="role">Emprendimiento</div><div class="person">Mamadou Boibá</div></div>
+            <div class="org-node" data-group="gb" tabindex="0"><div class="role">Deporte</div><div class="person">Ibraima Cámara</div></div>
+            <div class="org-node" data-group="gb" tabindex="0"><div class="role">Construcción</div><div class="person">Vasco Bidé Buó</div></div>
+            <div class="org-node" data-group="gb" tabindex="0"><div class="role">Mantenimiento</div><div class="person">Abudú Cámara</div></div>
+            <div class="org-node" data-group="gb" tabindex="0"><div class="role">Informática</div><div class="person">Banaque Sanha</div></div>
+            <div class="org-node" data-group="gb" tabindex="0"><div class="role">Limpieza</div><div class="person">Estela Sanha · Marina Bambuel</div></div>
+            <div class="org-node" data-group="gb" tabindex="0"><div class="role">Seguridad</div><div class="person">Aliu Dem · Saido Sonco · Mamudo Mané</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="org-counters">
+      <div class="org-counter"><div class="num" data-count="6">0</div><div class="lab">en Junta Directiva</div></div>
+      <div class="org-counter"><div class="num" data-count="2">0</div><div class="lab">coordinaciones</div></div>
+      <div class="org-counter"><div class="num" data-count="4">0</div><div class="lab">áreas en sede España</div></div>
+      <div class="org-counter"><div class="num" data-count="11">0</div><div class="lab">áreas en Guinea Bissau</div></div>
+      <div class="org-counter"><div class="num" data-count="30" data-suffix="+">0</div><div class="lab">personas trabajando</div></div>
+    </div>
+    <p class="org-foot" style="font-size: 20px">Una organización son las personas que la sostienen. Aquí están todas. A las dos orillas del puente.</p>
+  </div>
+</section>
+
+<!-- ============== ALIADOS ============== -->
+<section class="off" id="aliados">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center;max-width:760px;margin:0 auto">
+      <div class="section-tag" style="font-size: 14px">Caminamos en alianza</div>
+      <h2>Solos <em>no somos nada</em></h2>
+      <p style="color:var(--mid);font-size:1.02rem;line-height:1.7;margin:0">El cambio se multiplica cuando se construye en red. Trabajamos junto a contrapartes locales en Guinea Bissau, organizaciones del tercer sector en España, instituciones públicas y entidades aliadas que comparten nuestra forma de entender la cooperación.</p>
+    </div>
+    <div class="allies-marquee reveal">
+      <div class="allies-track" id="alliesTrack">
+        <!-- duplicated by JS -->
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:24px;color:var(--faint);font-family:ui-monospace,Menlo,monospace;font-size:11px">📷 Subir logos </p>
+  </div>
+</section>
+
+<!-- ============== CTA FINAL ============== -->
+<section class="cta-section" id="unete">
+  <div class="layer-shapes" data-parallax="0.4">
+    <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+      <ellipse cx="200" cy="200" rx="220" ry="80" fill="#2e7d32" opacity="0.5"/>
+      <ellipse cx="1240" cy="700" rx="280" ry="100" fill="#2e7d32" opacity="0.45"/>
+      <path d="M0,500 Q360,400 720,520 T1440,480" stroke="#2e7d32" stroke-width="2" fill="none" opacity="0.6"/>
+    </svg>
+  </div>
+  <div class="content">
+    <div class="reveal">
+      <div style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--a);font-weight:600;margin-bottom:18px">Hazte parte</div>
+      <h2>Esta historia<br>también <em>es tuya</em></h2>
+      <p class="sub">Soguiba la construyen las personas que se suman. Como socias, donantes, voluntarias, o simplemente difundiendo lo que hacemos.</p>
+      <div class="cta-buttons">
+        <a href="#" class="btn btn-primary">Hazte socio/a</a>
+        <a href="#" class="btn btn-amber">Donar puntualmente</a>
+        <a href="#" class="btn btn-ghost">Ser voluntario/a</a>
+      </div>
+      <div class="cta-foot">Tu donación desgrava hasta el 80% en la declaración de la renta.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <img src="img/soguiba-logo-white.png" alt="Soguiba" />
+      <p>Solidaridad con Guinea Bissau. Tendiendo puentes desde Cáceres desde 2001.</p>
+      <p style="font-size:.82rem;color:rgba(250,250,248,0.45)">CIF G-XXXXXXXX · Inscrita en el Registro de Asociaciones de Extremadura</p>
+    </div>
+    <div>
+      <h5>Navegación</h5>
+      <ul>
+        <li><a href="index.html#esencia">Inicio</a></li>
+        <li><a href="quienes-somos.html">Quiénes somos</a></li>
+        <li><a href="proyectos.html">Proyectos</a></li>
+        <li><a href="index.html#anumbara">Anúmbara</a></li>
+        <li><a href="index.html#actualidad">Actualidad</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Súmate</h5>
+      <ul>
+        <li><a href="#unete">Hazte socio/a</a></li>
+        <li><a href="#unete">Donar</a></li>
+        <li><a href="#unete">Voluntariado</a></li>
+        <li><a href="#">Boletín</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Contacto</h5>
+      <ul>
+        <li>C/ ejemplo, 12 — 10001 Cáceres</li>
+        <li>+34 927 00 00 00</li>
+        <li><a href="mailto:info@soguiba.org">info@soguiba.org</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 Soguiba — Solidaridad con Guinea Bissau</div>
+    <div style="display:flex;gap:24px"><a href="#">Aviso legal</a><a href="#">Privacidad</a><a href="#">Transparencia</a></div>
+  </div>
+</footer>
+
+<!-- ============== TWEAKS PANEL ============== -->
+<div id="tweaksPanel" style="display:none;position:fixed;right:16px;bottom:16px;z-index:2147483646;width:296px;max-height:calc(100vh - 32px);background:rgba(250,249,247,.85);color:#29261b;backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);border:.5px solid rgba(255,255,255,.6);border-radius:14px;box-shadow:0 1px 0 rgba(255,255,255,.5) inset, 0 12px 40px rgba(0,0,0,.22);font:11.5px/1.4 ui-sans-serif,system-ui,sans-serif;overflow:hidden">
+  <div id="tweaksHead" style="display:flex;align-items:center;justify-content:space-between;padding:10px 8px 10px 14px;cursor:move;user-select:none">
+    <b style="font-size:12px;font-weight:600;letter-spacing:.01em">Tweaks</b>
+    <button id="tweaksClose" style="appearance:none;border:0;background:transparent;color:rgba(41,38,27,.55);width:22px;height:22px;border-radius:6px;cursor:pointer;font-size:14px;line-height:1">×</button>
+  </div>
+  <div style="padding:2px 14px 16px;display:flex;flex-direction:column;gap:14px;max-height:calc(100vh - 80px);overflow-y:auto">
+
+    <div>
+      <div style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(41,38,27,.5);margin-bottom:8px">Tono</div>
+      <div style="font-size:11px;color:rgba(41,38,27,.7);margin-bottom:8px;line-height:1.45">El temperamento general del sitio. Recolorea fondos, acentos y atmósfera.</div>
+      <div class="tw-segments" data-key="mood" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;background:rgba(0,0,0,.05);padding:3px;border-radius:8px">
+        <button data-val="warm"      class="tw-seg" style="padding:8px 4px;border:0;background:transparent;border-radius:6px;cursor:pointer;font:inherit;color:#29261b;font-weight:500">Cálido<br><span style="font-size:9.5px;opacity:.6;font-weight:400">terroso</span></button>
+        <button data-val="editorial" class="tw-seg" style="padding:8px 4px;border:0;background:transparent;border-radius:6px;cursor:pointer;font:inherit;color:#29261b;font-weight:500">Sobrio<br><span style="font-size:9.5px;opacity:.6;font-weight:400">editorial</span></button>
+        <button data-val="cinema"    class="tw-seg" style="padding:8px 4px;border:0;background:transparent;border-radius:6px;cursor:pointer;font:inherit;color:#29261b;font-weight:500">Cinema<br><span style="font-size:9.5px;opacity:.6;font-weight:400">nocturno</span></button>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(41,38,27,.5);margin-bottom:8px">Ritmo</div>
+      <div style="font-size:11px;color:rgba(41,38,27,.7);margin-bottom:8px;line-height:1.45">Cómo respira la página. Reescala tipografía, aire entre secciones e interlineado en conjunto.</div>
+      <div class="tw-segments" data-key="rhythm" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;background:rgba(0,0,0,.05);padding:3px;border-radius:8px">
+        <button data-val="intimate"   class="tw-seg" style="padding:8px 4px;border:0;background:transparent;border-radius:6px;cursor:pointer;font:inherit;color:#29261b;font-weight:500">Íntimo</button>
+        <button data-val="balanced"   class="tw-seg" style="padding:8px 4px;border:0;background:transparent;border-radius:6px;cursor:pointer;font:inherit;color:#29261b;font-weight:500">Equilibrio</button>
+        <button data-val="monumental" class="tw-seg" style="padding:8px 4px;border:0;background:transparent;border-radius:6px;cursor:pointer;font:inherit;color:#29261b;font-weight:500">Monumental</button>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(41,38,27,.5);margin-bottom:8px">Movimiento</div>
+      <div style="font-size:11px;color:rgba(41,38,27,.7);margin-bottom:8px;line-height:1.45">El carácter de la animación. Afecta parallax, pulso del puente, tilt y curvas de entrada.</div>
+      <div class="tw-segments" data-key="motion" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;background:rgba(0,0,0,.05);padding:3px;border-radius:8px">
+        <button data-val="serene"  class="tw-seg" style="padding:8px 4px;border:0;background:transparent;border-radius:6px;cursor:pointer;font:inherit;color:#29261b;font-weight:500">Sereno</button>
+        <button data-val="organic" class="tw-seg" style="padding:8px 4px;border:0;background:transparent;border-radius:6px;cursor:pointer;font:inherit;color:#29261b;font-weight:500">Orgánico</button>
+        <button data-val="kinetic" class="tw-seg" style="padding:8px 4px;border:0;background:transparent;border-radius:6px;cursor:pointer;font:inherit;color:#29261b;font-weight:500">Cinético</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Side dots nav -->
+<aside class="side-nav" id="sideNav">
+  <a href="#historia" data-section="historia"><span>Historia</span></a>
+  <a href="#trayectoria" data-section="trayectoria"><span>Trayectoria</span></a>
+  <a href="#mision-vision-valores" data-section="mision-vision-valores"><span>Misión</span></a>
+  <a href="#metodologia" data-section="metodologia"><span>Cómo trabajamos</span></a>
+  <a href="#plan-estrategico" data-section="plan-estrategico"><span>Plan estratégico</span></a>
+  <a href="#videos" data-section="videos"><span>Vídeos</span></a>
+  <a href="#junta-directiva" data-section="junta-directiva"><span>Junta</span></a>
+  <a href="#organigrama" data-section="organigrama"><span>Organigrama</span></a>
+  <a href="#aliados" data-section="aliados"><span>Aliados</span></a>
+</aside>
+
+<script>
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- Tweaks defaults (editable via EDITMODE block) ---------- */
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "mood": "warm",
+  "rhythm": "balanced",
+  "motion": "organic"
+}/*EDITMODE-END*/;
+let TW = Object.assign({}, TWEAK_DEFAULTS);
+
+/* ---------- Mood / Rhythm / Motion presets ---------- */
+const MOODS = {
+  warm:      { '--w':'#fafaf8', '--off':'#f2f0ec', '--ink':'#141412', '--mid':'#5a5855', '--g':'#2e7d32', '--gl':'#43a047', '--gd':'#1b5e20', '--a':'#f39c12', '--al':'#f5b942' },
+  editorial: { '--w':'#ffffff', '--off':'#ececea', '--ink':'#1a1a1a', '--mid':'#525252', '--g':'#1f5f3a', '--gl':'#2f8055', '--gd':'#143d25', '--a':'#a87832', '--al':'#c2934d' },
+  cinema:    { '--w':'#f1efe9', '--off':'#1f1d1b', '--ink':'#0a0a08', '--mid':'#a39e95', '--g':'#3d8f4a', '--gl':'#5cb86a', '--gd':'#2a6633', '--a':'#e8a93c', '--al':'#f3c160' }
+};
+const RHYTHMS = {
+  intimate:   { fontSize:'15px',  sectionPad:'72px',  heroMin:'70vh', lineH:1.55, h2Scale:'clamp(1.7rem, 3.4vw, 2.6rem)', heroH1:'clamp(2.2rem, 5vw, 4rem)' },
+  balanced:   { fontSize:'17px',  sectionPad:'120px', heroMin:'88vh', lineH:1.6,  h2Scale:'clamp(2rem, 4.2vw, 3.4rem)',   heroH1:'clamp(2.6rem, 6.6vw, 5.6rem)' },
+  monumental: { fontSize:'19px',  sectionPad:'180px', heroMin:'100vh',lineH:1.75, h2Scale:'clamp(2.6rem, 5.6vw, 4.6rem)', heroH1:'clamp(3.2rem, 8vw, 7rem)' }
+};
+const MOTIONS = {
+  serene:  { parallax:0.10, bridgeFlow:'8s', bridgePulse:'5s', tilt:0.5, revealStagger:1.0, revealDur:'1.3s' },
+  organic: { parallax:0.30, bridgeFlow:'4s', bridgePulse:'3s', tilt:1.0, revealStagger:1.0, revealDur:'.9s'  },
+  kinetic: { parallax:0.55, bridgeFlow:'2s', bridgePulse:'1.4s', tilt:1.8, revealStagger:0.6, revealDur:'.55s' }
+};
+
+function applyTweaks(){
+  const root = document.documentElement;
+  const m = MOODS[TW.mood] || MOODS.warm;
+  Object.entries(m).forEach(([k,v])=>root.style.setProperty(k,v));
+  // In cinema mode, flip body background to dark (still legible w/ existing palette)
+  document.body.style.background = (TW.mood === 'cinema') ? 'var(--off)' : 'var(--w)';
+  document.body.style.color = (TW.mood === 'cinema') ? '#e8e4dc' : 'var(--ink)';
+
+  const r = RHYTHMS[TW.rhythm] || RHYTHMS.balanced;
+  document.body.style.fontSize = r.fontSize;
+  document.body.style.lineHeight = r.lineH;
+  root.style.setProperty('--section-pad', r.sectionPad);
+  root.style.setProperty('--hero-min', r.heroMin);
+  root.style.setProperty('--h2-scale', r.h2Scale);
+  root.style.setProperty('--hero-h1-scale', r.heroH1);
+
+  const mo = MOTIONS[TW.motion] || MOTIONS.organic;
+  root.style.setProperty('--bridge-flow-dur', mo.bridgeFlow);
+  root.style.setProperty('--bridge-pulse-dur', mo.bridgePulse);
+  root.style.setProperty('--reveal-dur', mo.revealDur);
+  window.__motionCfg = mo;
+
+  // Update segmented buttons
+  document.querySelectorAll('.tw-segments').forEach(grp=>{
+    const key = grp.dataset.key;
+    grp.querySelectorAll('.tw-seg').forEach(b=>{
+      const on = b.dataset.val === TW[key];
+      b.style.background = on ? '#fff' : 'transparent';
+      b.style.boxShadow = on ? '0 1px 2px rgba(0,0,0,.08), 0 0 0 .5px rgba(0,0,0,.06)' : 'none';
+      b.style.color = on ? '#29261b' : 'rgba(41,38,27,.7)';
+    });
+  });
+}
+
+function setTweak(key, val){
+  TW[key] = val;
+  applyTweaks();
+  try { window.parent.postMessage({type:'__edit_mode_set_keys', edits:{[key]:val}}, '*'); } catch(e){}
+}
+
+/* ---------- Tweaks panel host protocol ---------- */
+const tweaksPanel = document.getElementById('tweaksPanel');
+window.addEventListener('message', (ev)=>{
+  const d = ev.data || {};
+  if(d.type === '__activate_edit_mode') tweaksPanel.style.display = 'block';
+  if(d.type === '__deactivate_edit_mode') tweaksPanel.style.display = 'none';
+});
+try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e){}
+
+document.getElementById('tweaksClose').addEventListener('click', ()=>{
+  tweaksPanel.style.display = 'none';
+  try { window.parent.postMessage({type:'__edit_mode_dismissed'}, '*'); } catch(e){}
+});
+
+document.querySelectorAll('.tw-segments').forEach(grp=>{
+  const key = grp.dataset.key;
+  grp.querySelectorAll('.tw-seg').forEach(b=>{
+    b.addEventListener('click', ()=>setTweak(key, b.dataset.val));
+  });
+});
+
+// Drag panel
+(function dragInit(){
+  const head = document.getElementById('tweaksHead');
+  let dx, dy, dragging = false;
+  head.addEventListener('mousedown', (e)=>{
+    if(e.target.id === 'tweaksClose') return;
+    dragging = true;
+    const r = tweaksPanel.getBoundingClientRect();
+    dx = e.clientX - r.left; dy = e.clientY - r.top;
+    document.body.style.userSelect = 'none';
+  });
+  window.addEventListener('mousemove', (e)=>{
+    if(!dragging) return;
+    tweaksPanel.style.left = (e.clientX - dx)+'px';
+    tweaksPanel.style.top  = (e.clientY - dy)+'px';
+    tweaksPanel.style.right = 'auto';
+    tweaksPanel.style.bottom = 'auto';
+  });
+  window.addEventListener('mouseup', ()=>{ dragging = false; document.body.style.userSelect = ''; });
+})();
+
+applyTweaks();
+
+/* ---------- Scroll progress ---------- */
+const progressEl = document.getElementById('progress');
+const topnav = document.getElementById('topnav');
+function onScroll(){
+  const h = document.documentElement;
+  const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
+  progressEl.style.width = (scrolled*100)+'%';
+  topnav.classList.toggle('scrolled', h.scrollTop > 60);
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+/* ---------- Reveal observer ---------- */
+const ioReveal = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      ioReveal.unobserve(e.target);
+    }
+  });
+},{threshold:0.15, rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>ioReveal.observe(el));
+
+/* ---------- Hero word stagger ---------- */
+const heroTitle = document.getElementById('heroTitle');
+function startHero(){
+  const words = heroTitle.querySelectorAll('.word');
+  words.forEach((w,i)=>{
+    setTimeout(()=>w.classList.add('in'), 200 + i*100);
+  });
+  setTimeout(()=>heroTitle.classList.add('go'), 200 + words.length*100 + 200);
+}
+if(reduce){ heroTitle.querySelectorAll('.word').forEach(w=>w.classList.add('in')); heroTitle.classList.add('go'); }
+else startHero();
+
+/* ---------- Parallax ---------- */
+if(!reduce){
+  const parallaxEls = document.querySelectorAll('[data-parallax]');
+  let ticking = false;
+  function updateParallax(){
+    const y = window.scrollY;
+    parallaxEls.forEach(el=>{
+      const speed = parseFloat(el.dataset.parallax);
+      const rect = el.getBoundingClientRect();
+      const offset = (y - el.offsetTop) * speed * -1;
+      // simpler: translate based on viewport
+      const k = (window.__motionCfg && window.__motionCfg.parallax) || 0.30;
+      el.style.transform = `translate3d(0, ${y * speed * k}px, 0)`;
+    });
+    ticking = false;
+  }
+  window.addEventListener('scroll', ()=>{
+    if(!ticking){ requestAnimationFrame(updateParallax); ticking = true; }
+  }, {passive:true});
+}
+
+/* ---------- Counters ---------- */
+const counters = document.querySelectorAll('[data-count]');
+const ioCount = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el = e.target;
+      const target = parseInt(el.dataset.count, 10);
+      const suffix = el.dataset.suffix || '';
+      const prefix = el.textContent.startsWith('+') ? '+' : '';
+      if(reduce){ el.textContent = prefix + target + suffix; ioCount.unobserve(el); return; }
+      const dur = 1800;
+      const start = performance.now();
+      function tick(t){
+        const p = Math.min(1, (t-start)/dur);
+        const eased = 1 - Math.pow(1-p, 3);
+        el.textContent = prefix + Math.floor(target*eased) + (p===1?suffix:'');
+        if(p<1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      ioCount.unobserve(el);
+    }
+  });
+},{threshold:0.5});
+counters.forEach(c=>ioCount.observe(c));
+
+/* ---------- Timeline reveal stagger ---------- */
+const timelineWrap = document.querySelector('.timeline-wrap');
+const ioTimeline = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      timelineWrap.classList.add('in');
+      const stones = timelineWrap.querySelectorAll('.milestone');
+      stones.forEach((m,i)=>{
+        setTimeout(()=>m.classList.add('in'), 300 + i*200);
+      });
+      ioTimeline.unobserve(timelineWrap);
+    }
+  });
+},{threshold:0.2});
+if(timelineWrap) ioTimeline.observe(timelineWrap);
+
+/* ---------- Org canvas reveal & stagger ---------- */
+const orgCanvas = document.getElementById('orgCanvas');
+const ioOrg = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      orgCanvas.classList.add('in');
+      const nodes = orgCanvas.querySelectorAll('.org-node');
+      nodes.forEach((n,i)=>{
+        n.style.transitionDelay = (i*40)+'ms';
+      });
+      ioOrg.unobserve(orgCanvas);
+    }
+  });
+},{threshold:0.15});
+if(orgCanvas) ioOrg.observe(orgCanvas);
+
+/* ---------- Org filters ---------- */
+document.querySelectorAll('.org-filter').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.org-filter').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    document.querySelectorAll('.org-node').forEach(n=>{
+      if(f === 'all'){ n.classList.remove('dim'); }
+      else if(n.dataset.group === f){ n.classList.remove('dim'); }
+      else { n.classList.add('dim'); }
+    });
+  });
+});
+
+/* ---------- Org tilt 3D ---------- */
+const orgInner = document.getElementById('orgInner');
+if(orgInner && !reduce && window.matchMedia('(min-width: 1024px)').matches){
+  let raf;
+  orgCanvas.addEventListener('mousemove', (ev)=>{
+    const rect = orgCanvas.getBoundingClientRect();
+    const x = (ev.clientX - rect.left)/rect.width - 0.5;
+    const y = (ev.clientY - rect.top)/rect.height - 0.5;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(()=>{
+      const k = (window.__motionCfg && window.__motionCfg.tilt) || 1;
+      orgInner.style.transform = `rotateY(${x*2*k}deg) rotateX(${-y*2*k}deg)`;
+    });
+  });
+  orgCanvas.addEventListener('mouseleave', ()=>{
+    orgInner.style.transform = 'rotateY(0) rotateX(0)';
+  });
+}
+
+/* ---------- Tilt for how-img ---------- */
+const howImg = document.getElementById('howImg');
+if(howImg && !reduce && window.matchMedia('(min-width: 1024px)').matches){
+  howImg.addEventListener('mousemove', (ev)=>{
+    const rect = howImg.getBoundingClientRect();
+    const x = (ev.clientX - rect.left)/rect.width - 0.5;
+    const y = (ev.clientY - rect.top)/rect.height - 0.5;
+    const k = (window.__motionCfg && window.__motionCfg.tilt) || 1;
+    howImg.style.transform = `perspective(1200px) rotateY(${x*3*k}deg) rotateX(${-y*3*k}deg)`;
+  });
+  howImg.addEventListener('mouseleave', ()=>{
+    howImg.style.transform = 'perspective(1200px) rotateY(0) rotateX(0)';
+  });
+}
+
+/* ---------- Videos ---------- */
+document.querySelectorAll('.video-block .player').forEach(player=>{
+  player.addEventListener('click', ()=>{
+    const block = player.closest('.video-block');
+    const src = block.dataset.video;
+    // Pause other
+    document.querySelectorAll('.video-block video').forEach(v=>{ v.pause(); });
+    // Replace player with video element (since we don't have actual video file, just simulate)
+    if(!block.querySelector('video')){
+      const v = document.createElement('video');
+      v.src = src;
+      v.controls = true;
+      v.playsInline = true;
+      v.preload = 'metadata';
+      v.style.width = '100%';
+      v.style.aspectRatio = '16/9';
+      v.style.background = '#000';
+      v.style.display = 'block';
+      const playerWrap = block.querySelector('.player');
+      // Attempt to play; if unavailable, keep poster
+      playerWrap.innerHTML = '';
+      playerWrap.appendChild(v);
+      playerWrap.style.cursor = 'auto';
+      v.play().catch(()=>{
+        // Fallback: show note that file is missing
+        playerWrap.innerHTML = '<div style="color:rgba(250,250,248,0.5);font-family:monospace;font-size:12px;text-align:center;padding:24px">Vídeo no disponible (placeholder).<br>Subir archivo en: '+src+'</div>';
+      });
+    }
+  });
+});
+
+/* ---------- Side nav active state ---------- */
+const sideLinks = document.querySelectorAll('.side-nav a');
+const darkSections = ['plan-estrategico','videos','organigrama','unete'];
+const ioSide = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id = e.target.id;
+      sideLinks.forEach(a=>{
+        const isActive = a.dataset.section === id;
+        a.classList.toggle('active', isActive);
+        a.classList.toggle('dark-bg', darkSections.includes(id));
+      });
+    }
+  });
+},{rootMargin:'-40% 0px -40% 0px'});
+sideLinks.forEach(a=>{
+  const id = a.dataset.section;
+  const sec = document.getElementById(id);
+  if(sec) ioSide.observe(sec);
+});
+
+/* ---------- Allies marquee ---------- */
+const alliesTrack = document.getElementById('alliesTrack');
+const allies = ['Junta de Extremadura', 'AECID', 'Ayto. Cáceres', 'Diputación', 'CONGD-Ex', 'Caja Rural', 'Univ. Extremadura', 'Comercio Justo', 'CALA', 'Solidaridad Internacional'];
+function buildAllies(){
+  const set = [...allies, ...allies, ...allies, ...allies];
+  alliesTrack.innerHTML = set.map(n=>`<div class="ally-logo">${n}</div>`).join('');
+}
+buildAllies();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soguiba — Solidaridad con Guinea Bissau</title>
+<template id="__bundler_thumbnail" data-bg-color="#141412">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <!-- Dark bg -->
+    <rect width="1200" height="800" fill="#141412"/>
+    <!-- Green accent radial -->
+    <circle cx="200" cy="400" r="320" fill="rgba(46,125,50,0.18)"/>
+    <!-- Logo mark — Soguiba leaf/swirl -->
+    <path d="M560 340 C560 300 590 265 625 258 C642 255 655 264 655 278 C655 295 642 304 626 308 C610 312 595 323 595 340 C595 360 612 372 632 372 C647 372 660 366 667 357" stroke="#2e7d32" stroke-width="5" stroke-linecap="round" fill="none"/>
+    <path d="M617 263 C617 246 632 230 650 230 C661 230 668 238 668 248 C668 263 658 275 645 282 C635 288 624 300 624 315 C624 333 636 345 655 345" stroke="#43a047" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.65"/>
+    <!-- SOGUIBA text -->
+    <text x="690" y="370" font-family="Georgia,serif" font-size="64" font-weight="700" fill="white" letter-spacing="3">SOGUIBA</text>
+    <!-- Tagline -->
+    <text x="692" y="408" font-family="Georgia,serif" font-size="22" font-style="italic" fill="rgba(255,255,255,0.4)" letter-spacing="1">Solidaridad con Guinea Bissau</text>
+    <!-- Green stripe bottom -->
+    <rect x="0" y="750" width="1200" height="50" fill="#2e7d32" opacity="0.8"/>
+  </svg>
+</template>
+<meta name="ext-resource-dependency" content="uploads/Logotipo SOGUIBA (texto en blanco)-c8137899.png" data-resource-id="soguibaLogo" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g:#2e7d32;--gl:#43a047;--gd:#1b5e20;
+  --r:#c0392b;--rl:#e74c3c;
+  --a:#f39c12;--al:#f5b942;
+  --w:#fafaf8;--off:#f2f0ec;--ink:#141412;--mid:#5a5855;--faint:#9a9895;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Inter',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:var(--sans);background:var(--w);color:var(--ink);overflow-x:hidden;cursor:none}
+
+/* ── CURSOR ── */
+#cur-dot{position:fixed;width:6px;height:6px;background:var(--g);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s,background .2s,width .25s,height .25s}
+#cur-ring{position:fixed;width:36px;height:36px;border:1.5px solid rgba(46,125,50,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .18s cubic-bezier(.22,1,.36,1),width .3s,height .3s,opacity .3s}
+body:has(a:hover) #cur-dot,body:has(button:hover) #cur-dot{width:10px;height:10px;background:var(--a)}
+body:has(a:hover) #cur-ring,body:has(button:hover) #cur-ring{width:56px;height:56px;opacity:.5}
+@media(hover:none){#cur-dot,#cur-ring{display:none}body{cursor:auto}}
+
+/* ── LOADER ── */
+#loader{position:fixed;inset:0;background:var(--ink);z-index:10000;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px}
+.loader-logo{opacity:0}
+.loader-bar{width:160px;height:1px;background:rgba(255,255,255,.1);overflow:hidden}
+.loader-fill{height:100%;width:0;background:var(--g);transition:width .05s linear}
+.loader-pct{font-size:11px;letter-spacing:.18em;color:rgba(255,255,255,.3);font-weight:500}
+
+/* ── NAV ── */
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:28px 64px;transition:all .5s cubic-bezier(.22,1,.36,1)}
+#nav.solid{background:rgba(250,250,248,.96);backdrop-filter:blur(20px);
+  padding:18px 64px;box-shadow:0 1px 0 rgba(0,0,0,.06)}
+
+/* SOGUIBA LOGO SVG */
+.nav-logo{display:flex;align-items:center;gap:0;text-decoration:none}
+.logo-svg-wrap{transition:opacity .3s}
+
+.nav-links{display:flex;align-items:center;gap:40px;list-style:none}
+.nav-links a{font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  text-decoration:none;color:rgba(255,255,255,.75);transition:color .3s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;
+  background:var(--a);transition:width .3s}
+.nav-links a:hover{color:white}
+.nav-links a:hover::after{width:100%}
+#nav.solid .nav-links a{color:var(--mid)}
+#nav.solid .nav-links a:hover{color:var(--g)}
+#nav.solid .nav-links a::after{background:var(--g)}
+
+.nav-r{display:flex;align-items:center;gap:20px}
+.nav-lang{font-size:11px;font-weight:600;letter-spacing:.12em;color:rgba(255,255,255,.4);cursor:pointer;transition:color .3s}
+#nav.solid .nav-lang{color:var(--faint)}
+.btn-nav{position:relative;overflow:hidden;font-size:12px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:white;background:var(--g);
+  border:none;padding:12px 26px;border-radius:2px;cursor:none;text-decoration:none;
+  transition:background .3s,transform .2s}
+.btn-nav::after{content:'';position:absolute;top:-50%;left:-80%;width:50%;height:200%;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.3) 50%,transparent 60%);
+  transform:skewX(-15deg);transition:left .6s}
+.btn-nav:hover::after{left:135%}
+.btn-nav:hover{background:var(--gd)}
+
+/* ── HERO ── */
+#hero{position:relative;height:100vh;min-height:720px;overflow:hidden;
+  display:grid;grid-template-columns:1fr 1fr}
+
+.hero-img-col{position:relative;overflow:hidden;will-change:transform}
+.hero-photo{position:absolute;inset:0;width:100%;height:115%;
+  background:linear-gradient(160deg,
+    oklch(72% 0.10 55) 0%,oklch(58% 0.14 45) 30%,
+    oklch(42% 0.11 38) 65%,oklch(26% 0.07 40) 100%);
+  will-change:transform}
+.hero-photo::before{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,.025) 3px,rgba(255,255,255,.025) 4px)}
+.hero-photo-inner{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:12px}
+.hero-silhouette{position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:70%;height:88%;opacity:.9;
+  background:linear-gradient(to top,oklch(30% 0.09 38),oklch(52% 0.12 44) 55%,transparent 100%);
+  clip-path:polygon(28% 100%,12% 68%,18% 44%,26% 28%,34% 16%,42% 6%,50% 0%,58% 6%,66% 16%,74% 28%,82% 44%,88% 68%,72% 100%)}
+.hero-photo-note{position:relative;z-index:2;font-family:monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);text-align:center;line-height:2.2}
+
+.hero-img-overlay{position:absolute;inset:0;
+  background:linear-gradient(to right,rgba(0,0,0,.18),rgba(0,0,0,.05))}
+
+.hero-text-col{position:relative;background:var(--ink);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:140px 64px 80px 64px;overflow:hidden}
+.hero-text-col::before{content:'';position:absolute;top:-200px;right:-200px;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(46,125,50,.25),transparent 70%);
+  pointer-events:none}
+
+.hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--a);margin-bottom:24px;display:flex;align-items:center;gap:10px;
+  opacity:0;transform:translateY(16px)}
+.hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--a)}
+
+.hero-h1{font-family:var(--serif);font-weight:900;
+  font-size:clamp(52px,6.5vw,92px);line-height:.94;letter-spacing:-.025em;
+  color:white;margin-bottom:40px;opacity:0;transform:translateY(32px)}
+.hero-h1 .italic{font-style:italic;font-weight:400;color:var(--a)}
+.hero-h1 .outline{-webkit-text-stroke:1.5px rgba(255,255,255,.3);color:transparent}
+
+.hero-sub{font-size:15px;font-weight:300;line-height:1.85;
+  color:rgba(255,255,255,.55);max-width:380px;margin-bottom:40px;
+  opacity:0;transform:translateY(20px)}
+
+.hero-btns{display:flex;gap:14px;opacity:0;transform:translateY(20px)}
+.btn-hero-primary{position:relative;overflow:hidden;font-size:12px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:white;background:var(--g);
+  padding:16px 32px;border-radius:2px;text-decoration:none;
+  transition:background .3s,transform .2s;display:inline-flex;align-items:center;gap:10px}
+.btn-hero-primary::after{content:'';position:absolute;top:-50%;left:-80%;width:50%;height:200%;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.3) 50%,transparent 60%);
+  transform:skewX(-15deg);transition:left .6s}
+.btn-hero-primary:hover::after{left:135%}
+.btn-hero-primary:hover{background:var(--gd);transform:translateY(-2px)}
+.btn-hero-ghost{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);text-decoration:none;
+  border:1px solid rgba(255,255,255,.15);padding:16px 24px;border-radius:2px;
+  transition:all .3s;display:inline-flex;align-items:center;gap:8px}
+.btn-hero-ghost:hover{color:white;border-color:rgba(255,255,255,.4)}
+
+.hero-stats-strip{display:flex;gap:0;margin-top:56px;padding-top:40px;
+  border-top:1px solid rgba(255,255,255,.08);opacity:0}
+.hs{flex:1;text-align:center;padding:0 16px;border-right:1px solid rgba(255,255,255,.07)}
+.hs:last-child{border-right:none}
+.hs-num{font-family:var(--serif);font-size:28px;font-weight:700;color:white;line-height:1}
+.hs-lbl{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.3);margin-top:6px}
+
+.hero-scroll-indicator{position:absolute;left:64px;bottom:40px;
+  display:flex;align-items:center;gap:12px;opacity:0}
+.hsi-line{width:48px;height:1px;background:rgba(255,255,255,.2);animation:lineAnim 2s ease-in-out infinite}
+@keyframes lineAnim{0%,100%{width:32px;opacity:.3}50%{width:56px;opacity:.7}}
+.hsi-text{font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+
+/* ── MARQUEE ── */
+.marquee-strip{background:var(--g);padding:16px 0;overflow:hidden;
+  display:flex;align-items:center}
+.marquee-track{display:flex;animation:marquee 22s linear infinite;white-space:nowrap;align-items:center}
+.marquee-track:hover{animation-play-state:paused}
+.marquee-item{font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.85);padding:0 40px;display:flex;align-items:center;gap:40px}
+.marquee-dot{width:4px;height:4px;background:rgba(255,255,255,.4);border-radius:50%;flex-shrink:0}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── ESENCIA ── */
+#esencia{padding:140px 64px;display:grid;grid-template-columns:5fr 7fr;gap:100px;align-items:center}
+
+.section-tag{display:inline-flex;align-items:center;gap:10px;
+  font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--g);margin-bottom:20px}
+.section-tag::before{content:'';width:22px;height:2px;background:var(--g)}
+
+.es-h2{font-family:var(--serif);font-weight:700;
+  font-size:clamp(36px,4vw,56px);line-height:1.08;letter-spacing:-.02em;
+  color:var(--ink);margin-bottom:28px}
+.es-h2 em{font-style:italic;color:var(--g)}
+.es-body{font-size:16px;font-weight:300;line-height:1.9;color:var(--mid);margin-bottom:16px}
+.es-quote{border-left:3px solid var(--a);padding-left:24px;margin:32px 0;
+  font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.55;color:var(--ink)}
+.es-cta{margin-top:36px;display:flex;gap:16px;align-items:center}
+.btn-solid{display:inline-flex;align-items:center;gap:8px;position:relative;overflow:hidden;
+  font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:white;background:var(--g);padding:14px 28px;border-radius:2px;text-decoration:none;
+  transition:background .3s,transform .2s}
+.btn-solid::after{content:'';position:absolute;top:-50%;left:-80%;width:50%;height:200%;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.3) 50%,transparent 60%);
+  transform:skewX(-15deg);transition:left .6s}
+.btn-solid:hover::after{left:135%}
+.btn-solid:hover{background:var(--gd);transform:translateY(-2px)}
+.btn-text-link{font-size:13px;font-weight:500;color:var(--mid);text-decoration:none;
+  display:inline-flex;align-items:center;gap:6px;transition:color .3s,gap .3s}
+.btn-text-link:hover{color:var(--g);gap:10px}
+
+/* mosaic right */
+.es-mosaic{display:grid;grid-template-columns:1fr 1fr;
+  grid-template-rows:260px 200px;gap:12px;position:relative}
+.es-mosaic::before{content:'';position:absolute;right:-32px;bottom:-32px;
+  width:160px;height:160px;border:2px solid var(--a);border-radius:2px;z-index:-1}
+.mc{border-radius:3px;overflow:hidden;position:relative}
+.mc:nth-child(1){grid-row:1/3}
+.mc-photo{width:100%;height:100%;position:relative;overflow:hidden;
+  transition:transform .6s cubic-bezier(.22,1,.36,1)}
+.mc:hover .mc-photo{transform:scale(1.04)}
+.mcp1{background:linear-gradient(145deg,oklch(50% 0.14 142),oklch(30% 0.09 148))}
+.mcp2{background:linear-gradient(145deg,oklch(64% 0.11 55),oklch(48% 0.14 44))}
+.mcp3{background:linear-gradient(145deg,oklch(56% 0.09 210),oklch(40% 0.11 215))}
+.mcp4{background:linear-gradient(145deg,oklch(68% 0.09 75),oklch(55% 0.12 70))}
+.mc-photo::before{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,transparent,transparent 5px,rgba(0,0,0,.035) 5px,rgba(0,0,0,.035) 6px)}
+.mc-photo::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.45) 0%,transparent 50%)}
+.mc-label{position:absolute;bottom:14px;left:14px;right:14px;z-index:2;
+  display:flex;align-items:flex-end;justify-content:space-between}
+.mc-title{font-size:12px;font-weight:600;color:white;letter-spacing:.04em}
+.mc-badge{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  padding:4px 8px;border-radius:2px}
+.badge-g{background:var(--g);color:white}
+.badge-r{background:var(--r);color:white}
+.mc-note{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.35);text-align:center;line-height:2;z-index:1}
+
+/* ── MANIFIESTO ── (THE WOW SECTION) */
+#manifiesto{background:var(--ink);padding:160px 64px;position:relative;overflow:hidden;min-height:100vh;
+  display:flex;align-items:center}
+#manifiesto::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 20% 50%,rgba(46,125,50,.12),transparent)}
+#manifiesto::after{content:'';position:absolute;top:0;right:0;width:1px;height:100%;
+  background:linear-gradient(to bottom,transparent,rgba(255,255,255,.06) 30%,rgba(255,255,255,.06) 70%,transparent)}
+.manifiesto-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.manifiesto-tag{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--a);margin-bottom:60px;display:flex;align-items:center;gap:12px}
+.manifiesto-tag::before{content:'';width:28px;height:1px;background:var(--a)}
+.manifiesto-text{font-family:var(--serif);font-size:clamp(32px,5vw,72px);
+  font-weight:400;line-height:1.2;letter-spacing:-.01em;color:rgba(255,255,255,.15)}
+.manifiesto-text .word{display:inline-block;transition:color .4s,opacity .4s;cursor:default;padding:0 .12em}
+.manifiesto-text .word.active{color:white}
+.manifiesto-text em{font-style:italic}
+.manifiesto-cta{margin-top:72px;opacity:0;transform:translateY(20px);transition:all .6s}
+.manifiesto-cta.visible{opacity:1;transform:translateY(0)}
+
+/* ── IMPACTO ── */
+#impacto{padding:0 64px 120px;background:var(--w)}
+.impacto-header{padding:100px 0 72px;display:flex;align-items:flex-end;justify-content:space-between;
+  border-bottom:1px solid rgba(0,0,0,.07);margin-bottom:0}
+.ih-left .section-tag{color:var(--ink)}
+.ih-left .section-tag::before{background:var(--ink)}
+.ih-h2{font-family:var(--serif);font-size:clamp(40px,5vw,68px);font-weight:700;
+  line-height:1.05;letter-spacing:-.02em;color:var(--ink)}
+.ih-h2 em{font-style:italic;color:var(--g)}
+.ih-note{max-width:320px;font-size:14px;font-weight:300;line-height:1.75;color:var(--mid)}
+
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid rgba(0,0,0,.07)}
+.sr-stat{padding:56px 0;border-right:1px solid rgba(0,0,0,.07);padding-left:0;padding-right:40px;
+  opacity:0;transform:translateY(28px)}
+.sr-stat:first-child{padding-left:0}
+.sr-stat:last-child{border-right:none}
+.sr-stat + .sr-stat{padding-left:40px;padding-right:0}
+.sr-stat:nth-child(3){padding-right:40px}
+.sr-num{font-family:var(--serif);font-size:clamp(56px,7vw,88px);font-weight:900;
+  line-height:.9;letter-spacing:-.03em;margin-bottom:16px;
+  display:flex;align-items:baseline;gap:4px}
+.sr-pfx{font-size:.44em;font-weight:400;margin-top:8px}
+.sr-sfx{font-size:.4em;font-weight:400}
+.clr-g-stat .sr-pfx,.clr-g-stat .cnt{color:var(--g)}
+.clr-r-stat .sr-pfx,.clr-r-stat .cnt{color:var(--r)}
+.clr-a-stat .sr-pfx,.clr-a-stat .cnt{color:var(--a)}
+.clr-k-stat .sr-pfx,.clr-k-stat .cnt{color:var(--ink)}
+.sr-lbl{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:8px}
+.sr-desc{font-size:13px;font-weight:300;color:var(--mid);line-height:1.65;max-width:200px}
+
+/* ── SPLIT SECTION ── */
+#split{display:grid;grid-template-columns:1fr 1fr;min-height:80vh}
+.split-photo{position:relative;overflow:hidden}
+.split-photo-bg{position:absolute;inset:0;width:100%;height:110%;will-change:transform}
+.spbg1{background:linear-gradient(160deg,oklch(50% 0.14 140) 0%,oklch(28% 0.08 145) 100%)}
+.spbg2{background:linear-gradient(160deg,oklch(55% 0.07 28) 0%,oklch(30% 0.08 22) 100%)}
+.split-photo-bg::before{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 4px,rgba(0,0,0,.03) 4px,rgba(0,0,0,.03) 5px)}
+.split-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+.split-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:60px 56px}
+.split-flag{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.split-h3{font-family:var(--serif);font-size:clamp(28px,3vw,44px);font-weight:700;
+  line-height:1.12;color:white;margin-bottom:16px;letter-spacing:-.01em}
+.split-body{font-size:14px;font-weight:300;line-height:1.75;color:rgba(255,255,255,.6);
+  margin-bottom:28px;max-width:320px}
+.split-link{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--a);text-decoration:none;display:flex;align-items:center;gap:8px;
+  transition:gap .3s}
+.split-link:hover{gap:12px}
+.split-note{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.3);text-align:center;line-height:2;pointer-events:none}
+
+/* ── PROYECTOS SCROLL ── */
+#proyectos{padding:120px 0;background:var(--off);overflow:hidden}
+.py-header{padding:0 64px;display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:52px}
+.py-h2{font-family:var(--serif);font-size:clamp(36px,4.5vw,58px);font-weight:700;
+  line-height:1.08;letter-spacing:-.02em;color:var(--ink)}
+.py-h2 em{font-style:italic;color:var(--g)}
+.py-scroll-hint{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);display:flex;align-items:center;gap:8px}
+.py-scroll-hint svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;animation:nudge 2s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
+
+.py-track-wrap{overflow-x:auto;padding:0 64px 32px;scrollbar-width:thin;
+  scrollbar-color:rgba(0,0,0,.15) transparent}
+.py-track-wrap::-webkit-scrollbar{height:3px}
+.py-track-wrap::-webkit-scrollbar-track{background:transparent}
+.py-track-wrap::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:2px}
+.py-track{display:flex;gap:20px;width:max-content}
+
+.py-card{width:340px;background:white;border-radius:4px;overflow:hidden;flex-shrink:0;
+  position:relative;transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s}
+.py-card:hover{transform:translateY(-8px);box-shadow:0 32px 64px rgba(0,0,0,.12)}
+.py-card-img{height:240px;position:relative;overflow:hidden}
+.py-card-img-bg{width:100%;height:120%;position:absolute;top:0;left:0;transition:transform .6s cubic-bezier(.22,1,.36,1)}
+.py-card:hover .py-card-img-bg{transform:scale(1.06) translateY(-4%)}
+.pcb1{background:linear-gradient(145deg,oklch(50% 0.14 142),oklch(30% 0.09 148))}
+.pcb2{background:linear-gradient(145deg,oklch(64% 0.11 55),oklch(48% 0.14 44))}
+.pcb3{background:linear-gradient(145deg,oklch(55% 0.09 215),oklch(40% 0.11 220))}
+.pcb4{background:linear-gradient(145deg,oklch(68% 0.09 75),oklch(52% 0.12 70))}
+.pcb5{background:linear-gradient(145deg,oklch(52% 0.14 155),oklch(34% 0.10 150))}
+.py-card-img-bg::before{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,transparent,transparent 5px,rgba(0,0,0,.03) 5px,rgba(0,0,0,.03) 6px)}
+.py-card-img-note{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.38);text-align:center;line-height:2;z-index:1}
+.py-region{position:absolute;top:14px;left:14px;font-size:9px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:2px;z-index:2}
+.py-region-g{background:var(--g);color:white}
+.py-region-e{background:var(--r);color:white}
+.py-card-body{padding:24px 24px 20px}
+.py-cat{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--g);margin-bottom:8px}
+.py-title{font-family:var(--serif);font-size:18px;font-weight:700;line-height:1.25;
+  color:var(--ink);margin-bottom:10px}
+.py-excerpt{font-size:13px;font-weight:300;color:var(--mid);line-height:1.65;margin-bottom:20px}
+.py-link{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--g);text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+  border-bottom:1px solid transparent;padding-bottom:2px;transition:gap .3s,border-color .3s}
+.py-link:hover{gap:10px;border-color:var(--g)}
+.py-link svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── ANÚMBARA ── */
+#anumbara{background:var(--ink);position:relative;overflow:hidden}
+.an-grid{display:grid;grid-template-columns:1fr 1fr;min-height:600px}
+.an-left{padding:100px 64px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1}
+.an-left .section-tag{color:var(--a)}
+.an-left .section-tag::before{background:var(--a)}
+.an-h2{font-family:var(--serif);font-size:clamp(40px,5vw,68px);font-weight:700;
+  line-height:1.05;letter-spacing:-.02em;color:white;margin-bottom:24px}
+.an-h2 em{font-style:italic;color:var(--a)}
+.an-body{font-size:16px;font-weight:300;line-height:1.85;color:rgba(255,255,255,.5);margin-bottom:28px}
+.an-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px}
+.an-chip{font-size:10px;font-weight:600;letter-spacing:.08em;
+  border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.45);
+  padding:7px 14px;border-radius:999px;transition:all .3s;cursor:default}
+.an-chip:hover{border-color:var(--a);color:var(--a)}
+.btn-amber{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink);background:var(--a);padding:14px 28px;border-radius:2px;
+  text-decoration:none;transition:background .3s,transform .2s}
+.btn-amber::after{content:'';position:absolute;top:-50%;left:-80%;width:50%;height:200%;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.35) 50%,transparent 60%);
+  transform:skewX(-15deg);transition:left .6s}
+.btn-amber:hover::after{left:135%}
+.btn-amber:hover{background:var(--al);transform:translateY(-2px)}
+
+.an-right{position:relative;overflow:hidden}
+.an-photo{position:absolute;inset:0;
+  background:linear-gradient(155deg,oklch(72% 0.13 75),oklch(52% 0.16 68));
+  display:flex;align-items:center;justify-content:center}
+.an-photo::before{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,.025) 3px,rgba(255,255,255,.025) 4px)}
+.an-photo-note{position:relative;z-index:1;font-family:monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);text-align:center;line-height:2.2}
+.an-overlay{position:absolute;inset:0;
+  background:linear-gradient(to right,var(--ink) 0%,transparent 40%)}
+.an-price-badge{position:absolute;bottom:40px;right:40px;
+  background:rgba(0,0,0,.6);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:16px 20px}
+.an-price-badge .pb-label{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-bottom:6px}
+.an-price-badge .pb-price{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--a)}
+
+/* ── TESTIMONIOS ── */
+#testimonios{padding:140px 64px;background:var(--off);overflow:hidden}
+.test-h2{font-family:var(--serif);font-size:clamp(32px,4vw,52px);font-weight:700;
+  letter-spacing:-.02em;color:var(--ink);margin-bottom:64px;text-align:center}
+.test-h2 em{font-style:italic;color:var(--g)}
+
+.test-track{display:flex;gap:24px;transition:transform .7s cubic-bezier(.22,1,.36,1)}
+.test-wrap{overflow:hidden;width:100%}
+.test-track{display:flex;gap:24px;transition:transform .7s cubic-bezier(.22,1,.36,1);width:max-content}
+.test-card{width:calc(50vw - 76px);max-width:640px;min-width:280px;background:white;border-radius:4px;padding:48px 44px;flex-shrink:0}
+.test-quote{font-family:var(--serif);font-style:italic;font-size:clamp(18px,2.2vw,24px);
+  line-height:1.55;color:var(--ink);margin-bottom:32px;position:relative}
+.test-quote::before{content:'\201C';font-size:80px;line-height:.6;color:var(--g);
+  opacity:.2;position:absolute;top:-8px;left:-4px;font-family:var(--serif);font-style:normal}
+.test-author{display:flex;align-items:center;gap:16px}
+.test-avatar{width:48px;height:48px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:18px;font-weight:700;color:white}
+.av1{background:var(--g)} .av2{background:var(--r)} .av3{background:var(--a)} .av4{background:oklch(50% 0.14 220)}
+.test-name{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.test-role{font-size:12px;font-weight:400;color:var(--faint)}
+
+.test-controls{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:48px}
+.test-btn{width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(0,0,0,.12);
+  background:none;cursor:none;display:flex;align-items:center;justify-content:center;
+  transition:all .3s}
+.test-btn:hover{border-color:var(--g);background:var(--g)}
+.test-btn:hover svg{stroke:white}
+.test-btn svg{width:14px;height:14px;stroke:var(--mid);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.test-dots{display:flex;gap:6px;align-items:center}
+.test-dot{width:6px;height:6px;border-radius:50%;background:rgba(0,0,0,.15);
+  transition:all .3s;cursor:pointer}
+.test-dot.active{background:var(--g);width:20px;border-radius:3px}
+
+/* ── PARTNERS ── */
+#partners{padding:64px 0;border-top:1px solid rgba(0,0,0,.07);border-bottom:1px solid rgba(0,0,0,.07);overflow:hidden;background:var(--w)}
+.partners-label{text-align:center;font-size:10px;font-weight:700;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--faint);margin-bottom:36px}
+.partners-track{display:flex;animation:marquee 28s linear infinite;white-space:nowrap;align-items:center}
+.partners-track-2{animation-direction:reverse;animation-duration:32s;margin-top:16px}
+.partners-item{display:inline-flex;align-items:center;padding:0 40px;
+  font-size:13px;font-weight:700;letter-spacing:.04em;color:rgba(0,0,0,.25);
+  text-transform:uppercase;gap:40px}
+.pi-dot{width:3px;height:3px;background:rgba(0,0,0,.15);border-radius:50%;flex-shrink:0}
+
+/* ── CTA FINAL ── */
+#cta-final{background:var(--g);padding:120px 64px;position:relative;overflow:hidden;
+  display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
+#cta-final::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--gd) 0%,var(--g) 60%,oklch(52% 0.15 148) 100%)}
+#cta-final::after{content:'';position:absolute;top:-30%;right:-10%;width:600px;height:600px;
+  border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.06),transparent 70%)}
+.cta-left{position:relative;z-index:1}
+.cta-eyebrow{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);margin-bottom:18px}
+.cta-h2{font-family:var(--serif);font-size:clamp(40px,5.5vw,72px);font-weight:900;
+  line-height:.95;letter-spacing:-.025em;color:white;margin-bottom:24px}
+.cta-h2 em{font-style:italic;font-weight:400}
+.cta-body{font-size:16px;font-weight:300;line-height:1.85;color:rgba(255,255,255,.65);margin-bottom:40px}
+.cta-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-white{display:inline-flex;align-items:center;gap:8px;position:relative;overflow:hidden;
+  font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--g);background:white;padding:16px 32px;border-radius:2px;text-decoration:none;
+  transition:background .3s,transform .2s}
+.btn-white:hover{background:rgba(255,255,255,.92);transform:translateY(-2px)}
+.btn-outline-w{display:inline-flex;align-items:center;font-size:12px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:white;
+  border:1.5px solid rgba(255,255,255,.35);padding:16px 28px;border-radius:2px;
+  text-decoration:none;transition:all .3s}
+.btn-outline-w:hover{border-color:white;background:rgba(255,255,255,.08);transform:translateY(-2px)}
+.cta-right{position:relative;z-index:1;display:flex;flex-direction:column;gap:16px}
+.seal{display:flex;align-items:center;gap:18px;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:22px 24px;
+  backdrop-filter:blur(8px);transition:background .3s}
+.seal:hover{background:rgba(255,255,255,.12)}
+.seal-icon{width:46px;height:46px;background:rgba(255,255,255,.12);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.seal-icon svg{width:20px;height:20px;fill:none;stroke:white;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.seal-title{font-size:13px;font-weight:600;color:white;margin-bottom:4px}
+.seal-desc{font-size:12px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.5}
+
+/* ── FOOTER ── */
+footer{background:#0e0e0c;padding:80px 64px 36px}
+.ft{display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr;gap:72px;
+  padding-bottom:60px;border-bottom:1px solid rgba(255,255,255,.05)}
+.ft-name{font-family:var(--serif);font-size:30px;font-weight:700;color:white;margin-bottom:12px}
+.ft-tagline{font-size:14px;font-weight:300;color:rgba(255,255,255,.3);line-height:1.75;margin-bottom:28px}
+.ft-socials{display:flex;gap:10px}
+.ft-social{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all .3s}
+.ft-social svg{width:14px;height:14px;fill:rgba(255,255,255,.35);transition:fill .3s}
+.ft-social:hover{border-color:var(--g);background:var(--g)}
+.ft-social:hover svg{fill:white}
+.ft-col-h{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.25);margin-bottom:20px}
+.ft-links{list-style:none;display:flex;flex-direction:column;gap:12px}
+.ft-links a{font-size:13px;font-weight:300;color:rgba(255,255,255,.38);text-decoration:none;transition:color .3s}
+.ft-links a:hover{color:var(--gl)}
+.ft-bottom{padding-top:28px;display:flex;align-items:center;justify-content:space-between}
+.ft-copy{font-size:12px;color:rgba(255,255,255,.18)}
+.ft-flags{display:flex;gap:8px}
+.ft-flag{font-size:18px;opacity:.35;transition:opacity .3s;cursor:default}
+.ft-flag:hover{opacity:1}
+
+/* ── REVEAL UTIL ── */
+.reveal{opacity:0;transform:translateY(36px)}
+.reveal-left{opacity:0;transform:translateX(-40px)}
+.reveal-right{opacity:0;transform:translateX(40px)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  #nav{padding:20px 28px}
+  #nav.solid{padding:14px 28px}
+  .nav-links{display:none}
+  #hero{grid-template-columns:1fr;height:100vh}
+  .hero-img-col{position:absolute;inset:0;height:100%}
+  .hero-text-col{background:rgba(0,0,0,.7);backdrop-filter:blur(0);justify-content:flex-end}
+  #esencia,#testimonios{padding:80px 28px}
+  #esencia{grid-template-columns:1fr}
+  #impacto{padding:0 28px 80px}
+  .stats-row{grid-template-columns:1fr 1fr;gap:24px}
+  .sr-stat{border-right:none;padding:32px 0}
+  #split{grid-template-columns:1fr}
+  .py-header{padding:0 28px}
+  .py-track-wrap{padding:0 28px 24px}
+  #proyectos{padding:80px 0}
+  .an-grid{grid-template-columns:1fr}
+  .an-right{height:300px}
+  #cta-final{grid-template-columns:1fr;padding:80px 28px;gap:48px}
+  footer{padding:56px 28px 28px}
+  .ft{grid-template-columns:1fr 1fr;gap:40px}
+  #manifiesto{padding:100px 28px}
+  .manifiesto-text{font-size:clamp(28px,5vw,48px)}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">
+    <img src="uploads/Logotipo SOGUIBA (texto en blanco)-c8137899.png" alt="Soguiba" style="height:60px;width:auto">
+  </div>
+  <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
+  <div class="loader-pct" id="loaderPct">0%</div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <img src="uploads/Logotipo SOGUIBA (texto en blanco)-c8137899.png" id="navLogoImg" alt="Soguiba" style="height:36px;width:auto;transition:filter .45s ease">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#esencia">Quiénes somos</a></li>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#anumbara">Anúmbara</a></li>
+    <li><a href="#testimonios">Testimonios</a></li>
+    <li><a href="#cta-final">Colabora</a></li>
+  </ul>
+  <div class="nav-r">
+    <span class="nav-lang">ES</span>
+    <a href="#cta-final" class="btn-nav">Donar</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-img-col" id="heroImgCol">
+    <div class="hero-photo" id="heroPhoto">
+      <div class="hero-silhouette"></div>
+      <div class="hero-photo-inner">
+        <div class="hero-photo-note">Fotografía protagonista<br>Mujer de Guinea Bissau · plano medio · luz natural<br>↑ Subir imagen real aquí</div>
+      </div>
+    </div>
+    <div class="hero-img-overlay"></div>
+  </div>
+
+  <div class="hero-text-col">
+    <div class="hero-eyebrow" id="heroEyebrow">
+</div>
+    <h1 class="hero-h1" id="heroH1">
+      Solidaridad<br>
+      <span class="italic">con Guinea</span><br>
+      <span class="outline">Bissau</span>
+    </h1>
+    <p class="hero-sub" id="heroSub">Trabajamos junto a las comunidades de Guinea Bissau en educación, agua, salud y soberanía alimentaria. Desde Extremadura, construimos puentes de justicia.</p>
+    <div class="hero-btns" id="heroBtns">
+      <a href="#manifiesto" class="btn-hero-primary">Cambiamos Vidas</a>
+      <a href="#esencia" class="btn-hero-ghost">Nuestra historia</a>
+    </div>
+    <div class="hero-stats-strip" id="heroStats">
+      <div class="hs"><div class="hs-num">+20k</div><div class="hs-lbl">Personas</div></div>
+      <div class="hs"><div class="hs-num">38</div><div class="hs-lbl">Pozos</div></div>
+      <div class="hs"><div class="hs-num">23</div><div class="hs-lbl">Años</div></div>
+      <div class="hs"><div class="hs-num">+12</div><div class="hs-lbl">Proyectos</div></div>
+    </div>
+    <div class="hero-scroll-indicator" id="heroScroll">
+      <span class="hsi-line"></span>
+      <span class="hsi-text">Scroll</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-item">Guinea Bissau <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Extremadura <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Cooperación Internacional <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Educación <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Agua limpia <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Soberanía Alimentaria <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Voluntariado <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Justicia Global <span class="marquee-dot"></span></div>
+    <!-- duplicate for seamless loop -->
+    <div class="marquee-item">Guinea Bissau <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Extremadura <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Cooperación Internacional <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Educación <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Agua limpia <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Soberanía Alimentaria <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Voluntariado <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Justicia Global <span class="marquee-dot"></span></div>
+  </div>
+</div>
+
+<!-- ESENCIA -->
+<section id="esencia">
+  <div class="reveal-left" id="esLeft">
+    <div class="section-tag" style="font-size: 14px">Nuestra esencia</div>
+    <h2 class="es-h2">Más de 20 años<br>construyendo<br><em>dignidad real</em></h2>
+    <p class="es-body">Soguiba nació en Extremadura con una convicción: la cooperación internacional no es caridad, es justicia. Trabajamos junto a —no para— las comunidades de Guinea Bissau.</p>
+    <blockquote class="es-quote">«Ningún desarrollo es sostenible si no lo lidera la propia comunidad.»</blockquote>
+    <p class="es-body">En España, sensibilizamos, formamos voluntarios y gestionamos el Espacio Anúmbara, un espacio solidario que ayuda a financiar los proyectos.</p>
+    <div class="es-cta">
+      <a href="#proyectos" class="btn-solid" style="gap: 8px; align-items: center">QUIÉNES SOMOS</a>
+      <a href="#" class="btn-text-link">Descargar memoria anual →</a>
+    </div>
+  </div>
+  <div class="es-mosaic reveal-right" id="esMosaic">
+    <div class="mc">
+      <div class="mc-photo mcp1">
+        <div class="mc-note">Proyecto educativo<br>Guinea Bissau</div>
+      </div>
+      <div class="mc-label">
+        <span class="mc-title">Cooperación</span>
+        <span class="mc-badge badge-g">GB</span>
+      </div>
+    </div>
+    <div class="mc">
+      <div class="mc-photo mcp2">
+        <div class="mc-note">Proyecto agrícola<br>soberanía alimentaria</div>
+      </div>
+      <div class="mc-label">
+        <span class="mc-title">Anúmbara</span>
+        <span class="mc-badge badge-g">GB</span>
+      </div>
+    </div>
+    <div class="mc">
+      <div class="mc-photo mcp3">
+        <div class="mc-note">Voluntariado<br>Extremadura</div>
+      </div>
+      <div class="mc-label">
+        <span class="mc-title">Educación para la Ciudadanía</span>
+        <span class="mc-badge badge-r">ES</span>
+      </div>
+    </div>
+    <div class="mc">
+      <div class="mc-photo mcp4">
+        <div class="mc-note">Agua y<br>saneamiento</div>
+      </div>
+      <div class="mc-label">
+        <span class="mc-title">Agua</span>
+        <span class="mc-badge badge-g">GB</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFIESTO — THE WOW ANIMATION -->
+<section id="manifiesto">
+  <div class="manifiesto-inner">
+    <div class="manifiesto-tag" style="font-size: 14px">Nuestro manifiesto</div>
+    <div class="manifiesto-text" id="manifiestoText"></div>
+    <div class="manifiesto-cta" id="manifestoCta">
+      <a href="#cta-final" class="btn-solid" style="background:white;color:var(--ink)">Únete al movimiento →</a>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACTO -->
+<section id="impacto">
+  <div class="impacto-header reveal">
+    <div class="ih-left">
+      <div class="section-tag" style="font-size: 14px">Impacto medible</div>
+      <h2 class="ih-h2">Resultados que<br><em>hablan solos</em></h2>
+    </div>
+    <p class="ih-note">Cada cifra representa una vida transformada. Nuestros resultados son publicados cada año.</p>
+  </div>
+  <div class="stats-row">
+    <div class="sr-stat clr-g-stat">
+      <div class="sr-num"><span class="sr-pfx">+</span><span class="cnt counter" data-target="20000">0</span></div>
+      <div class="sr-lbl">Personas beneficiadas</div>
+      <div class="sr-desc">Beneficiarios directos en comunidades rurales de Guinea Bissau desde 2003.</div>
+    </div>
+    <div class="sr-stat clr-a-stat">
+      <div class="sr-num"><span class="cnt counter" data-target="38">0</span><span class="sr-sfx">&nbsp;pozos</span></div>
+      <div class="sr-lbl">Agua limpia</div>
+      <div class="sr-desc">Sistemas de agua potable y saneamiento construidos y en funcionamiento.</div>
+    </div>
+    <div class="sr-stat clr-r-stat">
+      <div class="sr-num"><span class="sr-pfx">+</span><span class="cnt counter" data-target="5200">0</span></div>
+      <div class="sr-lbl">MENORES ESCOLARIZADOS</div>
+      <div class="sr-desc">Acceso a educación de calidad para la nueva generación de Guinea Bissau.</div>
+    </div>
+    <div class="sr-stat clr-k-stat">
+      <div class="sr-num"><span class="cnt counter" data-target="23">25</span><span class="sr-sfx">&nbsp;años</span></div>
+      <div class="sr-lbl">De presencia</div>
+      <div class="sr-desc">Trabajo continuo sobre el terreno construyendo confianza y sostenibilidad.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SPLIT GUINEA BISSAU / EXTREMADURA -->
+<section id="split">
+  <div class="split-photo">
+    <div class="split-photo-bg spbg1" id="splitBg1"></div>
+    <div class="split-overlay"></div>
+    <div class="split-note">Fotografías Guinea Bissau<br>Campo, escuelas, comunidades<br>↑ Subir imágenes reales</div>
+    <div class="split-content">
+      <div class="split-flag">🇬🇼 Guinea Bissau</div>
+      <h3 class="split-h3">Donde el trabajo<br>cobra sentido</h3>
+      <p class="split-body">Proyectos educativos, agrícolas, de agua y salud que transforman el día a día de miles de familias en las regiones más remotas del país.</p>
+      <a href="#proyectos" class="split-link">Ver proyectos en Guinea Bissau →</a>
+    </div>
+  </div>
+  <div class="split-photo">
+    <div class="split-photo-bg spbg2" id="splitBg2"></div>
+    <div class="split-overlay"></div>
+    <div class="split-note">Fotografías Extremadura<br>Anúmbara, voluntariado, eventos<br>↑ Subir imágenes reales</div>
+    <div class="split-content">
+      <div class="split-flag">🇪🇸 Extremadura</div>
+      <h3 class="split-h3">Donde nace<br>la solidaridad</h3>
+      <p class="split-body">Desde Cáceres, gestionamos el Espacio Anúmbara, formamos voluntarios y sensibilizamos a miles de ciudadanos sobre la realidad de Guinea Bissau.</p>
+      <a href="#anumbara" class="split-link">Descubrir Espacio Anúmbara →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROYECTOS SCROLL HORIZONTAL -->
+<section id="proyectos">
+  <div class="py-header reveal">
+    <div>
+      <div class="section-tag" style="font-size: 14px">Proyectos activos</div>
+      <h2 class="py-h2">Lo que hacemos<br><em>sobre el terreno</em></h2>
+    </div>
+    <div class="py-scroll-hint">
+      Desliza para explorar
+      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </div>
+  </div>
+  <div class="py-track-wrap">
+    <div class="py-track">
+      <div class="py-card">
+        <div class="py-card-img">
+          <div class="py-card-img-bg pcb1"><div class="py-card-img-note">Aulas · niñas<br>Guinea Bissau</div></div>
+          <div class="py-region py-region-g">Guinea Bissau</div>
+        </div>
+        <div class="py-card-body">
+          <div class="py-cat">Educación · 2023–2025</div>
+          <div class="py-title">Calidités III: Empoderamiento de mujeres jóvenes</div>
+          <div class="py-excerpt">Acceso a la educación para niñas en zonas rurales remotas. Formación docente y construcción de aulas.</div>
+          <a href="#" class="py-link">Leer más <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+      <div class="py-card">
+        <div class="py-card-img">
+          <div class="py-card-img-bg pcb2"><div class="py-card-img-note">Campo · huerta<br>soberanía alimentaria</div></div>
+          <div class="py-region py-region-g">Guinea Bissau</div>
+        </div>
+        <div class="py-card-body">
+          <div class="py-cat">Agricultura · 2024–2026</div>
+          <div class="py-title">Mânfur Horticultura: Futuro de nó Horta</div>
+          <div class="py-excerpt">Técnicas agroecológicas sostenibles para producción local de alimentos y autonomía económica.</div>
+          <a href="#" class="py-link">Leer más <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+      <div class="py-card">
+        <div class="py-card-img">
+          <div class="py-card-img-bg pcb3"><div class="py-card-img-note">Voluntariado<br>Extremadura</div></div>
+          <div class="py-region py-region-e">Extremadura</div>
+        </div>
+        <div class="py-card-body">
+          <div class="py-cat">Sensibilización · Anual</div>
+          <div class="py-title">Voluntariado: pieza clave de Soguiba Extremadura</div>
+          <div class="py-excerpt">Formación y acción voluntaria en España con posibilidad de vivir experiencia internacional.</div>
+          <a href="#" class="py-link">Leer más <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+      <div class="py-card">
+        <div class="py-card-img">
+          <div class="py-card-img-bg pcb4"><div class="py-card-img-note">Pozo · agua<br>comunidad rural</div></div>
+          <div class="py-region py-region-g">Guinea Bissau</div>
+        </div>
+        <div class="py-card-body">
+          <div class="py-cat">Agua · 2023–2024</div>
+          <div class="py-title">Fonte na Escola: Agua limpia en cada escuela</div>
+          <div class="py-excerpt">Sistemas de captación y purificación en centros educativos rurales. Higiene y salud garantizadas.</div>
+          <a href="#" class="py-link">Leer más <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+      <div class="py-card">
+        <div class="py-card-img">
+          <div class="py-card-img-bg pcb5"><div class="py-card-img-note">Líderes comunitarias<br>Guinea Bissau</div></div>
+          <div class="py-region py-region-g">Guinea Bissau</div>
+        </div>
+        <div class="py-card-body">
+          <div class="py-cat">Liderazgo · 2024</div>
+          <div class="py-title">Avanço Guinée: Liderazgo social y empresarial</div>
+          <div class="py-excerpt">Formación de mujeres líderes comunitarias para el desarrollo económico y social de Guinea Bissau.</div>
+          <a href="#" class="py-link">Leer más <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANÚMBARA -->
+<section id="anumbara">
+  <div class="an-grid">
+    <div class="an-left reveal">
+      <div class="section-tag" style="font-size: 14px">Espacio solidario</div>
+      <h2 class="an-h2">Espacio<br><em>Anúmbara</em></h2>
+      <p class="an-body">Un espacio único en Cáceres donde el comercio justo, el arte africano y la cultura de Guinea Bissau se encuentran. Cada compra financia directamente un proyecto sobre el terreno.</p>
+      <div class="an-chips">
+        <span class="an-chip">Productos artesanales</span>
+        <span class="an-chip">Voluntariado</span>
+        <span class="an-chip">Arte y cultura</span>
+        <span class="an-chip">Comercio justo</span>
+        <span class="an-chip">Talleres</span>
+        <span class="an-chip">Eventos solidarios</span>
+      </div>
+      <a href="#" class="btn-amber" style="font-weight: 600">Visitar Anúmbara →</a>
+    </div>
+    <div class="an-right">
+      <div class="an-photo">
+        <div class="an-photo-note">Fotografía Espacio Anúmbara<br>Interior · ambiente cálido · artesanía<br>↑ Subir imagen real</div>
+      </div>
+      <div class="an-overlay"></div>
+      <div class="an-price-badge">
+        <div class="pb-label">ASÓCIATE DESDE</div>
+        <div class="pb-price">5€/mes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section id="testimonios">
+  <div class="section-tag reveal" style="justify-content: center; margin-bottom: 12px; font-size: 14px">Voces reales</div>
+  <h2 class="test-h2 reveal">Lo que dicen quienes<br><em>lo viven</em></h2>
+  <div class="test-wrap">
+    <div class="test-track" id="testTrack">
+      <div class="test-card">
+        <p class="test-quote">Cuando llegué a Guinea Bissau como voluntaria, pensé que iba a ayudar. Pero fui yo quien recibió una lección de vida sobre lo que significa la comunidad, la fuerza y la alegría en condiciones adversas.</p>
+        <div class="test-author">
+          <div class="test-avatar av1">A</div>
+          <div><div class="test-name">Ana Pérez</div><div class="test-role">Voluntaria · Programa 2023</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <p class="test-quote">Soguiba no viene a decirnos qué necesitamos. Vienen a escuchar, a construir junto a nosotros. Por eso llevamos más de diez años trabajando con ellos en nuestra comunidad.</p>
+        <div class="test-author">
+          <div class="test-avatar av2">D</div>
+          <div><div class="test-name">Domingos Mendes</div><div class="test-role">Líder comunitario · Bafatá, Guinea Bissau</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <p class="test-quote">Gracias a la beca escolar de Soguiba pude seguir estudiando. Hoy soy maestra en mi aldea y mis alumnas también tienen la oportunidad que yo tuve.</p>
+        <div class="test-author">
+          <div class="test-avatar av3">F</div>
+          <div><div class="test-name">Fátima Baldé</div><div class="test-role">Maestra · Beneficiaria programa educativo</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <p class="test-quote">El Espacio Anúmbara me ha cambiado la manera de consumir. Saber que cada compra un pozo de agua en Guinea Bissau es algo que no tiene precio.</p>
+        <div class="test-author">
+          <div class="test-avatar av4">C</div>
+          <div><div class="test-name">Carlos Romero</div><div class="test-role">Socio mensual · Mérida</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="test-controls">
+    <button class="test-btn" id="testPrev" aria-label="Anterior">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="test-dots" id="testDots">
+      <div class="test-dot active" data-idx="0"></div>
+      <div class="test-dot" data-idx="1"></div>
+    </div>
+    <button class="test-btn" id="testNext" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<div id="partners">
+  <div class="partners-label" style="font-size: 1px">Financiadores y entidades colaboradoras</div>
+  <div style="overflow:hidden">
+    <div class="partners-track">
+      <div class="partners-item">Junta de Extremadura <span class="pi-dot"></span></div>
+      <div class="partners-item">AEXCID</div>
+      <div class="partners-item">Diputación Cáceres <span class="pi-dot"></span></div>
+      <div class="partners-item">IMAS
+</div>
+      <div class="partners-item">Fundación La Caixa <span class="pi-dot"></span></div>
+      <div class="partners-item">TIERRA SIN MALES
+</div>
+      <div class="partners-item">Coordinadora ONG Extremadura <span class="pi-dot"></span></div>
+      <div class="partners-item">Junta de Extremadura <span class="pi-dot"></span></div>
+      <div class="partners-item">AECID <span class="pi-dot"></span></div>
+      <div class="partners-item">Diputación Cáceres <span class="pi-dot"></span></div>
+      <div class="partners-item">Ayuntamiento de Mérida <span class="pi-dot"></span></div>
+      <div class="partners-item">Fundación La Caixa <span class="pi-dot"></span></div>
+      <div class="partners-item">Cruz Roja <span class="pi-dot"></span></div>
+      <div class="partners-item">Coordinadora ONG Extremadura <span class="pi-dot"></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA FINAL -->
+<section id="cta-final">
+  <div class="cta-left reveal">
+    <div class="cta-eyebrow" style="font-size: 14px">Únete al cambio</div>
+    <h2 class="cta-h2">Tu apoyo<br><em>transforma</em><br>vidas reales</h2>
+    <p class="cta-body">Hazte socio/a desde 5€/mes y sé parte de una red de más de 80 personas comprometidas con la justicia global. Más del 95% llega íntegro al terreno.</p>
+    <div class="cta-btns">
+      <a href="#" class="btn-white">Hazte socio/a</a>
+      <a href="#" class="btn-outline-w">Donación puntual</a>
+    </div>
+  </div>
+  <div class="cta-right reveal">
+    <div class="seal">
+      <div class="seal-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+      </div>
+      <div>
+        <div class="seal-title">ONG Acreditada </div>
+        <div class="seal-desc">Registrada en el Registro Nacional de Asociaciones</div>
+      </div>
+    </div>
+    <div class="seal">
+      <div class="seal-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+      </div>
+      <div>
+        <div class="seal-title">+95% al terreno</div>
+        <div class="seal-desc">Cada euro donado llega casi íntegro a proyectos en Guinea Bissau.</div>
+      </div>
+    </div>
+    <div class="seal">
+      <div class="seal-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      </div>
+      <div>
+        <div class="seal-title">+80 socios activos</div>
+        <div class="seal-desc">Una comunidad comprometida con la solidaridad internacional.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft">
+    <div>
+      <div class="ft-name">SOGUIBA</div>
+      <div class="ft-tagline">Asociación de cooperación al desarrollo para Guinea Bissau.<br>Desde Extremadura, mirando al mundo.</div>
+      <div class="ft-socials">
+        <a href="#" class="ft-social"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+        <a href="#" class="ft-social"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
+        <a href="#" class="ft-social"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" class="ft-social"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+      </div>
+    </div>
+    <div>
+      <div class="ft-col-h">Organización</div>
+      <ul class="ft-links">
+        <li><a href="#">Quiénes somos</a></li>
+        <li><a href="#">Junta directiva</a></li>
+        <li><a href="#">Transparencia</a></li>
+        <li><a href="#">Memorias anuales</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-h">Proyectos</div>
+      <ul class="ft-links">
+        <li><a href="#">Guinea Bissau</a></li>
+        <li><a href="#">Extremadura</a></li>
+        <li><a href="#">Espacio Anúmbara</a></li>
+        <li><a href="#">Voluntariado</a></li>
+        <li><a href="#">Noticias</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-h">Contacto</div>
+      <ul class="ft-links">
+        <li><a href="mailto:info@ongsoguiba.org">info@ongsoguiba.org</a></li>
+        <li><a href="tel:+34927779669">927 779 669</a></li>
+        <li><a href="#">Calle San Antón, Cáceres</a></li>
+        <li><a href="#">ongsoguiba.org</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div class="ft-copy">© 2025 ONG Soguiba · <a href="#" style="color:inherit">Aviso legal</a> · <a href="#" style="color:inherit">Privacidad</a></div>
+    <div class="ft-flags"><span class="ft-flag">🇬🇼</span><span class="ft-flag">🇪🇸</span></div>
+  </div>
+</footer>
+
+<script>
+/* ── CURSOR ── */
+const dot = document.getElementById('cur-dot');
+const ring = document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px'});
+(function animRing(){rx+=(mx-rx)*.14;ry+=(my-ry)*.14;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
+
+/* ── LOADER ── */
+const fill = document.getElementById('loaderFill');
+const pct  = document.getElementById('loaderPct');
+let p=0;
+const loaderInt = setInterval(()=>{
+  p = Math.min(p + Math.random()*18+4, 100);
+  fill.style.width = p+'%';
+  pct.textContent = Math.floor(p)+'%';
+  if(p>=100){
+    clearInterval(loaderInt);
+    setTimeout(()=>{
+      gsap.to('#loader',{opacity:0,duration:.6,ease:'power2.in',onComplete:()=>{
+        document.getElementById('loader').style.display='none';
+        startIntro();
+      }});
+    },300);
+  }
+},60);
+gsap.to('.loader-logo',{opacity:1,duration:.8,delay:.2});
+
+/* ── NAV LOGO text color on solid ── */
+const navLogoImg = document.getElementById('navLogoImg');
+ScrollTrigger.create({
+  start:80,
+  onEnter:()=>{
+    document.getElementById('nav').classList.add('solid');
+    // Logo PNG is white — invert to full color on solid white nav
+    navLogoImg.style.filter='brightness(0) saturate(100%) invert(35%) sepia(60%) saturate(500%) hue-rotate(90deg)';
+  },
+  onLeaveBack:()=>{
+    document.getElementById('nav').classList.remove('solid');
+    navLogoImg.style.filter='none';
+  }
+});
+
+gsap.registerPlugin(ScrollTrigger);
+
+function startIntro(){
+  /* hero entrance */
+  const tl = gsap.timeline({defaults:{ease:'power3.out'}});
+  tl.to('#heroEyebrow',{opacity:1,y:0,duration:.9,delay:.15})
+    .to('#heroH1',{opacity:1,y:0,duration:1.1},'-=.6')
+    .to('#heroSub',{opacity:1,y:0,duration:.9},'-=.7')
+    .to('#heroBtns',{opacity:1,y:0,duration:.8},'-=.6')
+    .to('#heroStats',{opacity:1,duration:.8},'-=.5')
+    .to('#heroScroll',{opacity:1,duration:.7},'-=.4');
+}
+
+/* ── PARALLAX HERO ── */
+gsap.to('#heroPhoto',{
+  y:'-12%',ease:'none',
+  scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}
+});
+gsap.to('#heroScroll',{
+  opacity:0,ease:'none',
+  scrollTrigger:{trigger:'#hero',start:'top top',end:'15% top',scrub:true}
+});
+
+/* ── SPLIT PARALLAX ── */
+gsap.to('#splitBg1',{y:'-8%',ease:'none',scrollTrigger:{trigger:'#split',start:'top bottom',end:'bottom top',scrub:true}});
+gsap.to('#splitBg2',{y:'-12%',ease:'none',scrollTrigger:{trigger:'#split',start:'top bottom',end:'bottom top',scrub:true}});
+
+/* ── REVEALS ── */
+gsap.utils.toArray('.reveal').forEach(el=>{
+  gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 82%',toggleActions:'play none none none'}});
+});
+gsap.utils.toArray('.reveal-left').forEach(el=>{
+  gsap.to(el,{opacity:1,x:0,duration:1,ease:'power3.out',
+    scrollTrigger:{trigger:el,start:'top 80%',toggleActions:'play none none none'}});
+});
+gsap.utils.toArray('.reveal-right').forEach(el=>{
+  gsap.to(el,{opacity:1,x:0,duration:1,ease:'power3.out',delay:.12,
+    scrollTrigger:{trigger:el,start:'top 80%',toggleActions:'play none none none'}});
+});
+
+/* ── COUNTERS ── */
+const eqo = t=>1-Math.pow(1-t,4);
+const cio = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const el=e.target,target=parseInt(el.dataset.target),dur=2400,t0=performance.now();
+    const tick=now=>{
+      const prog=eqo(Math.min((now-t0)/dur,1));
+      const v=Math.round(prog*target);
+      el.textContent=v>=1000?v.toLocaleString('es-ES'):v;
+      if(now-t0<dur)requestAnimationFrame(tick);
+      else el.textContent=target>=1000?target.toLocaleString('es-ES'):target;
+    };
+    requestAnimationFrame(tick);
+    cio.unobserve(el);
+  });
+},{threshold:.4});
+document.querySelectorAll('.counter').forEach(c=>cio.observe(c));
+
+/* ── STAT STAGGER ── */
+gsap.utils.toArray('.sr-stat').forEach((el,i)=>{
+  gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',delay:i*.12,
+    scrollTrigger:{trigger:'#impacto',start:'top 78%',toggleActions:'play none none none'}});
+});
+
+/* ── MANIFIESTO WORD REVEAL ── */
+const manifiestoWords = [
+  {text:'Cada',em:false},{text:'niña',em:true},{text:'merece',em:false},{text:'una',em:false},{text:'escuela.',em:false},
+  {text:'Cada',em:false},{text:'familia',em:true},{text:'merece',em:false},{text:'agua',em:false},{text:'limpia.',em:false},
+  {text:'Cada',em:false},{text:'comunidad',em:true},{text:'merece',em:false},{text:'decidir',em:false},{text:'su',em:false},{text:'propio',em:false},{text:'futuro.',em:false},
+  {text:'Eso',em:false},{text:'es',em:false},{text:'Soguiba.',em:true}
+];
+const mText = document.getElementById('manifiestoText');
+manifiestoWords.forEach(w=>{
+  const span=document.createElement('span');
+  span.className='word';
+  span.textContent=w.text+' ';
+  if(w.em)span.style.fontStyle='italic';
+  mText.appendChild(span);
+});
+const words = mText.querySelectorAll('.word');
+ScrollTrigger.create({
+  trigger:'#manifiesto',
+  start:'top 80%',
+  end:'bottom 20%',
+  scrub:false,
+  onUpdate(self){
+    const prog=self.progress;
+    words.forEach((w,i)=>{
+      const threshold=i/words.length;
+      if(prog>threshold){w.classList.add('active')}
+      else{w.classList.remove('active')}
+    });
+    if(prog>0.85){document.getElementById('manifestoCta').classList.add('visible')}
+    else{document.getElementById('manifestoCta').classList.remove('visible')}
+  }
+});
+/* also trigger on scroll position more precisely */
+gsap.to({},{ scrollTrigger:{
+  trigger:'#manifiesto',start:'top center',end:'bottom center',scrub:.5,
+  onUpdate(self){
+    words.forEach((w,i)=>{
+      w.classList.toggle('active',self.progress > i/words.length * .95);
+    });
+    document.getElementById('manifestoCta').classList.toggle('visible',self.progress>.85);
+  }
+}});
+
+/* ── TESTIMONIOS SLIDER ── */
+const track=document.getElementById('testTrack');
+const dots=document.querySelectorAll('.test-dot');
+let cur=0,total=2;
+function goTo(n){
+  cur=Math.max(0,Math.min(n,total-1));
+  track.style.transform=`translateX(calc(-${cur}*(50% + 12px)))`;
+  dots.forEach((d,i)=>d.classList.toggle('active',i===cur));
+}
+document.getElementById('testNext').addEventListener('click',()=>goTo(cur+1));
+document.getElementById('testPrev').addEventListener('click',()=>goTo(cur-1));
+dots.forEach((d,i)=>d.addEventListener('click',()=>goTo(i)));
+let autoSlide=setInterval(()=>goTo(cur<total-1?cur+1:0),5000);
+track.parentElement.addEventListener('mouseenter',()=>clearInterval(autoSlide));
+track.parentElement.addEventListener('mouseleave',()=>{autoSlide=setInterval(()=>goTo(cur<total-1?cur+1:0),5000)});
+
+/* ── MOBILE TOUCH ── */
+if(window.matchMedia('(hover:none)').matches){
+  let ts=0;
+  track.addEventListener('touchstart',e=>ts=e.touches[0].clientX,{passive:true});
+  track.addEventListener('touchend',e=>{
+    const diff=ts-e.changedTouches[0].clientX;
+    if(Math.abs(diff)>40){diff>0?goTo(cur+1):goTo(cur-1)}
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proyectos — Soguiba · Solidaridad con Guinea Bissau</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g:#2e7d32;--gl:#43a047;--gd:#1b5e20;
+  --r:#c0392b;--rl:#e74c3c;
+  --a:#f39c12;--al:#f5b942;
+  --w:#fafaf8;--off:#f2f0ec;--ink:#141412;--mid:#5a5855;--faint:#9a9895;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Inter',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:var(--sans);background:var(--w);color:var(--ink);overflow-x:hidden;cursor:none}
+
+/* ── SCROLL PROGRESS ── */
+#scroll-bar{position:fixed;top:0;left:0;height:2px;background:var(--g);z-index:9999;width:0%;transition:width .05s linear;pointer-events:none}
+
+/* ── CURSOR ── */
+#cur-dot{position:fixed;width:6px;height:6px;background:var(--g);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .1s,background .2s,width .25s,height .25s}
+#cur-ring{position:fixed;width:36px;height:36px;border:1.5px solid rgba(46,125,50,.4);border-radius:50%;pointer-events:none;z-index:9997;transform:translate(-50%,-50%);transition:transform .18s cubic-bezier(.22,1,.36,1),width .3s,height .3s,opacity .3s}
+#cur-counter{position:fixed;width:56px;height:56px;border-radius:50%;pointer-events:none;z-index:9996;transform:translate(-50%,-50%);display:none;align-items:center;justify-content:center;background:var(--g);color:white;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+body:has(a:hover) #cur-dot,body:has(button:hover) #cur-dot{width:10px;height:10px;background:var(--a)}
+body:has(a:hover) #cur-ring,body:has(button:hover) #cur-ring{width:56px;height:56px;opacity:.5}
+@media(hover:none){#cur-dot,#cur-ring,#cur-counter{display:none}body{cursor:auto}}
+
+/* ── NAV ── */
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:28px 64px;transition:all .5s cubic-bezier(.22,1,.36,1)}
+#nav.solid{background:rgba(250,250,248,.96);backdrop-filter:blur(20px);
+  padding:18px 64px;box-shadow:0 1px 0 rgba(0,0,0,.06)}
+.nav-logo{display:flex;align-items:center;text-decoration:none}
+.nav-links{display:flex;align-items:center;gap:40px;list-style:none}
+.nav-links a{font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  text-decoration:none;color:rgba(255,255,255,.75);transition:color .3s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--a);transition:width .3s}
+.nav-links a:hover{color:white}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-links a.active{color:white}
+#nav.solid .nav-links a{color:var(--mid)}
+#nav.solid .nav-links a:hover,#nav.solid .nav-links a.active{color:var(--g)}
+#nav.solid .nav-links a::after,#nav.solid .nav-links a.active::after{background:var(--g)}
+.nav-r{display:flex;align-items:center;gap:20px}
+.nav-lang{font-size:11px;font-weight:600;letter-spacing:.12em;color:rgba(255,255,255,.4);cursor:pointer;transition:color .3s}
+#nav.solid .nav-lang{color:var(--faint)}
+.btn-nav{position:relative;overflow:hidden;font-size:12px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:white;background:var(--g);
+  border:none;padding:12px 26px;border-radius:2px;cursor:none;text-decoration:none;
+  transition:background .3s,transform .2s}
+.btn-nav::after{content:'';position:absolute;top:-50%;left:-80%;width:50%;height:200%;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.3) 50%,transparent 60%);
+  transform:skewX(-15deg);transition:left .6s}
+.btn-nav:hover::after{left:135%}
+.btn-nav:hover{background:var(--gd)}
+
+/* ── SECTION TAG ── */
+.section-tag{display:inline-flex;align-items:center;gap:10px;
+  font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--g);margin-bottom:20px}
+.section-tag::before{content:'';width:22px;height:2px;background:var(--g)}
+.section-tag.amber{color:var(--a)}
+.section-tag.amber::before{background:var(--a)}
+.section-tag.white{color:rgba(255,255,255,.6)}
+.section-tag.white::before{background:rgba(255,255,255,.4)}
+
+/* ── REVEAL UTIL ── */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1)}
+.reveal-right{opacity:0;transform:translateX(40px);transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1)}
+.reveal.visible,.reveal-left.visible,.reveal-right.visible{opacity:1;transform:translate(0)}
+.stagger-child{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.stagger-child.visible{opacity:1;transform:translateY(0)}
+
+/* ── HERO ── */
+#hero{position:relative;min-height:70vh;overflow:hidden;
+  display:flex;align-items:center;justify-content:center}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg-img{position:absolute;inset:-20%;
+  background:linear-gradient(170deg,
+    oklch(30% 0.10 148) 0%,
+    oklch(22% 0.08 145) 35%,
+    oklch(14% 0.04 145) 70%,
+    oklch(10% 0.02 145) 100%);
+  will-change:transform}
+.hero-bg-img::before{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 4px,rgba(255,255,255,.018) 4px,rgba(255,255,255,.018) 5px)}
+.hero-bg-img::after{content:'';position:absolute;top:10%;left:5%;
+  width:60%;height:80%;
+  background:radial-gradient(ellipse,rgba(46,125,50,.18) 0%,transparent 65%);
+  pointer-events:none}
+.hero-bg-note{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;
+  pointer-events:none}
+.hero-bg-note span{font-family:monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.2);text-align:center;line-height:2.5}
+/* organic SVG leaf layer */
+.hero-leaves{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;will-change:transform}
+/* dark gradient overlay */
+.hero-overlay{position:absolute;inset:0;z-index:3;
+  background:linear-gradient(to bottom,rgba(20,20,18,.3) 0%,rgba(20,20,18,.55) 60%,rgba(20,20,18,.78) 100%)}
+.hero-content{position:relative;z-index:4;text-align:center;padding:160px 48px 100px;max-width:860px}
+.hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--a);margin-bottom:28px;opacity:0;transform:translateY(16px);
+  transition:opacity .8s,transform .8s}
+.hero-eyebrow.in{opacity:1;transform:translateY(0)}
+.hero-h1{font-family:var(--serif);font-weight:900;font-size:clamp(52px,7vw,96px);
+  line-height:.93;letter-spacing:-.025em;color:white;margin-bottom:36px}
+.hero-h1 .word{display:inline-block;opacity:0;transform:translateY(40px);
+  transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
+.hero-h1 .word.in{opacity:1;transform:translateY(0)}
+.hero-h1 em{font-style:italic;font-weight:400;position:relative;display:inline-block}
+.hero-h1 em .underline-anim{position:absolute;bottom:-4px;left:0;height:3px;
+  background:var(--g);width:0;border-radius:2px;transition:width 1s cubic-bezier(.22,1,.36,1)}
+.hero-h1 em .underline-anim.drawn{width:100%}
+.hero-sub{font-size:clamp(15px,1.6vw,18px);font-weight:300;line-height:1.85;
+  color:rgba(255,255,255,.82);max-width:600px;margin:0 auto 48px;
+  opacity:0;transform:translateY(20px);transition:opacity .9s .6s,transform .9s .6s}
+.hero-sub.in{opacity:1;transform:translateY(0)}
+.hero-scroll{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+  z-index:4;display:flex;flex-direction:column;align-items:center;gap:10px;
+  opacity:0;transition:opacity .8s 1.2s}
+.hero-scroll.in{opacity:1}
+.hero-scroll-line{width:1px;height:44px;background:rgba(255,255,255,.2);
+  animation:scrollPulse 2s ease-in-out infinite}
+@keyframes scrollPulse{0%,100%{transform:scaleY(1);opacity:.3}50%{transform:scaleY(1.3);opacity:.7}}
+.hero-scroll-txt{font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+
+/* ── INTRO ── */
+#intro{padding:120px 64px;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;background:var(--off)}
+.intro-h2{font-family:var(--serif);font-weight:700;font-size:clamp(34px,3.8vw,52px);
+  line-height:1.08;letter-spacing:-.02em;color:var(--ink);margin-bottom:0}
+.intro-h2 em{font-style:italic;color:var(--g)}
+.intro-body p{font-size:16px;font-weight:300;line-height:1.9;color:var(--mid);margin-bottom:18px}
+.intro-body p:last-child{margin-bottom:0}
+.intro-chain{margin-top:28px;padding:22px 24px;border-left:3px solid var(--g);background:rgba(46,125,50,.04);border-radius:0 4px 4px 0}
+.intro-chain p{font-family:var(--serif);font-style:italic;font-size:17px;line-height:1.65;color:var(--ink);margin-bottom:0}
+
+/* ── AREA SECTIONS ── */
+.area-section{position:relative;min-height:90vh;display:flex;align-items:center;overflow:hidden;background:var(--w)}
+.area-section:nth-child(even){background:var(--off)}
+/* parallax bg blobs */
+.area-blobs{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;will-change:transform}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.10}
+.blob-g{background:var(--g)}
+.blob-gl{background:var(--gl)}
+.blob-a{background:var(--a)}
+/* botanical layer */
+.area-leaves{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;will-change:transform}
+/* content layer */
+.area-inner{position:relative;z-index:2;width:100%;max-width:1400px;margin:0 auto;
+  padding:100px 64px;display:flex;flex-direction:row;gap:80px;align-items:center}
+.area-inner > .area-visual-tilt{flex:1 1 0;min-width:0}
+.area-inner > .area-content{flex:1 1 0;min-width:0}
+/* Even areas: flip columns via explicit .area-even class */
+.area-even .area-visual-tilt{order:2}
+.area-even .area-content{order:1}
+
+/* Visual side */
+.area-visual{position:relative;border-radius:4px;overflow:hidden;min-height:520px}
+.area-visual-bg{position:absolute;inset:0;background:linear-gradient(145deg,oklch(45% 0.13 142),oklch(28% 0.08 148))}
+.area-visual-bg::before{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,transparent,transparent 5px,rgba(0,0,0,.03) 5px,rgba(0,0,0,.03) 6px)}
+.area-visual-note{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(255,255,255,.32);text-align:center;line-height:2.4;z-index:1;padding:32px}
+.area-num{position:absolute;bottom:-20px;right:-10px;font-family:var(--serif);font-weight:900;
+  font-size:clamp(120px,14vw,180px);line-height:1;color:white;opacity:.12;
+  pointer-events:none;letter-spacing:-.04em;z-index:2;user-select:none}
+.area-badge{position:absolute;top:24px;left:24px;z-index:3;
+  font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  background:var(--g);color:white;padding:6px 14px;border-radius:2px}
+.area-badge.amber{background:var(--a);color:var(--ink)}
+/* tilt wrapper */
+.area-visual-tilt{transform-style:preserve-3d;transition:transform .4s cubic-bezier(.22,1,.36,1)}
+
+/* Content side */
+.area-content{display:flex;flex-direction:column;gap:0}
+.area-icon{width:80px;height:80px;margin-bottom:28px;flex-shrink:0}
+.area-icon svg{width:80px;height:80px}
+.area-h2{font-family:var(--serif);font-weight:700;font-size:clamp(36px,4vw,54px);
+  line-height:1.06;letter-spacing:-.02em;color:var(--ink);margin-bottom:28px}
+.area-h2 em{font-style:italic;position:relative;display:inline-block}
+.area-h2 em .ul{position:absolute;bottom:-3px;left:0;height:2px;background:var(--g);
+  width:0;border-radius:1px;transition:width .9s cubic-bezier(.22,1,.36,1)}
+.area-h2 em .ul.drawn{width:100%}
+.area-h2 em .ul.amber{background:var(--a)}
+.area-lema{border-left:3px solid var(--g);padding:20px 24px;margin-bottom:28px;
+  font-family:var(--serif);font-style:italic;font-size:clamp(17px,1.8vw,21px);line-height:1.55;color:var(--ink)}
+.area-lema.amber{border-color:var(--a)}
+.area-desc p{font-size:15px;font-weight:300;line-height:1.9;color:var(--mid);margin-bottom:14px}
+.area-desc p:last-child{margin-bottom:0}
+.area-checklist{list-style:none;margin-top:28px;display:flex;flex-direction:column;gap:10px}
+.area-checklist li{display:flex;align-items:flex-start;gap:12px;font-size:14px;font-weight:400;color:var(--ink);line-height:1.5}
+.area-checklist li .ck{flex-shrink:0;width:20px;height:20px;margin-top:1px}
+.area-checklist li .ck svg{width:20px;height:20px}
+.area-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:36px;background:rgba(0,0,0,.07);border-radius:4px;overflow:hidden}
+.area-stat{background:var(--w);padding:20px 16px;text-align:center}
+.area-section:nth-child(even) .area-stat{background:var(--off)}
+/* even bg flip for alternate rows */
+.area-section:nth-child(even) .area-stats .area-stat{background:var(--w)}
+.area-stat-num{font-family:var(--serif);font-weight:700;font-size:clamp(28px,3vw,36px);color:var(--g);line-height:1;margin-bottom:4px;display:flex;align-items:baseline;justify-content:center;gap:2px}
+.area-stat-num.amber{color:var(--a)}
+.area-stat-lbl{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+
+/* ── IMPACT BAND ── */
+#impact-band{position:relative;background:var(--ink);padding:100px 64px;overflow:hidden;will-change:transform}
+#impact-band::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 20% 50%,rgba(46,125,50,.15),transparent)}
+.impact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.05);max-width:1200px;margin:0 auto}
+.impact-cell{padding:60px 40px;text-align:center;background:transparent}
+.impact-num{font-family:var(--serif);font-weight:900;font-size:clamp(52px,7vw,84px);
+  line-height:.9;letter-spacing:-.03em;color:white;margin-bottom:16px;
+  display:flex;align-items:baseline;justify-content:center;gap:4px}
+.impact-pfx{font-size:.42em;font-weight:400;margin-top:6px}
+.impact-lbl{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);line-height:1.4}
+
+/* ── TRANSPARENCIA ── */
+#transparencia{padding:120px 64px;background:var(--off);display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
+.transp-h2{font-family:var(--serif);font-weight:700;font-size:clamp(36px,4vw,52px);
+  line-height:1.06;letter-spacing:-.02em;color:var(--ink);margin-bottom:0}
+.transp-h2 em{font-style:italic;color:var(--g)}
+.transp-body p{font-size:16px;font-weight:300;line-height:1.9;color:var(--mid);margin-bottom:18px}
+.transp-body p:last-child{margin-bottom:0}
+.transp-btns{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+.btn-solid{display:inline-flex;align-items:center;gap:8px;position:relative;overflow:hidden;
+  font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:white;background:var(--g);padding:14px 28px;border-radius:2px;text-decoration:none;
+  transition:background .3s,transform .2s}
+.btn-solid::after{content:'';position:absolute;top:-50%;left:-80%;width:50%;height:200%;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.3) 50%,transparent 60%);
+  transform:skewX(-15deg);transition:left .6s}
+.btn-solid:hover::after{left:135%}
+.btn-solid:hover{background:var(--gd);transform:translateY(-2px)}
+.btn-text-arrow{font-size:13px;font-weight:500;color:var(--mid);text-decoration:none;
+  display:inline-flex;align-items:center;gap:6px;transition:color .3s,gap .3s}
+.btn-text-arrow:hover{color:var(--g);gap:10px}
+
+/* ── CTA FINAL ── */
+#cta-final{min-height:100vh;background:var(--ink);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  padding:140px 48px 100px;position:relative;overflow:hidden}
+#cta-final::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 70% at 50% 50%,rgba(46,125,50,.12),transparent)}
+.cta-eyebrow{font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--a);margin-bottom:24px}
+.cta-h2{font-family:var(--serif);font-weight:900;font-size:clamp(48px,7vw,88px);
+  line-height:.93;letter-spacing:-.025em;color:white;margin-bottom:28px}
+.cta-h2 em{font-style:italic;font-weight:400}
+.cta-sub{font-size:clamp(15px,1.6vw,18px);font-weight:300;line-height:1.85;
+  color:rgba(255,255,255,.6);max-width:560px;margin:0 auto 52px}
+.cta-btns{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:36px}
+.btn-cta-green{position:relative;overflow:hidden;font-size:12px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:white;background:var(--g);padding:18px 36px;border-radius:2px;
+  text-decoration:none;transition:background .3s,transform .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-cta-green::after{content:'';position:absolute;top:-50%;left:-80%;width:50%;height:200%;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.3) 50%,transparent 60%);
+  transform:skewX(-15deg);transition:left .6s}
+.btn-cta-green:hover::after{left:135%}
+.btn-cta-green:hover{background:var(--gd);transform:translateY(-2px)}
+.btn-cta-amber{position:relative;overflow:hidden;font-size:12px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink);background:var(--a);padding:18px 36px;border-radius:2px;
+  text-decoration:none;transition:background .3s,transform .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-cta-amber:hover{background:var(--al);transform:translateY(-2px)}
+.btn-cta-ghost{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:white;border:1.5px solid rgba(255,255,255,.35);padding:18px 32px;border-radius:2px;
+  text-decoration:none;transition:all .3s;display:inline-flex;align-items:center;gap:8px}
+.btn-cta-ghost:hover{border-color:white;background:rgba(255,255,255,.08);transform:translateY(-2px)}
+.cta-legal{font-size:12px;font-weight:300;color:rgba(255,255,255,.25);max-width:420px;margin:0 auto;line-height:1.7}
+
+/* ── SIDE NAV ── */
+#side-nav{position:fixed;right:28px;top:50%;transform:translateY(-50%);z-index:400;
+  display:flex;flex-direction:column;gap:12px;
+  opacity:0;transition:opacity .5s}
+#side-nav.visible{opacity:1}
+.sn-dot{width:8px;height:8px;border-radius:50%;border:1.5px solid rgba(46,125,50,.35);
+  background:transparent;cursor:pointer;transition:all .3s;position:relative}
+.sn-dot.active{background:var(--g);border-color:var(--g)}
+.sn-dot:hover .sn-tooltip{opacity:1;transform:translateX(0);pointer-events:auto}
+.sn-tooltip{position:absolute;right:18px;top:50%;transform:translateY(-50%) translateX(6px);
+  white-space:nowrap;font-size:10px;font-weight:600;letter-spacing:.08em;
+  background:rgba(20,20,18,.85);color:white;padding:5px 10px;border-radius:3px;
+  opacity:0;transition:all .25s;pointer-events:none;backdrop-filter:blur(8px)}
+@media(max-width:1279px){#side-nav{display:none}}
+
+/* ── FOOTER ── */
+footer{background:#0e0e0c;padding:80px 64px 36px}
+.ft{display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr;gap:72px;
+  padding-bottom:60px;border-bottom:1px solid rgba(255,255,255,.05)}
+.ft-brand img{height:48px;margin-bottom:18px}
+.ft-tagline{font-size:14px;font-weight:300;color:rgba(255,255,255,.3);line-height:1.75;margin-bottom:28px}
+.ft-socials{display:flex;gap:10px}
+.ft-social{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all .3s}
+.ft-social svg{width:14px;height:14px;fill:rgba(255,255,255,.35);transition:fill .3s}
+.ft-social:hover{border-color:var(--g);background:var(--g)}
+.ft-social:hover svg{fill:white}
+.ft-col-h{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.25);margin-bottom:20px}
+.ft-links{list-style:none;display:flex;flex-direction:column;gap:12px}
+.ft-links a{font-size:13px;font-weight:300;color:rgba(255,255,255,.38);text-decoration:none;transition:color .3s}
+.ft-links a:hover{color:var(--gl)}
+.ft-bottom{padding-top:28px;display:flex;align-items:center;justify-content:space-between}
+.ft-copy{font-size:12px;color:rgba(255,255,255,.18)}
+.ft-copy a{color:inherit;text-decoration:none}
+.ft-flags{display:flex;gap:8px}
+.ft-flag{font-size:18px;opacity:.35;transition:opacity .3s;cursor:default}
+.ft-flag:hover{opacity:1}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  #nav{padding:20px 28px}
+  #nav.solid{padding:14px 28px}
+  .nav-links{display:none}
+  #intro{padding:80px 28px;grid-template-columns:1fr}
+  #intro .reveal-left,.#intro .reveal-right{transform:translateY(36px)}
+  .area-inner{padding:72px 28px;flex-direction:column;gap:48px}
+  .area-even .area-visual-tilt,.area-even .area-content{order:unset}
+  .area-section:nth-child(even) .area-inner{direction:ltr}
+  .area-visual{min-height:320px}
+  .area-num{font-size:100px;bottom:-10px;right:-5px}
+  #impact-band{padding:72px 28px}
+  .impact-grid{grid-template-columns:1fr 1fr}
+  #transparencia{padding:80px 28px;grid-template-columns:1fr;gap:48px}
+  #cta-final{padding:100px 28px 80px}
+  .cta-btns{flex-direction:column;align-items:stretch}
+  .btn-cta-green,.btn-cta-amber,.btn-cta-ghost{justify-content:center}
+  footer{padding:56px 28px 28px}
+  .ft{grid-template-columns:1fr 1fr;gap:40px}
+}
+@media(max-width:600px){
+  .area-stats{grid-template-columns:1fr}
+  .impact-grid{grid-template-columns:1fr}
+  .hero-content{padding:140px 24px 80px}
+}
+
+/* ── REDUCED MOTION ── */
+@media(prefers-reduced-motion:reduce){
+  .reveal,.reveal-left,.reveal-right,.stagger-child{opacity:1;transform:none;transition:none}
+  .hero-h1 .word{opacity:1;transform:none;transition:none}
+  .hero-eyebrow,.hero-sub,.hero-scroll{opacity:1;transform:none;transition:none}
+  .hero-bg-img,.hero-leaves,.area-blobs,.area-leaves,#impact-band{will-change:auto}
+  .area-icon svg path,.area-icon svg circle,.area-icon svg line,.area-icon svg polyline,.area-icon svg rect,.area-icon svg ellipse{stroke-dasharray:none!important;stroke-dashoffset:none!important}
+  .scrollPulse,.hero-scroll-line{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div id="scroll-bar"></div>
+
+<!-- CURSOR -->
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+
+<!-- SIDE NAV -->
+<nav id="side-nav" aria-label="Navegación rápida por áreas">
+  <div class="sn-dot" data-target="educacion"><span class="sn-tooltip">01 Educación</span></div>
+  <div class="sn-dot" data-target="horticultura"><span class="sn-tooltip">02 Horticultura</span></div>
+  <div class="sn-dot" data-target="agua"><span class="sn-tooltip">03 Agua</span></div>
+  <div class="sn-dot" data-target="igualdad"><span class="sn-tooltip">04 Igualdad</span></div>
+  <div class="sn-dot" data-target="emprendimiento"><span class="sn-tooltip">05 Emprendimiento</span></div>
+</nav>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="soguiba-home-v2.html" class="nav-logo">
+    <img src="uploads/Logotipo SOGUIBA (texto en blanco).png" id="navLogo" alt="Soguiba" height="36" style="transition:filter .4s">
+  </a>
+  <ul class="nav-links">
+    <li><a href="soguiba-home-v2.html#esencia">Quiénes somos</a></li>
+    <li><a href="proyectos.html" class="active">Proyectos</a></li>
+    <li><a href="soguiba-home-v2.html#anumbara">Anúmbara</a></li>
+    <li><a href="soguiba-home-v2.html#testimonios">Testimonios</a></li>
+    <li><a href="soguiba-home-v2.html#cta-final">Colabora</a></li>
+  </ul>
+  <div class="nav-r">
+    <span class="nav-lang">ES</span>
+    <a href="#cta-final" class="btn-nav">Donar</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════ HERO ═══ -->
+<section id="hero" data-screen-label="Hero">
+  <div class="hero-bg">
+    <div class="hero-bg-img" id="heroBgImg">
+      <div class="hero-bg-note">
+        <span>Paisaje Guinea Bissau · comunidad trabajando · plano amplio<br>↑ Subir imagen real aquí</span>
+      </div>
+    </div>
+    <svg class="hero-leaves" id="heroLeaves" viewBox="0 0 1440 700" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M-40 580 C80 520 180 420 260 360 C340 300 380 180 320 100" stroke="#43a047" stroke-width="1.5" opacity="0.12" fill="none"/>
+      <path d="M1480 200 C1360 280 1260 380 1200 460 C1140 540 1080 620 980 660" stroke="#43a047" stroke-width="1.5" opacity="0.10" fill="none"/>
+      <ellipse cx="140" cy="520" rx="48" ry="22" transform="rotate(-30 140 520)" fill="#43a047" opacity="0.08"/>
+      <ellipse cx="1300" cy="280" rx="56" ry="24" transform="rotate(25 1300 280)" fill="#43a047" opacity="0.07"/>
+      <ellipse cx="700" cy="80" rx="40" ry="18" transform="rotate(-15 700 80)" fill="#43a047" opacity="0.06"/>
+      <path d="M400 620 C430 560 460 500 420 440 C380 380 340 360 360 300" stroke="#43a047" stroke-width="1" opacity="0.09" fill="none"/>
+      <path d="M1100 680 C1060 600 1020 520 1060 460 C1100 400 1140 380 1120 320" stroke="#43a047" stroke-width="1" opacity="0.08" fill="none"/>
+    </svg>
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow" id="heroEyebrow" style="font-size: 14px">NUESTROS PROYECTOS EN GUINEA BISSAU</div>
+    <h1 class="hero-h1" id="heroH1" aria-label="Cinco caminos, una misma raíz">
+      <span class="word" style="transition-delay:0ms">Cinco</span><span class="word" style="transition-delay:100ms">&nbsp;caminos,</span><br>
+      <span class="word" style="transition-delay:200ms">una</span>&nbsp;<span class="word" style="transition-delay:300ms">misma</span>&nbsp;<span class="word" style="transition-delay:400ms"><em>raíz<span class="underline-anim" id="heroUnderline"></span></em></span>
+    </h1>
+    <p class="hero-sub" id="heroSub">Todo lo que hacemos en Guinea Bissau nace de cinco compromisos que se sostienen entre sí. Conoce las áreas que son la vértebra nuestro trabajo.</p>
+  </div>
+  <div class="hero-scroll" id="heroScroll">
+    <div class="hero-scroll-line"></div>
+    <span class="hero-scroll-txt">Scroll</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ INTRO ═══ -->
+<section id="intro" data-screen-label="Intro">
+  <div class="reveal-left">
+    <div class="section-tag" style="font-size: 14px">Cómo trabajamos</div>
+    <h2 class="intro-h2">No hacemos cooperación,<br>construimos <em>relación</em></h2>
+  </div>
+  <div class="reveal-right">
+    <div class="intro-body">
+      <p>En Soguiba creemos que el desarrollo no se trae, se acompaña. Por eso ninguno de nuestros proyectos se diseña en un despacho de Extremadura: cada iniciativa nace de una conversación con las propias comunidades guineanas, de sus prioridades, de sus saberes y de sus tiempos.</p>
+      <p>Trabajamos junto a contrapartes locales, asociaciones de mujeres, comités de aldea, docentes, técnicos agrícolas y emprendedoras. Ellos lideran. Nosotros aportamos recursos, formación y acompañamiento sostenido en el tiempo, sin imponer soluciones prefabricadas.</p>
+    </div>
+    <div class="intro-chain">
+      <p>Cada uno de los proyectos que verás a continuación responde a esta lógica. Y todos están entrelazados: la educación abre el agua, el agua libera tiempo a las mujeres, las mujeres lideran las huertas, las huertas alimentan a los niños que vuelven a la escuela. Por eso son cinco caminos con una misma raíz.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ 01 EDUCACIÓN ═══ -->
+<section class="area-section" id="educacion" data-screen-label="01 Educación">
+  <div class="area-blobs" data-speed="0.3">
+    <div class="blob blob-g" style="width:500px;height:500px;top:-100px;left:-150px;opacity:.09"></div>
+    <div class="blob blob-gl" style="width:350px;height:350px;bottom:50px;right:100px;opacity:.07"></div>
+  </div>
+  <div class="area-leaves" data-speed="0.6">
+    <svg viewBox="0 0 800 900" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0" aria-hidden="true">
+      <ellipse cx="120" cy="200" rx="60" ry="28" transform="rotate(-20 120 200)" fill="#43a047" opacity="0.06"/>
+      <ellipse cx="680" cy="700" rx="70" ry="30" transform="rotate(15 680 700)" fill="#43a047" opacity="0.05"/>
+      <path d="M50 800 C100 720 140 640 120 560 C100 480 60 440 80 360" stroke="#43a047" stroke-width="1.2" opacity="0.07" fill="none"/>
+    </svg>
+  </div>
+  <div class="area-inner">
+    <div class="area-visual-tilt reveal" data-tilt>
+      <div class="area-visual">
+        <div class="area-visual-bg" style="background:linear-gradient(145deg,oklch(44% 0.13 142),oklch(27% 0.08 148))"></div>
+        <div class="area-visual-note">Aula · niñas en clase<br>zona rural Guinea Bissau<br>↑ Subir imagen real</div>
+        <div class="area-badge">Guinea Bissau · Extremadura</div>
+        <div class="area-num">01</div>
+      </div>
+    </div>
+    <div class="area-content">
+      <div class="area-icon reveal" id="icon-edu">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path id="edu-cover" d="M16 22 H64 Q68 22 68 26 V62 Q68 66 64 66 H16 Q12 66 12 62 V26 Q12 22 16 22 Z" stroke="#2e7d32" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path id="edu-spine" d="M40 22 V66" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round"/>
+          <path id="edu-pages-l" d="M40 30 C34 28 26 28 20 30 M40 38 C34 36 26 36 20 38 M40 46 C34 44 26 44 20 46 M40 54 C34 52 26 52 20 54" stroke="#2e7d32" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
+          <path id="edu-pages-r" d="M40 30 C46 28 54 28 60 30 M40 38 C46 36 54 36 60 38 M40 46 C46 44 54 44 60 46 M40 54 C46 52 54 52 60 54" stroke="#2e7d32" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
+          <path id="edu-top" d="M24 22 C24 18 28 14 40 14 C52 14 56 18 56 22" stroke="#2e7d32" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="section-tag reveal" style="transition-delay: .1s; font-size: 14px">Educación</div>
+      <h2 class="area-h2 reveal" style="transition-delay:.15s">La educación,<br>la <em>puerta<span class="ul" id="ul-edu"></span></em> a todo lo demás</h2>
+      <blockquote class="area-lema reveal" style="transition-delay:.2s">"Garantizar el acceso a la educación lo cambia todo: transforma el futuro de niños y niñas y abre oportunidades para toda la comunidad."</blockquote>
+      <div class="area-desc reveal" style="transition-delay:.25s">
+        <p>La educación es nuestra puerta de entrada a todo lo demás. En Guinea Bissau trabajamos para que ningún niño o niña se quede fuera del aula, especialmente las niñas en zonas rurales, donde la tasa de escolarización sigue siendo dramáticamente baja y muchas abandonan la escuela antes de los doce años.</p>
+        <p>Construimos y rehabilitamos escuelas, formamos a docentes locales en metodologías activas, entregamos material escolar y becas, y acompañamos a las familias para que la escuela no sea un lujo sino un derecho cotidiano. Cada proyecto se diseña junto a las comunidades educativas, nunca desde fuera.</p>
+        <p>En Extremadura, complementamos este trabajo con programas de Educación para la Ciudadanía Global en centros escolares, formando a niños y jóvenes españoles en valores de justicia, interculturalidad y solidaridad activa.</p>
+      </div>
+      <ul class="area-checklist" id="cl-edu">
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Construcción y rehabilitación de aulas en zonas rurales</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Formación continua de docentes locales</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Becas y material escolar para niñas en riesgo de abandono</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Programas de Educación para la Ciudadanía Global en Extremadura</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Sensibilización con familias para reducir el abandono escolar</li>
+      </ul>
+      <div class="area-stats reveal" style="transition-delay:.3s">
+        <div class="area-stat"><div class="area-stat-num"><span class="counter" data-target="1200" data-pfx="+">0</span></div><div class="area-stat-lbl">Niñas escolarizadas</div></div>
+        <div class="area-stat"><div class="area-stat-num"><span class="counter" data-target="14">0</span></div><div class="area-stat-lbl">Escuelas rehabilitadas</div></div>
+        <div class="area-stat"><div class="area-stat-num"><span class="counter" data-target="80">0</span></div><div class="area-stat-lbl">Docentes formados</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ 02 HORTICULTURA ═══ -->
+<section class="area-section area-even" id="horticultura" data-screen-label="02 Horticultura" style="background:var(--off)">
+  <div class="area-blobs" data-speed="0.3">
+    <div class="blob blob-gl" style="width:420px;height:420px;top:100px;right:-100px;opacity:.08"></div>
+    <div class="blob blob-g" style="width:300px;height:300px;bottom:-60px;left:80px;opacity:.07"></div>
+  </div>
+  <div class="area-leaves" data-speed="0.6">
+    <svg viewBox="0 0 800 900" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0" aria-hidden="true">
+      <ellipse cx="700" cy="150" rx="65" ry="27" transform="rotate(10 700 150)" fill="#43a047" opacity="0.07"/>
+      <ellipse cx="80" cy="750" rx="55" ry="24" transform="rotate(-12 80 750)" fill="#43a047" opacity="0.06"/>
+      <path d="M750 100 C700 200 660 300 680 400 C700 500 740 560 700 650" stroke="#43a047" stroke-width="1.2" opacity="0.06" fill="none"/>
+    </svg>
+  </div>
+  <div class="area-inner">
+    <div class="area-visual-tilt reveal" data-tilt>
+      <div class="area-visual">
+        <div class="area-visual-bg" style="background:linear-gradient(145deg,oklch(52% 0.16 142),oklch(34% 0.10 150))"></div>
+        <div class="area-visual-note">Huerta comunitaria<br>mujeres trabajando<br>Guinea Bissau<br>↑ Subir imagen real</div>
+        <div class="area-badge">Guinea Bissau</div>
+        <div class="area-num">02</div>
+      </div>
+    </div>
+    <div class="area-content">
+      <div class="area-icon reveal" id="icon-hort">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path id="hort-stem" d="M40 68 V44" stroke="#2e7d32" stroke-width="2" stroke-linecap="round"/>
+          <path id="hort-ground" d="M28 68 H52" stroke="#2e7d32" stroke-width="2" stroke-linecap="round"/>
+          <path id="hort-leaf-l" d="M40 52 C36 42 24 36 16 38 C20 50 32 54 40 52 Z" stroke="#2e7d32" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+          <path id="hort-leaf-r" d="M40 44 C44 34 56 28 64 30 C60 42 48 46 40 44 Z" stroke="#2e7d32" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+          <path id="hort-roots" d="M40 68 C36 72 30 74 26 72 M40 68 C44 72 50 74 54 72 M40 68 V76" stroke="#2e7d32" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="section-tag reveal" style="transition-delay: .1s; font-size: 14px">Horticultura y soberanía alimentaria</div>
+      <h2 class="area-h2 reveal" style="transition-delay:.15s">Sembrar autonomía,<br>cosechar <em>dignidad<span class="ul" id="ul-hort"></span></em></h2>
+      <blockquote class="area-lema reveal" style="transition-delay:.2s">"Cultivar la tierra es garantizar el derecho a la alimentación que sostiene a las comunidades: sembrar autonomía, cosechar dignidad."</blockquote>
+      <div class="area-desc reveal" style="transition-delay:.25s">
+        <p>Una comunidad que produce su propio alimento es una comunidad libre. Por eso impulsamos huertas comunitarias gestionadas mayoritariamente por mujeres, formación en técnicas agroecológicas y sistemas de riego adaptados al clima y al terreno de Guinea Bissau.</p>
+        <p>Trabajamos con semillas locales, recuperando saberes tradicionales y combinándolos con prácticas sostenibles que protegen la biodiversidad y el suelo. La meta no es asistencial: es que las familias dejen de depender de la ayuda externa para alimentarse.</p>
+        <p>El excedente de las huertas genera además ingresos en mercados locales, fortaleciendo la economía rural y consolidando el tejido productivo de las aldeas. La tierra no solo da de comer: también da independencia.</p>
+      </div>
+      <ul class="area-checklist" id="cl-hort">
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Creación de huertas comunitarias gestionadas por mujeres</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Formación en agroecología y conservación de suelos</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Instalación de sistemas de riego sostenibles</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Recuperación de semillas y saberes tradicionales</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Apoyo a la comercialización en mercados locales</li>
+      </ul>
+      <div class="area-stats reveal" style="transition-delay:.3s">
+        <div class="area-stat" style="background:var(--w)"><div class="area-stat-num"><span class="counter" data-target="8">0</span></div><div class="area-stat-lbl">Huertas comunitarias</div></div>
+        <div class="area-stat" style="background:var(--w)"><div class="area-stat-num"><span class="counter" data-target="200" data-pfx="+">0</span></div><div class="area-stat-lbl">Familias autosuficientes</div></div>
+        <div class="area-stat" style="background:var(--w)"><div class="area-stat-num"><span class="counter" data-target="35">0</span></div><div class="area-stat-lbl">Mujeres líderes formadas</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ 03 AGUA ═══ -->
+<section class="area-section" id="agua" data-screen-label="03 Agua">
+  <div class="area-blobs" data-speed="0.3">
+    <div class="blob" style="width:480px;height:480px;top:-80px;left:-120px;background:oklch(55% 0.09 215);opacity:.08"></div>
+    <div class="blob blob-g" style="width:320px;height:320px;bottom:40px;right:60px;opacity:.07"></div>
+  </div>
+  <div class="area-inner">
+    <div class="area-visual-tilt reveal" data-tilt>
+      <div class="area-visual">
+        <div class="area-visual-bg" style="background:linear-gradient(145deg,oklch(50% 0.10 215),oklch(32% 0.08 220))"></div>
+        <div class="area-visual-note">Pozo de agua · aldea<br>comunidad reunida<br>Guinea Bissau<br>↑ Subir imagen real</div>
+        <div class="area-badge">Guinea Bissau</div>
+        <div class="area-num">03</div>
+      </div>
+    </div>
+    <div class="area-content">
+      <div class="area-icon reveal" id="icon-agua">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path id="agua-drop" d="M40 14 C40 14 22 34 22 48 C22 58.5 30.1 67 40 67 C49.9 67 58 58.5 58 48 C58 34 40 14 40 14 Z" stroke="#2e7d32" stroke-width="2" fill="none" stroke-linejoin="round" style="stroke: rgb(51, 97, 159)"/>
+          <ellipse id="agua-wave1" cx="40" cy="48" rx="10" ry="4" stroke="#2e7d32" stroke-width="1.4" fill="none" opacity="0.6" style="stroke: rgb(51, 97, 159)"/>
+          <ellipse id="agua-wave2" cx="40" cy="48" rx="16" ry="7" stroke="#2e7d32" stroke-width="1.2" fill="none" opacity="0.35" style="stroke: rgb(51, 97, 159)"/>
+        </svg>
+      </div>
+      <div class="section-tag reveal" style="transition-delay: .1s; font-size: 14px; color: rgb(51, 97, 159)">Agua y saneamiento</div>
+      <h2 class="area-h2 reveal" style="transition-delay:.15s">Donde llega el agua,<br>empieza la <em>vida<span class="ul" id="ul-agua"></span></em></h2>
+      <blockquote class="area-lema reveal" style="transition-delay:.2s">"Donde se garantiza el derecho al agua y al saneamiento, empieza el cambio real: la salud mejora, la vida se dignifica y las comunidades avanzan."</blockquote>
+      <div class="area-desc reveal" style="transition-delay:.25s">
+        <p>El acceso a agua potable transforma una vida entera: reduce la mortalidad infantil, libera horas de trabajo a las mujeres y niñas que antes recorrían kilómetros para conseguirla, y permite que las escuelas funcionen con dignidad. Sin agua, no hay salud, no hay educación, no hay desarrollo posible.</p>
+        <p>Perforamos pozos, instalamos sistemas de captación y purificación, y construimos infraestructura sanitaria básica en escuelas y aldeas rurales. Cada pozo se acompaña de un comité comunitario formado para mantenerlo a largo plazo, porque una infraestructura sin mantenimiento es solo una promesa rota.</p>
+        <p>El agua atraviesa todas nuestras demás áreas: riega las huertas, lava las aulas, cuida la salud, libera el tiempo de las mujeres. Por eso es uno de los pilares más urgentes y transversales de nuestro trabajo en Guinea Bissau.</p>
+      </div>
+      <ul class="area-checklist" id="cl-agua">
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Perforación de pozos en aldeas y escuelas rurales</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Sistemas de captación y purificación de agua</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Construcción de letrinas y saneamiento básico</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Formación de comités comunitarios de mantenimiento</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Educación en higiene y salud preventiva</li>
+      </ul>
+      <div class="area-stats reveal" style="transition-delay:.3s">
+        <div class="area-stat"><div class="area-stat-num"><span class="counter" data-target="38" style="color: rgb(51, 97, 159)">0</span></div><div class="area-stat-lbl">Pozos abiertos</div></div>
+        <div class="area-stat"><div class="area-stat-num"><span class="counter" data-target="20000" data-pfx="+" style="color: rgb(51, 97, 159)">0</span></div><div class="area-stat-lbl">Personas con agua</div></div>
+        <div class="area-stat"><div class="area-stat-num"><span class="counter" data-target="22" style="color: rgb(51, 97, 159)">0</span></div><div class="area-stat-lbl">Escuelas con saneamiento</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ 04 IGUALDAD ═══ -->
+<section class="area-section area-even" id="igualdad" data-screen-label="04 Igualdad" style="background:var(--off)">
+  <div class="area-blobs" data-speed="0.3">
+    <div class="blob blob-g" style="width:440px;height:440px;top:60px;right:-80px;opacity:.08"></div>
+    <div class="blob blob-gl" style="width:300px;height:300px;bottom:-40px;left:120px;opacity:.07"></div>
+  </div>
+  <div class="area-inner">
+    <div class="area-visual-tilt reveal" data-tilt>
+      <div class="area-visual">
+        <div class="area-visual-bg" style="background:linear-gradient(145deg,oklch(47% 0.15 340),oklch(30% 0.09 345))"></div>
+        <div class="area-visual-note">Mujeres líderes · reunión<br>asociación comunitaria<br>Guinea Bissau<br>↑ Subir imagen real</div>
+        <div class="area-badge">Guinea Bissau</div>
+        <div class="area-num">04</div>
+      </div>
+    </div>
+    <div class="area-content">
+      <div class="area-icon reveal" id="icon-igual">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle id="igual-c1" cx="28" cy="32" r="12" stroke="#2e7d32" stroke-width="2" fill="none"/>
+          <circle id="igual-c2" cx="52" cy="32" r="12" stroke="#2e7d32" stroke-width="2" fill="none"/>
+          <path id="igual-link" d="M28 44 C28 52 34 58 40 58 C46 58 52 52 52 44" stroke="#2e7d32" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path id="igual-balance" d="M24 64 H56 M40 58 V64" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="section-tag reveal" style="transition-delay: .1s; font-size: 1px">Igualdad de género</div>
+      <h2 class="area-h2 reveal" style="transition-delay:.15s">Cuando ellas avanzan,<br>avanza <em>todo<span class="ul" id="ul-igual"></span></em></h2>
+      <blockquote class="area-lema reveal" style="transition-delay:.2s">"La igualdad de oportunidades para mujeres y niñas no solo transforma sus vidas: acelera el progreso y fortalece a toda la comunidad."</blockquote>
+      <div class="area-desc reveal" style="transition-delay:.25s">
+        <p>La igualdad de género atraviesa todo lo que hacemos. Cuando una mujer accede a la educación, a recursos económicos o a espacios de decisión, el efecto se multiplica en su familia y en su comunidad entera. Por cada euro que llega a manos de una mujer en Guinea Bissau, se generan ingresos para entre tres y cinco personas más.</p>
+        <p>Promovemos liderazgos femeninos en las aldeas, formación específica para mujeres jóvenes, alfabetización para adultas y acompañamiento a mujeres emprendedoras. Trabajamos también para prevenir la violencia de género y combatir las prácticas que limitan el desarrollo de las niñas.</p>
+        <p>Apoyamos a asociaciones locales lideradas por mujeres guineanas, porque el cambio sostenible solo nace cuando son ellas quienes lideran sus propios procesos. No vamos a hablar por ellas: vamos a sostener su voz.</p>
+      </div>
+      <ul class="area-checklist" id="cl-igual">
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Programas de liderazgo femenino comunitario</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Alfabetización y formación para mujeres adultas</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Prevención de la violencia de género y prácticas nocivas</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Apoyo a asociaciones lideradas por mujeres locales</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2e7d32" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#2e7d32" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Becas específicas para niñas en riesgo de abandono</li>
+      </ul>
+      <div class="area-stats reveal" style="transition-delay:.3s">
+        <div class="area-stat" style="background:var(--w)"><div class="area-stat-num"><span class="counter" data-target="450" data-pfx="+">0</span></div><div class="area-stat-lbl">Mujeres formadas</div></div>
+        <div class="area-stat" style="background:var(--w)"><div class="area-stat-num"><span class="counter" data-target="12">0</span></div><div class="area-stat-lbl">Asociaciones lideradas</div></div>
+        <div class="area-stat" style="background:var(--w)"><div class="area-stat-num"><span class="counter" data-target="5">0</span></div><div class="area-stat-lbl">Comunidades con programa</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ 05 EMPRENDIMIENTO ═══ -->
+<section class="area-section" id="emprendimiento" data-screen-label="05 Emprendimiento">
+  <div class="area-blobs" data-speed="0.3">
+    <div class="blob blob-a" style="width:460px;height:460px;top:-60px;left:-100px;opacity:.08"></div>
+    <div class="blob" style="width:280px;height:280px;bottom:80px;right:80px;background:var(--al);opacity:.06"></div>
+  </div>
+  <div class="area-inner">
+    <div class="area-visual-tilt reveal" data-tilt>
+      <div class="area-visual">
+        <div class="area-visual-bg" style="background:linear-gradient(145deg,oklch(66% 0.14 65),oklch(46% 0.15 58))"></div>
+        <div class="area-visual-note">Emprendedoras · taller<br>microemprendimiento local<br>Guinea Bissau<br>↑ Subir imagen real</div>
+        <div class="area-badge amber">Guinea Bissau</div>
+        <div class="area-num" style="color:var(--a);opacity:.14">05</div>
+      </div>
+    </div>
+    <div class="area-content">
+      <div class="area-icon reveal" id="icon-emp">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path id="emp-spark" d="M40 20 L38 34 L26 32 L40 44 L36 58 L40 44 L54 50 L44 38 L58 34 L44 36 Z" stroke="#f39c12" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+          <path id="emp-ray1" d="M40 12 V18" stroke="#f39c12" stroke-width="1.8" stroke-linecap="round" opacity="0.5"/>
+          <path id="emp-ray2" d="M58 22 L54 26" stroke="#f39c12" stroke-width="1.8" stroke-linecap="round" opacity="0.5"/>
+          <path id="emp-ray3" d="M64 40 H58" stroke="#f39c12" stroke-width="1.8" stroke-linecap="round" opacity="0.5"/>
+          <path id="emp-ray4" d="M22 22 L26 26" stroke="#f39c12" stroke-width="1.8" stroke-linecap="round" opacity="0.5"/>
+          <path id="emp-ray5" d="M16 40 H22" stroke="#f39c12" stroke-width="1.8" stroke-linecap="round" opacity="0.5"/>
+          <circle id="emp-glow" cx="40" cy="40" r="6" stroke="#f39c12" stroke-width="1.4" fill="none" opacity="0.3"/>
+        </svg>
+      </div>
+      <div class="section-tag amber reveal" style="transition-delay: .1s; font-size: 14px">Emprendimiento</div>
+      <h2 class="area-h2 reveal" style="transition-delay:.15s">Protagonistas<br>de su propio <em>futuro<span class="ul amber" id="ul-emp"></span></em></h2>
+      <blockquote class="area-lema amber reveal" style="transition-delay:.2s">"Personas protagonistas de su propio futuro: el emprendimiento como motor económico que genera oportunidades y transforma comunidades."</blockquote>
+      <div class="area-desc reveal" style="transition-delay:.25s">
+        <p>Que la dignidad económica se construya desde dentro. Acompañamos a personas emprendedoras —mayoritariamente mujeres y jóvenes— en la creación y consolidación de microemprendimientos: pequeños comercios, talleres artesanales, transformación de productos agrícolas, servicios locales.</p>
+        <p>Ofrecemos formación empresarial básica adaptada a la realidad guineana, acceso a microcréditos a través de cooperativas locales, y mentoría sostenida en el tiempo. No se trata solo de poner en marcha un negocio, sino de construir tejido económico autónomo, capaz de sobrevivir cuando nosotros ya no estemos.</p>
+        <p>Cada microemprendimiento que prospera se convierte en empleo, en ingresos para más familias y en una prueba viva de que el desarrollo se construye desde la iniciativa propia. Es el cierre del círculo.</p>
+      </div>
+      <ul class="area-checklist" id="cl-emp">
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#f39c12" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#f39c12" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Formación empresarial adaptada al contexto local</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#f39c12" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#f39c12" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Acceso a microcréditos vía cooperativas de mujeres</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#f39c12" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#f39c12" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Mentoría y acompañamiento sostenido</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#f39c12" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#f39c12" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Apoyo a la transformación de productos agrícolas</li>
+        <li class="stagger-child"><span class="ck"><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#f39c12" stroke-width="1.5"/><path d="M6 10l3 3 5-5" stroke="#f39c12" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Conexión con redes de comercio justo internacional</li>
+      </ul>
+      <div class="area-stats reveal" style="transition-delay:.3s">
+        <div class="area-stat"><div class="area-stat-num amber"><span class="counter" data-target="60">0</span></div><div class="area-stat-lbl">Microemprendimientos activos</div></div>
+        <div class="area-stat"><div class="area-stat-num amber"><span class="counter" data-target="180" data-pfx="+">0</span></div><div class="area-stat-lbl">Empleos generados</div></div>
+        <div class="area-stat"><div class="area-stat-num amber"><span class="counter" data-target="45">0</span></div><div class="area-stat-lbl">Mujeres con microcrédito</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ IMPACT BAND ═══ -->
+<section id="impact-band" data-screen-label="Impacto">
+  <div class="impact-grid">
+    <div class="impact-cell reveal">
+      <div class="impact-num"><span class="impact-pfx">+</span><span class="counter" data-target="20000">0</span></div>
+      <div class="impact-lbl">Personas<br>impactadas</div>
+    </div>
+    <div class="impact-cell reveal" style="transition-delay:.1s">
+      <div class="impact-num"><span class="counter" data-target="38">0</span></div>
+      <div class="impact-lbl">Pozos<br>abiertos</div>
+    </div>
+    <div class="impact-cell reveal" style="transition-delay:.2s">
+      <div class="impact-num"><span class="counter" data-target="5">0</span></div>
+      <div class="impact-lbl">Áreas<br>de acción</div>
+    </div>
+    <div class="impact-cell reveal" style="transition-delay:.3s">
+      <div class="impact-num"><span class="counter" data-target="23">0</span></div>
+      <div class="impact-lbl">Años<br>acompañando</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ TRANSPARENCIA ═══ -->
+<section id="transparencia" data-screen-label="Transparencia">
+  <div class="reveal-left">
+    <div class="section-tag" style="font-size: 14px">Transparencia</div>
+    <h2 class="transp-h2">Cada euro<br>que llega, <em>llega</em></h2>
+  </div>
+  <div class="reveal-right">
+    <div class="transp-body">
+      <p>Publicamos cuentas detalladas y memorias de actividad accesibles para cualquiera que quiera revisarlas. Más del 90% de los fondos recibidos se destina directamente a proyectos sobre el terreno; el resto cubre los gastos mínimos de gestión y sensibilización.</p>
+      <p>Creemos que la confianza no se pide, se demuestra. Por eso cada proyecto tiene su informe de seguimiento, sus indicadores y sus resultados públicos. Si hay algo que no funciona, lo decimos. Si algo cambia de rumbo, lo explicamos.</p>
+    </div>
+    <div class="transp-btns">
+      <a href="#" class="btn-solid">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Descargar memoria anual
+      </a>
+      <a href="#" class="btn-text-arrow">
+        Ver cuentas auditadas →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ CTA FINAL ═══ -->
+<section id="cta-final" data-screen-label="CTA Final">
+  <div class="cta-eyebrow reveal" style="font-size: 14px">Súmate</div>
+  <h2 class="cta-h2 reveal" style="transition-delay:.1s">Ningún cambio<br>se construye <em>solo</em></h2>
+  <p class="cta-sub reveal" style="transition-delay:.2s">Hazte socio o socia, colabora con un proyecto concreto, hazte voluntario o voluntaria, o simplemente cuéntale a alguien lo que estamos haciendo.</p>
+  <div class="cta-btns reveal" style="transition-delay:.3s">
+    <a href="#" class="btn-cta-green">Hazte socio/a</a>
+    <a href="#" class="btn-cta-amber">Donar puntualmente</a>
+    <a href="#" class="btn-cta-ghost">Ser voluntario/a</a>
+  </div>
+  <p class="cta-legal reveal" style="transition-delay: .4s; font-size: 14px">ONG Soguiba · CIF G10234567 · Registrada en el Registro Nacional de Asociaciones.<br>Tu donación desgrava hasta el 80% en la declaración de la renta.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════ FOOTER ═══ -->
+<footer>
+  <div class="ft">
+    <div class="ft-brand">
+      <img src="uploads/Logotipo SOGUIBA (texto en blanco).png" alt="Soguiba" height="44">
+      <p class="ft-tagline">Asociación de cooperación al desarrollo para Guinea Bissau.<br>Desde Extremadura, mirando al mundo.</p>
+      <div class="ft-socials">
+        <a href="#" class="ft-social" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+        <a href="#" class="ft-social" aria-label="Twitter/X"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
+        <a href="#" class="ft-social" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" class="ft-social" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+      </div>
+    </div>
+    <div>
+      <div class="ft-col-h">Organización</div>
+      <ul class="ft-links">
+        <li><a href="soguiba-home-v2.html#esencia">Quiénes somos</a></li>
+        <li><a href="#">Junta directiva</a></li>
+        <li><a href="#transparencia">Transparencia</a></li>
+        <li><a href="#">Memorias anuales</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-h">Proyectos</div>
+      <ul class="ft-links">
+        <li><a href="#educacion">Educación</a></li>
+        <li><a href="#horticultura">Horticultura</a></li>
+        <li><a href="#agua">Agua y saneamiento</a></li>
+        <li><a href="#igualdad">Igualdad de género</a></li>
+        <li><a href="#emprendimiento">Emprendimiento</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-h">Contacto</div>
+      <ul class="ft-links">
+        <li><a href="mailto:info@ongsoguiba.org">info@ongsoguiba.org</a></li>
+        <li><a href="tel:+34927779669">927 779 669</a></li>
+        <li><a href="#">Calle San Antón, Cáceres</a></li>
+        <li><a href="soguiba-home-v2.html#anumbara">Espacio Anúmbara</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div class="ft-copy">© 2025 ONG Soguiba · <a href="#">Aviso legal</a> · <a href="#">Privacidad</a></div>
+    <div class="ft-flags"><span class="ft-flag">🇬🇼</span><span class="ft-flag">🇪🇸</span></div>
+  </div>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════
+   REDUCED MOTION CHECK
+════════════════════════════════════════════ */
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ════════════════════════════════════════════
+   CURSOR
+════════════════════════════════════════════ */
+const dot = document.getElementById('cur-dot');
+const ring = document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+if(!reducedMotion && window.matchMedia('(hover:hover)').matches){
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+  });
+  (function animRing(){
+    rx += (mx - rx) * .14; ry += (my - ry) * .14;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  })();
+}
+
+/* ════════════════════════════════════════════
+   SCROLL PROGRESS BAR
+════════════════════════════════════════════ */
+const scrollBar = document.getElementById('scroll-bar');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+  scrollBar.style.width = pct + '%';
+}, { passive: true });
+
+/* ════════════════════════════════════════════
+   NAV SOLID + LOGO TINT
+════════════════════════════════════════════ */
+const nav = document.getElementById('nav');
+const navLogo = document.getElementById('navLogo');
+function updateNav(){
+  if(window.scrollY > 60){
+    nav.classList.add('solid');
+    navLogo.style.filter = 'brightness(0)'; // show dark version
+  } else {
+    nav.classList.remove('solid');
+    navLogo.style.filter = 'brightness(0) invert(1)'; // white version
+  }
+}
+window.addEventListener('scroll', updateNav, { passive: true });
+updateNav();
+
+/* ════════════════════════════════════════════
+   HERO ENTRANCE
+════════════════════════════════════════════ */
+setTimeout(() => {
+  document.getElementById('heroEyebrow').classList.add('in');
+}, 200);
+const heroWords = document.querySelectorAll('#heroH1 .word');
+heroWords.forEach((w, i) => {
+  setTimeout(() => w.classList.add('in'), 500 + i * 100);
+});
+setTimeout(() => {
+  document.getElementById('heroSub').classList.add('in');
+}, 1100);
+setTimeout(() => {
+  document.getElementById('heroScroll').classList.add('in');
+  // Draw underline after words appear
+  setTimeout(() => {
+    document.getElementById('heroUnderline').classList.add('drawn');
+  }, 600);
+}, 1300);
+
+/* ════════════════════════════════════════════
+   PARALLAX — hero bg + leaves
+════════════════════════════════════════════ */
+if(!reducedMotion){
+  const heroBgImg = document.getElementById('heroBgImg');
+  const heroLeaves = document.getElementById('heroLeaves');
+  const impactBand = document.getElementById('impact-band');
+  
+  // Parallax layers with speed multipliers
+  const parallaxLayers = [
+    { el: document.querySelectorAll('.area-blobs'), speed: 0.3 },
+    { el: document.querySelectorAll('.area-leaves'), speed: 0.55 }
+  ];
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if(!ticking){
+      requestAnimationFrame(() => {
+        const sy = window.scrollY;
+        // Hero BG
+        if(heroBgImg) heroBgImg.style.transform = `translateY(${sy * 0.35}px)`;
+        if(heroLeaves) heroLeaves.style.transform = `translateY(${sy * 0.18}px)`;
+        // Impact band inverse parallax
+        if(impactBand){
+          const rect = impactBand.getBoundingClientRect();
+          const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+          impactBand.style.transform = `translateY(${progress * -60}px)`;
+        }
+        // Area blobs + leaves
+        document.querySelectorAll('.area-section').forEach(section => {
+          const rect = section.getBoundingClientRect();
+          const progress = (window.innerHeight / 2 - rect.top) / rect.height;
+          const blobs = section.querySelector('.area-blobs');
+          const leaves = section.querySelector('.area-leaves');
+          if(blobs) blobs.style.transform = `translateY(${progress * 60}px)`;
+          if(leaves) {
+            const rotation = progress * 8;
+            leaves.style.transform = `translateY(${progress * 90}px) rotate(${rotation}deg)`;
+          }
+        });
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+}
+
+/* ════════════════════════════════════════════
+   3D TILT on visual blocks
+════════════════════════════════════════════ */
+if(!reducedMotion && window.matchMedia('(hover:hover)').matches){
+  document.querySelectorAll('[data-tilt]').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const rect = el.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / rect.width;
+      const dy = (e.clientY - cy) / rect.height;
+      el.style.transform = `perspective(1000px) rotateY(${dx * 4}deg) rotateX(${-dy * 4}deg)`;
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = 'perspective(1000px) rotateY(0) rotateX(0)';
+    });
+  });
+}
+
+/* ════════════════════════════════════════════
+   INTERSECTION OBSERVER — REVEALS
+════════════════════════════════════════════ */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      revealObs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObs.observe(el));
+
+/* ════════════════════════════════════════════
+   STAGGER CHILDREN (checklists)
+════════════════════════════════════════════ */
+const staggerObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      const parent = entry.target;
+      const children = parent.querySelectorAll('.stagger-child');
+      children.forEach((child, i) => {
+        setTimeout(() => child.classList.add('visible'), i * 90);
+      });
+      staggerObs.unobserve(parent);
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.area-checklist').forEach(list => staggerObs.observe(list));
+
+/* ════════════════════════════════════════════
+   UNDERLINE ANIMATION on area h2
+════════════════════════════════════════════ */
+const ulObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      const em = entry.target.querySelector('em .ul');
+      if(em) setTimeout(() => em.classList.add('drawn'), 400);
+      ulObs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('.area-h2').forEach(h => ulObs.observe(h));
+
+/* ════════════════════════════════════════════
+   ICON SVG STROKE-DASHARRAY DRAW ANIMATION
+════════════════════════════════════════════ */
+if(!reducedMotion){
+  const iconObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        const paths = entry.target.querySelectorAll('path,circle,ellipse,line,polyline,rect');
+        paths.forEach(p => {
+          const len = p.getTotalLength ? p.getTotalLength() : 200;
+          p.style.strokeDasharray = len;
+          p.style.strokeDashoffset = len;
+          p.style.transition = 'stroke-dashoffset 1.2s cubic-bezier(.22,1,.36,1)';
+          requestAnimationFrame(() => { p.style.strokeDashoffset = '0'; });
+        });
+        iconObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.area-icon').forEach(icon => iconObs.observe(icon));
+}
+
+/* ════════════════════════════════════════════
+   COUNTERS
+════════════════════════════════════════════ */
+const ease = t => 1 - Math.pow(1 - t, 4);
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(!entry.isIntersecting) return;
+    const el = entry.target;
+    const target = parseInt(el.dataset.target);
+    const pfx = el.dataset.pfx || '';
+    const dur = 2000;
+    const t0 = performance.now();
+    const fmt = v => v >= 1000 ? v.toLocaleString('es-ES') : String(v);
+    const tick = now => {
+      const p = ease(Math.min((now - t0) / dur, 1));
+      const v = Math.round(p * target);
+      el.textContent = pfx + fmt(v);
+      if(now - t0 < dur) requestAnimationFrame(tick);
+      else el.textContent = pfx + fmt(target);
+    };
+    requestAnimationFrame(tick);
+    counterObs.unobserve(el);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.counter').forEach(c => counterObs.observe(c));
+
+/* ════════════════════════════════════════════
+   SIDE NAV — highlight active area
+════════════════════════════════════════════ */
+const sideNav = document.getElementById('side-nav');
+const sideAreas = ['educacion','horticultura','agua','igualdad','emprendimiento'];
+const sideDots = document.querySelectorAll('.sn-dot');
+
+// Show side nav after first area
+const firstArea = document.getElementById('educacion');
+const sideNavShowObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) sideNav.classList.add('visible');
+    else {
+      // Check if we're below last area
+      if(window.scrollY < (firstArea.offsetTop - 100)){
+        sideNav.classList.remove('visible');
+      }
+    }
+  });
+}, { threshold: 0.1 });
+sideNavShowObs.observe(firstArea);
+
+// Highlight active dot
+const areaObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      const id = entry.target.id;
+      const idx = sideAreas.indexOf(id);
+      sideDots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+  });
+}, { threshold: 0.4, rootMargin: '-10% 0px -10% 0px' });
+sideAreas.forEach(id => {
+  const el = document.getElementById(id);
+  if(el) areaObs.observe(el);
+});
+
+// Dot click → smooth scroll
+sideDots.forEach((dot, i) => {
+  dot.addEventListener('click', () => {
+    const el = document.getElementById(sideAreas[i]);
+    if(el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>
