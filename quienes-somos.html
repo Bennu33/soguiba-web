@@ -361,14 +361,17 @@ section.off{background:var(--off)}
 
 /* ---------- Videos ---------- */
 .videos-section{background:var(--ink);color:var(--w);overflow:hidden}
-.videos-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:56px}
+.videos-grid{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:48px;margin-top:56px
+}
 .video-block{
   position:relative;border-radius:8px;overflow:hidden;
   border:1px solid rgba(67,160,71,0.3);
   box-shadow:0 30px 80px -30px rgba(0,0,0,.6);
   background:#000;
   transition:transform .4s ease;
-  transform-style:preserve-3d
+  transform-style:preserve-3d;
+  flex:0 1 400px;width:100%;max-width:400px
 }
 .video-block .badge{
   position:absolute;top:-12px;left:24px;z-index:3;
@@ -378,8 +381,9 @@ section.off{background:var(--off)}
 .video-block.gb .badge{background:var(--g);color:var(--w)}
 .video-block.es .badge{background:var(--a);color:var(--ink)}
 .video-block .player{
-  position:relative;aspect-ratio:16/9;background:#0a0a0a;cursor:pointer;
-  display:flex;align-items:center;justify-content:center
+  position:relative;aspect-ratio:9/16;background:#0a0a0a;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  width:100%;overflow:hidden
 }
 .video-block .poster{
   position:absolute;inset:0;
@@ -697,7 +701,8 @@ footer{
   .nav-burger{display:block}
   section{padding:80px 24px}
   .hero{padding:140px 24px 80px;min-height:80vh}
-  .history-grid,.how-grid,.videos-grid,.plan-grid{grid-template-columns:1fr;gap:48px}
+  .history-grid,.how-grid,.plan-grid{grid-template-columns:1fr;gap:48px}
+  .videos-grid{gap:36px}
   .history-evidence{grid-template-columns:1fr;gap:32px;margin-top:56px;padding-top:48px}
   .mvv-grid{grid-template-columns:1fr;gap:24px}
   .values-detail{grid-template-columns:1fr}
@@ -1699,7 +1704,9 @@ document.querySelectorAll('.video-block .player').forEach(player=>{
       v.playsInline = true;
       v.preload = 'metadata';
       v.style.width = '100%';
-      v.style.aspectRatio = '16/9';
+      v.style.height = '100%';
+      v.style.aspectRatio = '9/16';
+      v.style.objectFit = 'contain';
       v.style.background = '#000';
       v.style.display = 'block';
       const playerWrap = block.querySelector('.player');
