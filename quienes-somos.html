@@ -421,38 +421,28 @@ section.off{background:var(--off)}
   font-size:10px;letter-spacing:2.2px;text-transform:uppercase;font-weight:700;
   color:var(--gl);padding:4px 10px;border:1px solid rgba(67,160,71,0.4);border-radius:2px
 }
-.people-band-card{
-  max-width:920px;margin:24px auto 80px;
-  background:var(--w);color:var(--ink);
-  border-radius:10px;padding:48px 52px;
-  box-shadow:0 40px 80px -30px rgba(0,0,0,.5);
-  position:relative;z-index:2
+.pb-bridge{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;align-items:center;gap:24px;
+  max-width:720px;margin:0 auto;padding:32px 24px 40px;
+  text-align:center
 }
-.people-band-card .pbc-eyebrow{
-  font-size:11px;letter-spacing:3px;text-transform:uppercase;
-  color:var(--a);font-weight:700;margin-bottom:14px
+.pb-bridge-line{
+  display:block;width:1px;height:48px;
+  background:linear-gradient(180deg, transparent, rgba(67,160,71,0.7), transparent);
+  background-size:100% 220%;
+  animation:pbBridgeFlow 3.2s ease-in-out infinite
 }
-.people-band-card h3{
-  font-family:var(--serif);font-size:clamp(1.5rem,2.6vw,2rem);line-height:1.2;
-  color:var(--ink);margin:0 0 16px;font-weight:600;text-wrap:balance
+@keyframes pbBridgeFlow{
+  0%{background-position:0 -110%}
+  100%{background-position:0 110%}
 }
-.people-band-card h3 em{font-style:italic;color:var(--g);font-weight:400}
-.people-band-card p{
-  color:var(--mid);font-size:1rem;line-height:1.7;margin:0 0 32px
+.pb-bridge-text{
+  font-family:var(--serif);font-size:clamp(1.05rem,1.75vw,1.4rem);
+  line-height:1.5;color:rgba(250,250,248,.65);font-weight:400;
+  letter-spacing:-0.005em;text-wrap:balance;margin:0
 }
-.pbc-stats{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
-  border-top:1px solid rgba(20,20,18,0.08);padding-top:24px
-}
-.pbc-stat{display:flex;flex-direction:column;gap:6px}
-.pbc-stat .num{
-  font-family:var(--serif);font-size:2.4rem;font-weight:600;
-  color:var(--g);line-height:1;letter-spacing:-0.02em
-}
-.pbc-stat .lbl{
-  font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--mid);font-weight:600
-}
+.pb-bridge-text em{font-style:italic;color:var(--gl)}
 
 /* ---------- Videos ---------- */
 .videos-section{background:var(--ink);color:var(--w);overflow:hidden;padding-top:40px;padding-bottom:80px}
@@ -806,8 +796,8 @@ footer{background:#0e0e0c;padding:80px 64px 36px}
   .videos-grid{gap:36px}
   .people-band{padding:0 24px}
   .people-band-grid{grid-template-columns:1fr;gap:24px;padding:48px 0}
-  .people-band-card{padding:36px 28px;margin:24px auto 56px}
-  .pbc-stats{grid-template-columns:1fr;gap:18px}
+  .pb-bridge{padding:24px 16px 36px;gap:18px}
+  .pb-bridge-line{height:36px}
   .history-evidence{margin-top:56px;padding-top:48px}
   .mvv-grid{grid-template-columns:1fr;gap:24px}
   .values-detail{grid-template-columns:1fr}
@@ -1243,15 +1233,9 @@ footer{background:#0e0e0c;padding:80px 64px 36px}
       <figcaption><span class="pb-tag">Comunidad</span> Equipo local en España junto al voluntariado</figcaption>
     </figure>
   </div>
-  <div class="people-band-card reveal">
-    <div class="pbc-eyebrow">El puente, hecho de personas</div>
-    <h3>Una organización <em>tejida</em> entre orillas</h3>
-    <p>Detrás de cada proyecto hay nombres y rostros concretos. Personas que trabajan codo con codo entre Extremadura y Guinea Bissau, y voluntariado que sostiene la red desde dentro. A continuación, los conocerás en primera persona.</p>
-    <div class="pbc-stats">
-      <div class="pbc-stat"><span class="num">+30</span><span class="lbl">Personas en el equipo</span></div>
-      <div class="pbc-stat"><span class="num">2</span><span class="lbl">Orillas · una misión</span></div>
-      <div class="pbc-stat"><span class="num">+25</span><span class="lbl">Años acompañando</span></div>
-    </div>
+  <div class="pb-bridge reveal" aria-hidden="true">
+    <span class="pb-bridge-line"></span>
+    <p class="pb-bridge-text">Aquí empiezan <em>los nombres y los rostros</em>.</p>
   </div>
 </section>
 
